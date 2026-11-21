@@ -24,7 +24,7 @@ VALID_TYPES = {"source", "concept", "method", "comparison", "question",
 
 LINK_RE = re.compile(r"(?<!!)\[([^\]]*)\]\(([^)\s]+)\)")
 CITE_RE = re.compile(r"\[(\d{2}-[^,\]\s]+\.pdf)\s*,\s*([^\]]+)\]")
-BARE_PDF_RE = re.compile(r"\[(\d{2}-[^,\]\s]+\.pdf)\s*\]")
+BARE_PDF_RE = re.compile(r"\[(\d{2}-[^,\]\s]+\.pdf)\s*\](?!\()")   # 後面接 ( 是 Markdown 連結，不是引用
 TODO_MARK = "[待補來源]"
 WIKILINK_RE = re.compile(r"\[\[[^\]]+\]\]")
 LABEL_ONLY_RE = re.compile(r"^-\s*\*\*(比喻|對應到 RAG 的哪個部分|比喻的極限)\*\*")
@@ -126,7 +126,7 @@ def check_block(path: Path, lineno: int, block: str):
             errors.append(f"{rel(path)}:{lineno} 引用的 raw 檔不存在：{m.group(1)}")
     cited = bool(CITE_RE.search(block)) or TODO_MARK in block
     stripped = CITE_RE.sub("", block)
-    stripped = LINK_RE.sub(lambda m: m.group(1), stripped)
+    stripped = LINK_RE.sub("", stripped)                # 連結是導覽用途，不算主張
     stripped = re.sub(r"`[^`]*`", "", stripped)
     stripped = re.sub(r"^([-*+]|\d+\.)\s+", "", stripped)
     content = re.sub(r"[\s|*_\-—–:：,，。.()（）]", "", stripped)
