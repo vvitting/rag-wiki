@@ -138,3 +138,14 @@
 - 待補來源：無
 - 未處理：reviewer 其餘 13 項輕微問題與 5 處待核對 raw 的引用，見 output/what-is-rag/lint.md
 - lint：0 error, 0 warning
+
+## [2026-11-22] lint | 修正 topic-slides ⓪ 第 2 輪 reviewer 指出的問題（嚴重 1 + 輕微 #2、#3、#5、#7）
+- 修改：sources/07-es2023-ragas.md — GPT Ranking 和人類判斷的一致度原寫「常常不到一半」，和同頁表格 0.54／0.40／0.52 矛盾，改為「只有 0.40–0.54」，和 overview、rag-evaluation 一致（嚴重）
+- 修改：concepts/lost-in-the-middle.md、concepts/context-window.md、sources/04、sources/06 — 06 的 8k context 結果補上「在全面性上」「其他標準差不多」；lost-in-the-middle 另註明 06 沒有直接測位置效應
+- 修改：comparisons/closed-book-vs-open-book.md — 「open-book 低於 closed-book」補上「20、30 份文件設定、最差位置」的限定
+- 修改：concepts/generator.md、sources/01 — 原始 RAG 是把問題和每一份文件分別串接，再 marginalize，不是串成一個長 prompt；generator 頁連到原始 RAG
+- 修改：overview.md、sources/01 — 「小模型勝過大模型」補上「在 open-domain QA（例如 NQ）上」
+- ⚠️ 新標註：無
+- 待補來源：無
+- 未處理：第 2 輪其餘輕微問題，見 output/what-is-rag/lint.md
+- lint：0 error, 0 warning

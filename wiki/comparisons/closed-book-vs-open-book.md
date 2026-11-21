@@ -48,7 +48,7 @@ RAG 結合了兩邊的優點：closed-book 能自由生成文字，open-book 有
 | 20 份文件，答案在第 1 份 | 75.8% | [04-liu2023-lost-in-middle.pdf, Table 6, p.18] |
 | 20 份文件，答案在第 10 份 | 53.8% | [04-liu2023-lost-in-middle.pdf, Table 6, p.18] |
 
-- 答案放在中間時，open-book 的表現反而**低於** closed-book [04-liu2023-lost-in-middle.pdf, §2.3, p.5]。
+- 在 20 和 30 份文件的設定中，答案放在最差的位置時（例如 20 份中的第 10 份，見上表），open-book 的表現反而**低於** closed-book [04-liu2023-lost-in-middle.pdf, §2.3, p.5]。
 - 所以開書考要考得好，不只要「帶對書」，還要「把重點翻到前面」。詳見 [Lost in the middle](../concepts/lost-in-the-middle.md) [04-liu2023-lost-in-middle.pdf, §5, p.10]。
 
 ### 第二份證據：05 的 Table 2

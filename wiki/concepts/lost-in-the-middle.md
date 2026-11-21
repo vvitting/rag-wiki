@@ -51,7 +51,7 @@ updated: 2026-11-22
 - **把問題放在文件前後**（query-aware contextualization）：對 key-value 檢索效果很大，對多文件問答則幾乎沒有幫助 [04-liu2023-lost-in-middle.pdf, §4.2, p.8]。
 
 - **把資訊分散到多個 context window**：GraphRAG 回答問題時，把社群摘要打亂、切成多塊平行處理，避免相關資訊集中在單一個 context window 而被漏掉 [06-edge2024-graphrag.pdf, §3.1.6, p.6]。
-- **用較小的 context window**：06 為一般 RAG 挑選 context 大小時，8k 勝過 16k、32k、64k [06-edge2024-graphrag.pdf, App. C, p.19]。
+- **用較小的 context window**：06 因為擔心 lost in the middle，為一般 RAG 測試不同的 context 大小，結果 8k 在全面性上勝過 16k、32k、64k，其他標準則差不多 [06-edge2024-graphrag.pdf, App. C, p.19]。注意 06 測的是答案品質，沒有直接測位置效應 [06-edge2024-graphrag.pdf, App. C, p.19]。
 
 ## 各論文怎麼說
 

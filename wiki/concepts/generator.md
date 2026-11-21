@@ -21,7 +21,7 @@ Generator 是 RAG 裡負責「寫答案」的部分：它讀了問題和 [retrie
 
 - 原始 RAG 用 BART-large 當 generator，它是一個有 400M 參數的預訓練 seq2seq transformer [01-lewis2020-rag.pdf, §2.3, p.3]。
 - 理論上任何 encoder-decoder 模型都可以當 generator [01-lewis2020-rag.pdf, §2.3, p.3]。
-- 把資料交給 generator 的方式很簡單：直接把問題和檢索到的文件串接（concatenate）在一起 [01-lewis2020-rag.pdf, §2.3, p.3]。
+- 把資料交給 generator 的方式很簡單：把問題和**每一份**檢索到的文件分別串接（concatenate）[01-lewis2020-rag.pdf, §2.3, p.3]，再把各份文件得到的結果按檢索機率加權合併（marginalize），而不是把所有文件串成一個長 prompt [01-lewis2020-rag.pdf, §2.1, p.3]。詳見 [原始 RAG](../methods/original-rag.md)。
 - Generator 的參數就是 RAG 的 [parametric memory](parametric-vs-non-parametric-memory.md) [01-lewis2020-rag.pdf, §2.3, p.3]。
 
 ### Extractive vs generative（abstractive）

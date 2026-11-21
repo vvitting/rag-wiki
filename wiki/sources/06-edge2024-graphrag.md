@@ -107,7 +107,7 @@ updated: 2026-11-22
 
 ## 和既有頁面的關係
 
-- **呼應 04**：作者因為考慮到 lost in the middle，才為一般 RAG 測試不同大小的 context window；結果 8k 最好 [06-edge2024-graphrag.pdf, App. C, p.19]。回答問題時把社群摘要打亂、分散到多個 context window，也是為了避免相關資訊集中在單一 context window 而被漏掉 [06-edge2024-graphrag.pdf, §3.1.6, p.6]。
+- **呼應 04**：作者因為考慮到 lost in the middle，才為一般 RAG 測試不同大小的 context window；結果 8k 在全面性上最好，其他標準則差不多 [06-edge2024-graphrag.pdf, App. C, p.19]。回答問題時把社群摘要打亂、分散到多個 context window，也是為了避免相關資訊集中在單一 context window 而被漏掉 [06-edge2024-graphrag.pdf, §3.1.6, p.6]。
 - **對 02 的 knowledge graph 的補充**：02 說 knowledge graph 這類結構化資料「通常經過驗證、資訊較精確」[02-gao2023-survey.pdf, §III-A, p.7]；GraphRAG 的 knowledge graph 則是 LLM 從文字中抽出來的，作者自己稱之為一種摘要 [06-edge2024-graphrag.pdf, §3.1.3, p.5]，兩者性質不同。
 - **把一般 RAG 稱為 naive RAG**：本篇的圖表把一般 RAG（SS）稱為「naïve RAG」[06-edge2024-graphrag.pdf, Fig.2, p.10]。
 

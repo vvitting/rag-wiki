@@ -69,7 +69,7 @@ updated: 2026-11-22
 
 ## 6. 總結
 
-- RAG 讓小模型也能勝過大很多的純參數模型 [01-lewis2020-rag.pdf, App. G, p.19]。
+- 在 open-domain QA（例如 NQ）上，RAG 讓小模型也能勝過大很多的純參數模型 [01-lewis2020-rag.pdf, App. G, p.19]。
 - 更新知識只要換掉 index，不用重新訓練 [01-lewis2020-rag.pdf, §4.5, p.8]。
 - RAG 和 fine-tuning 可以互補，不是二選一 [02-gao2023-survey.pdf, §II-D, p.5]。
 - 即使 LLM 能讀很長的 context，RAG 在效率和可驗證性上仍有優勢 [02-gao2023-survey.pdf, §VII-A, p.14]。

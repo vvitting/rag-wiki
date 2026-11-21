@@ -52,7 +52,7 @@ updated: 2026-11-22
 > 下面是 wiki 根據上面六個說法整理出的結論，每一點都附上依據：
 
 1. **到某個數量之前，多放會有幫助**：03 的 5 → 10 → 20 都在進步 [03-anthropic-contextual-retrieval.pdf, p.8]；04 的 retriever recall 也隨文件數量上升 [04-liu2023-lost-in-middle.pdf, Fig.11, p.10]。
-2. **超過某個數量後，效益很小，成本卻持續增加**：04 發現 20 份以上幾乎不再進步 [04-liu2023-lost-in-middle.pdf, §5, p.10]；06 也發現，一般 RAG 的 context 用 8k 比用 64k 好 [06-edge2024-graphrag.pdf, App. C, p.19]。
+2. **超過某個數量後，效益很小，成本卻持續增加**：04 發現 20 份以上幾乎不再進步 [04-liu2023-lost-in-middle.pdf, §5, p.10]；06 也發現，一般 RAG 的 context 用 8k 在全面性上比用 64k 好，其他標準則差不多 [06-edge2024-graphrag.pdf, App. C, p.19]。
 3. **位置比數量更重要**：同樣 20 份文件，答案在第 1 份時是 75.8%，在第 10 份時是 53.8% [04-liu2023-lost-in-middle.pdf, Table 6, p.18]。
 4. **01 是不同的情境**：原始 RAG 把每份文件分別交給 generator，再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，不是串成一個長 prompt，所以不受位置影響的方式也不同。04 也發現 encoder-decoder 模型（01 的 BART 就屬於這類 [01-lewis2020-rag.pdf, §2.3, p.3]）在訓練長度內，對位置比較不敏感 [04-liu2023-lost-in-middle.pdf, §4.1, p.7]。
 5. **「不相關的文件也可能有幫助」要看是哪種不相關**：04 發現用隨機文件當干擾時，準確率比用「相關但沒有答案」的文件當干擾還高 [04-liu2023-lost-in-middle.pdf, App. B, p.14]。這和 02 引用的 Cuconasu et al. 結果方向一致 [02-gao2023-survey.pdf, §VII-B, p.14]，但兩者的實驗設計不同，不能直接比較。

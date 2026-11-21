@@ -33,7 +33,7 @@ updated: 2026-11-22
 - **兩個元件**：retriever 根據輸入 x 找出文件 z；generator 根據 x 和 z 逐字產生答案 y [01-lewis2020-rag.pdf, §2, p.2–3]。
 - **Retriever 用 DPR**：document encoder 和 query encoder 都是 BERT-base（bi-encoder 架構）；找出最相關的文件被視為 Maximum Inner Product Search（MIPS）問題 [01-lewis2020-rag.pdf, §2.2, p.3]。
 - **Generator 用 BART-large**：一個有 400M 參數的預訓練 seq2seq transformer [01-lewis2020-rag.pdf, §2.3, p.3]。
-- **怎麼把資料交給 generator**：直接把輸入 x 和檢索到的內容 z 串接（concatenate）起來 [01-lewis2020-rag.pdf, §2.3, p.3]。
+- **怎麼把資料交給 generator**：把輸入 x 和每一份檢索到的文件 z 分別串接（concatenate）起來 [01-lewis2020-rag.pdf, §2.3, p.3]，再對各份文件的結果加權合併（marginalize），不是把所有文件串成一段 [01-lewis2020-rag.pdf, §2.1, p.3]。
 - **兩種版本**：RAG-Sequence 整個答案都根據同一份文件；RAG-Token 每產生一個 token 都可以根據不同的文件 [01-lewis2020-rag.pdf, §2.1, p.3]。
 - **訓練方式**：retriever 和 generator 一起訓練，但不告訴模型「應該找哪份文件」[01-lewis2020-rag.pdf, §2.4, p.3]。
 - **訓練時固定的部分**：document encoder 和 index 都不更新，只微調 query encoder 和 BART，作者認為這樣已足以得到強表現 [01-lewis2020-rag.pdf, §2.4, p.4]。
@@ -117,7 +117,7 @@ updated: 2026-11-22
 1. RAG 的核心就是「先查，再寫」：retriever 負責查，generator 負責寫 [01-lewis2020-rag.pdf, Fig.1, p.2]。
 2. 論文本身就用 closed-book（只靠記憶）和 open-book（可以查資料）來形容兩類方法，這正是「閉書考 vs 開書考」的比喻 [01-lewis2020-rag.pdf, §4.1, p.5]。
 3. 知識存在可以替換的 index 裡，所以換一份資料就能更新知識，不用重新訓練模型 [01-lewis2020-rag.pdf, §4.5, p.8]。
-4. 小模型加上檢索，可以打贏大很多、只靠記憶的模型 [01-lewis2020-rag.pdf, App. G, p.19]。
+4. 在 open-domain QA（例如 NQ）上，小模型加上檢索，可以打贏大很多、只靠記憶的模型 [01-lewis2020-rag.pdf, App. G, p.19]。
 5. RAG 的記憶是人類讀得懂、也改得動的原始文字，這讓模型更容易解釋，也更容易更新 [01-lewis2020-rag.pdf, §5, p.9]。
 
 ## 相關頁面

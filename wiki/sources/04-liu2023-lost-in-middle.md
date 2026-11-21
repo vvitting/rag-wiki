@@ -103,7 +103,7 @@ updated: 2026-11-22
 - **印證 02**：02 說「LLM 和人一樣，傾向只注意長文的開頭和結尾」[02-gao2023-survey.pdf, §IV-A, p.10]，引用的正是這篇的研究 [02-gao2023-survey.pdf, Ref. 98, p.19]。
 - **心理學的對應**：本篇把 U 形曲線連結到心理學的「序列位置效應」（serial-position effect）：人在回想一串項目時，最記得第一個和最後一個 [04-liu2023-lost-in-middle.pdf, §6.3, p.10]。不過作者也指出，Transformer 的 self-attention 理論上能同等地取用任何位置的 token，所以這個現象其實有點令人意外 [04-liu2023-lost-in-middle.pdf, §6.3, p.11]。
 - **被 07 正確引用**：RAGAS 設計 context relevance 指標的理由之一，就是 LLM 比較難利用長 context 中間的資訊 [07-es2023-ragas.pdf, §3, p.3]。
-- **被 06 引用**：GraphRAG 因為擔心 lost in the middle，才為一般 RAG 測試不同大小的 context window，結果 8k 最好 [06-edge2024-graphrag.pdf, App. C, p.19]。但 06 在另一處把本篇的結論描述成「chunk **前段**的資訊容易被漏掉」[06-edge2024-graphrag.pdf, §3.1.1, p.4]，和本篇「中間最差」的發現不一致，詳見 [Lost in the middle](../concepts/lost-in-the-middle.md)。
+- **被 06 引用**：GraphRAG 因為擔心 lost in the middle，才為一般 RAG 測試不同大小的 context window，結果 8k 在全面性上最好，其他標準則差不多 [06-edge2024-graphrag.pdf, App. C, p.19]。但 06 在另一處把本篇的結論描述成「chunk **前段**的資訊容易被漏掉」[06-edge2024-graphrag.pdf, §3.1.1, p.4]，和本篇「中間最差」的發現不一致，詳見 [Lost in the middle](../concepts/lost-in-the-middle.md)。
 - **支持 reranking**：作者建議把相關文件 rerank 到 context 的開頭，或在適當時少取幾份文件（ranked list truncation）[04-liu2023-lost-in-middle.pdf, §5, p.10]。這支持了 02、03 的看法，詳見 [Reranking](../concepts/reranking.md)。
 
 ## 關鍵圖表說明
