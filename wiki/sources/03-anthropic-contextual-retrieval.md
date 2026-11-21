@@ -5,7 +5,7 @@ raw: 03-anthropic-contextual-retrieval.pdf
 authors: [Anthropic]
 year: 2024
 tags: [rag, contextual-retrieval, bm25, hybrid-search, reranking, industry-blog]
-sources: [03-anthropic-contextual-retrieval.pdf, 01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 04-liu2023-lost-in-middle.pdf]
+sources: [03-anthropic-contextual-retrieval.pdf, 01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 04-liu2023-lost-in-middle.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -74,6 +74,8 @@ Anthropic 在 2024 年 9 月 19 日發表的技術文章 [03-anthropic-contextua
 - **附錄抽不到文字**：附錄 I 的分資料集結果在 raw 檔中是圖片，文字抽取不到，所以本 wiki 無法引用那些細部數字 [03-anthropic-contextual-retrieval.pdf, p.11–12]。
 - **Reranking 的代價**：多了一個執行步驟，一定會增加一點延遲；要在「rerank 更多 chunk 換更好表現」和「rerank 更少換更低延遲與成本」之間取捨 [03-anthropic-contextual-retrieval.pdf, p.10]。
 - **其他方法的效果有限**：作者試過把通用的文件摘要加到 chunk 上，提升非常有限；也評估過以摘要為基礎的 indexing，表現很差 [03-anthropic-contextual-retrieval.pdf, p.5]。
+
+> ⚠️ **爭議／更新**：GraphRAG 正是以摘要為基礎的 index，並在全局問題上勝過一般 RAG [06-edge2024-graphrag.pdf, §5.1, p.9]。兩篇衡量的東西不同：本篇衡量能不能找到特定 chunk [03-anthropic-contextual-retrieval.pdf, p.7]，06 衡量全局問題的答案夠不夠全面。詳見 [Chunking](../concepts/chunking.md)。
 
 > ⚠️ **爭議／更新**：本篇說知識庫小於 200,000 tokens（約 500 頁）時，可以直接把整個知識庫放進 prompt，不需要 RAG [03-anthropic-contextual-retrieval.pdf, p.2]；但 [02-gao2023-survey.pdf, §VII-A, p.14] 認為即使 LLM 能處理長 context，RAG 在效率和可驗證性上仍無可取代；[04-liu2023-lost-in-middle.pdf, §2.3, p.5] 也發現，支援長 context 的模型不一定比較會用 context，中間的資訊容易被忽略（測的是 2023 年的模型）。詳見 [Context window](../concepts/context-window.md)。
 

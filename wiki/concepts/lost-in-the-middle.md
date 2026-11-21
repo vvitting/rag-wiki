@@ -2,7 +2,7 @@
 type: concept
 title: "Lost in the middle（中間迷失）"
 tags: [concept, lost-in-the-middle, positional-bias, long-context]
-sources: [04-liu2023-lost-in-middle.pdf, 02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 05-asai2023-self-rag.pdf]
+sources: [04-liu2023-lost-in-middle.pdf, 02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -50,12 +50,19 @@ updated: 2026-11-22
 - **少放幾份文件**：在適當時候少取幾份（ranked list truncation）[04-liu2023-lost-in-middle.pdf, §5, p.10]。
 - **把問題放在文件前後**（query-aware contextualization）：對 key-value 檢索效果很大，對多文件問答則幾乎沒有幫助 [04-liu2023-lost-in-middle.pdf, §4.2, p.8]。
 
+- **把資訊分散到多個 context window**：GraphRAG 回答問題時，把社群摘要打亂、切成多塊平行處理，避免相關資訊集中在單一個 context window 而被漏掉 [06-edge2024-graphrag.pdf, §3.1.6, p.6]。
+- **用較小的 context window**：06 為一般 RAG 挑選 context 大小時，8k 勝過 16k、32k、64k [06-edge2024-graphrag.pdf, App. C, p.19]。
+
 ## 各論文怎麼說
 
 - **[04-liu2023-lost-in-middle.pdf](../sources/04-liu2023-lost-in-middle.md)**：提出這個現象的原始研究 [04-liu2023-lost-in-middle.pdf, Abstract, p.1]。
 - **[02-gao2023-survey.pdf](../sources/02-gao2023-survey.md)**：引用這個現象，說明為什麼檢索後要先整理內容，不能把所有文件直接丟給 LLM [02-gao2023-survey.pdf, §IV-A, p.10]。
 - **[01-lewis2020-rag.pdf](../sources/01-lewis2020-rag.md)**：原始 RAG 是把每份文件「分別」和問題串接後交給 generator，再把結果加權合併 [01-lewis2020-rag.pdf, §2.1, §2.3, p.3]，並不是把所有文件串成一個長 prompt；所以 lost in the middle 描述的情境，和它不完全相同。
 - **[05-asai2023-self-rag.pdf](../sources/05-asai2023-self-rag.md)**：Self-RAG 也是對每份文件分別、平行產生回答，再依評分挑選 [05-asai2023-self-rag.pdf, §3.1, p.4]。不過 05 沒有討論位置效應，所以無法判斷這種做法能否避免 lost in the middle [05-asai2023-self-rag.pdf, §3.3, p.6]。
+
+- **[06-edge2024-graphrag.pdf](../sources/06-edge2024-graphrag.md)**：因為擔心 lost in the middle，才為一般 RAG 測試不同大小的 context window [06-edge2024-graphrag.pdf, App. C, p.19]。
+
+> ⚠️ **爭議／更新**：[06-edge2024-graphrag.pdf, §3.1.1, p.4] 說較長的 chunk 會讓「出現在 chunk **前段**的資訊」比較難被找到，並引用了 04 和 Kuratov et al. 2024；但 04 的實際發現是開頭的資訊用得最好，**中間**的最差 [04-liu2023-lost-in-middle.pdf, Abstract, p.1; Table 6, p.18]。Kuratov et al. 不在 raw/ 中，無法核對。引用 06 的這句話時，建議以 04 的原始結果為準。
 
 ## 常見誤解
 

@@ -2,7 +2,7 @@
 type: concept
 title: "Retriever（檢索器）"
 tags: [concept, retrieval, dpr, bm25, mips]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -72,6 +72,12 @@ Retriever 是 RAG 裡負責「查資料」的部分：拿到問題後，它會�
 - **非結構化資料**：文字是最常用的來源；open-domain QA 主要用 Wikipedia dump [02-gao2023-survey.pdf, §III-A, p.7]。
 - **半結構化資料**：例如含有表格的 PDF。切分可能把表格切斷，表格也會讓語意相似度搜尋變得更複雜 [02-gao2023-survey.pdf, §III-A, p.7]。
 - **結構化資料**：例如 knowledge graph，通常經過驗證、資訊較精確，但建立和維護都要額外的功夫 [02-gao2023-survey.pdf, §III-A, p.7]。
+- **用 LLM 從文字建出來的 knowledge graph**：GraphRAG 讓 LLM 從文件中抽出實體和關係，自己建 knowledge graph 當 index [06-edge2024-graphrag.pdf, §3.1.2–3.1.3, p.4–5]。這種圖是 LLM 產生的摘要，不是經過驗證的資料 [06-edge2024-graphrag.pdf, §3.1.3, p.5]。詳見 [GraphRAG](../methods/graphrag.md)。
+
+### Retriever 的天生限制：只找得到「局部」
+
+- 一般 RAG 取回的是「各自和問題相關」的少數幾筆資料，所以適合答案集中在少數文件裡的問題 [06-edge2024-graphrag.pdf, §1, p.1–2]。
+- 遇到「這批資料的主要主題是什麼？」這種全局問題就無能為力，因為答案分散在整批資料裡 [06-edge2024-graphrag.pdf, Abstract, p.1]。
 - **LLM 自己產生的內容**：例如 GenRead 用 LLM 產生的內容取代 retriever [02-gao2023-survey.pdf, §III-A, p.7]。
 
 ### 讓 retriever 更貼合任務

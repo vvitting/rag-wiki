@@ -2,7 +2,7 @@
 type: concept
 title: "Context window 與「放多少文件」"
 tags: [concept, context-window, long-context, lost-in-the-middle]
-sources: [04-liu2023-lost-in-middle.pdf, 02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf]
+sources: [04-liu2023-lost-in-middle.pdf, 02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -12,6 +12,8 @@ updated: 2026-11-22
 
 - LLM 主要是透過 prompting 來完成任務：把任務說明和要處理的資料全部整理成一段文字輸入（input context），模型再接著產生文字 [04-liu2023-lost-in-middle.pdf, §1, p.1]。
 - Context window 就是模型一次能接受的最大輸入長度，以 token 計算。例如 GPT-3.5-Turbo 是 4K tokens，GPT-3.5-Turbo（16K）是 16K tokens [04-liu2023-lost-in-middle.pdf, §2.2, p.5]。
+- GraphRAG 論文的定義更直白：context window 是 LLM 一次能處理的最大 token（文字單位）數量 [06-edge2024-graphrag.pdf, §1, p.1]。
+- RAG 最適合的情況，就是資料總量超過 LLM 的 context window、無法一次放進 prompt 的時候 [06-edge2024-graphrag.pdf, §2.1, p.2]。
 - 為了配合這個限制，RAG 會把文件切成較小的 [chunk](chunking.md) [02-gao2023-survey.pdf, §II-A, p.3]。
 
 ### Context window 為什麼有上限？
@@ -37,19 +39,20 @@ updated: 2026-11-22
 
 ## 「放越多文件越好」嗎？
 
-> ⚠️ **爭議／更新**：[01-lewis2020-rag.pdf, §4.5, p.8]、[02-gao2023-survey.pdf, §IV-A, p.10; §VII-B, p.14]、[03-anthropic-contextual-retrieval.pdf, p.8]、[04-liu2023-lost-in-middle.pdf, §5, p.10] 的五個說法並不一致：
+> ⚠️ **爭議／更新**：[01-lewis2020-rag.pdf, §4.5, p.8]、[02-gao2023-survey.pdf, §IV-A, p.10; §VII-B, p.14]、[03-anthropic-contextual-retrieval.pdf, p.8]、[04-liu2023-lost-in-middle.pdf, §5, p.10]、[06-edge2024-graphrag.pdf, App. C, p.19] 的六個說法並不一致：
 > - [01-lewis2020-rag.pdf, §4.5, p.8; Fig.3, p.8]：RAG-Sequence 在測試時取越多份文件，NQ 表現就越好；RAG-Token 則在 10 份時最好。
 > - [02-gao2023-survey.pdf, §IV-A, p.10]：「盡量多檢索、全部串成長 prompt」是 RAG 的常見誤解，過多的 context 會帶來雜訊。
 > - [02-gao2023-survey.pdf, §VII-B, p.14]：綜述引用 Cuconasu et al. 的研究，加入不相關的文件反而讓準確率提高超過 30%。
 > - [03-anthropic-contextual-retrieval.pdf, p.8]：放越多 chunk，越有機會包含相關資訊，但資訊太多會讓模型分心，所以有上限；實測 5、10、20 個 chunk 中，20 個最好。
 > - [04-liu2023-lost-in-middle.pdf, §5, p.10]：retriever 的 recall 還在上升，模型的表現卻早早停止進步；取 50 份和取 20 份相比，GPT-3.5-Turbo 只多約 1.5%，Claude-1.3 約 1%，但延遲和成本都增加了。
+> - [06-edge2024-graphrag.pdf, App. C, p.19]：gpt-4-turbo 有 128k 的 context window，但為一般 RAG（SS）挑選 context 大小時，在 8k、16k、32k、64k 四種大小中，最小的 8k 在全面性上全面勝出（平均勝率 58.1%），其他標準則差不多。
 
 ### 目前最合理的整合
 
-> 下面是 wiki 根據上面五個說法整理出的結論，每一點都附上依據：
+> 下面是 wiki 根據上面六個說法整理出的結論，每一點都附上依據：
 
 1. **到某個數量之前，多放會有幫助**：03 的 5 → 10 → 20 都在進步 [03-anthropic-contextual-retrieval.pdf, p.8]；04 的 retriever recall 也隨文件數量上升 [04-liu2023-lost-in-middle.pdf, Fig.11, p.10]。
-2. **超過某個數量後，效益很小，成本卻持續增加**：04 發現 20 份以上幾乎不再進步 [04-liu2023-lost-in-middle.pdf, §5, p.10]。
+2. **超過某個數量後，效益很小，成本卻持續增加**：04 發現 20 份以上幾乎不再進步 [04-liu2023-lost-in-middle.pdf, §5, p.10]；06 也發現，一般 RAG 的 context 用 8k 比用 64k 好 [06-edge2024-graphrag.pdf, App. C, p.19]。
 3. **位置比數量更重要**：同樣 20 份文件，答案在第 1 份時是 75.8%，在第 10 份時是 53.8% [04-liu2023-lost-in-middle.pdf, Table 6, p.18]。
 4. **01 是不同的情境**：原始 RAG 把每份文件分別交給 generator，再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，不是串成一個長 prompt，所以不受位置影響的方式也不同。04 也發現 encoder-decoder 模型（01 的 BART 就屬於這類 [01-lewis2020-rag.pdf, §2.3, p.3]）在訓練長度內，對位置比較不敏感 [04-liu2023-lost-in-middle.pdf, §4.1, p.7]。
 5. **「不相關的文件也可能有幫助」要看是哪種不相關**：04 發現用隨機文件當干擾時，準確率比用「相關但沒有答案」的文件當干擾還高 [04-liu2023-lost-in-middle.pdf, App. B, p.14]。這和 02 引用的 Cuconasu et al. 結果方向一致 [02-gao2023-survey.pdf, §VII-B, p.14]，但兩者的實驗設計不同，不能直接比較。

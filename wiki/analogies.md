@@ -2,7 +2,7 @@
 type: analogy
 title: "比喻集"
 tags: [analogy, teaching]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -80,6 +80,13 @@ updated: 2026-11-22
 - **對應到 RAG 的哪個部分**：[Self-RAG](methods/self-rag.md)（Retrieve、ISREL、ISSUP、ISUSE 四種 reflection tokens）
 - **比喻的極限**：真實的學生是邊想邊決定；Self-RAG 的「自我檢查」是先用 GPT-4 標註的資料訓練出來的固定能力。而且它的自我評分也不是百分之百準：critic 和 GPT-4 判斷一致的比例，在「有不有用」這一項只有 73.5%。
 - **對應的技術事實**：Self-RAG 用 Retrieve 判斷要不要查、ISREL 判斷文件相不相關、ISSUP 判斷有沒有根據、ISUSE 判斷有不有用 [05-asai2023-self-rag.pdf, Table 1, p.4]；寫暑假作文的例子不需要檢索 [05-asai2023-self-rag.pdf, Fig.1, p.2]；critic 在 ISUSE 上和 GPT-4 的一致度是 73.5% [05-asai2023-self-rag.pdf, App. A.2, p.18]。
+
+### 找一句話 vs 寫讀書報告
+
+- **比喻**：老師問「書裡哪一頁提到牛頓？」，翻目錄就找得到，這是一般 RAG 擅長的事。但老師問「這整套百科全書的主要主題是什麼？」，你不可能只翻幾頁就回答，得先把每一章整理成重點摘要，再從所有摘要中歸納。GraphRAG 就是先把整批資料整理成「人物關係圖＋分章摘要」，再回答這種大問題。
+- **對應到 RAG 的哪個部分**：[GraphRAG](methods/graphrag.md)、[Naive RAG](methods/naive-rag.md)
+- **比喻的極限**：真人做摘要時會判斷哪些重要；GraphRAG 的關係圖和摘要都是 LLM 自動產生的，可能漏掉細節，也可能出錯。而且事先整理很花時間。
+- **對應的技術事實**：一般 RAG 適合答案集中在少數文件裡的問題，無法回答「資料集的主要主題是什麼？」這類全局問題 [06-edge2024-graphrag.pdf, Abstract, p.1; §1, p.2]；GraphRAG 為約 100 萬 tokens 的資料建 index，花了 281 分鐘 [06-edge2024-graphrag.pdf, §4.1.3, p.9]。
 
 ## 相關頁面
 - [目錄](index.md)

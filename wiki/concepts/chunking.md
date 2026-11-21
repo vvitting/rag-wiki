@@ -2,7 +2,7 @@
 type: concept
 title: "Chunking（切塊）"
 tags: [concept, chunking, preprocessing, indexing]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -48,7 +48,15 @@ Chunking 就是把長文件切成一小段一小段（chunk），讓 [retriever]
 - **解法**：[Contextual Retrieval](../methods/contextual-retrieval.md) 先用 LLM 為每個 chunk 寫一段 50–100 tokens 的說明，再建 index [03-anthropic-contextual-retrieval.pdf, p.5–6]。
 - 03 也提醒，chunk 大小、切分邊界、chunk 之間重疊（overlap）多少，都會影響檢索表現 [03-anthropic-contextual-retrieval.pdf, p.8]。
 
-> ⚠️ **爭議／更新**：[02-gao2023-survey.pdf, §III-B, p.8] 把「為段落加上摘要」和階層式 index（每個節點存摘要）列為優化方法；但 [03-anthropic-contextual-retrieval.pdf, p.5] 實驗發現，把**通用的文件摘要**加到 chunk 上提升非常有限，**以摘要為基礎的 indexing** 表現也很差。兩者指的摘要範圍不完全相同（段落摘要 vs 通用的文件摘要），而 02 沒有提供實測數字。
+> ⚠️ **爭議／更新**：[02-gao2023-survey.pdf, §III-B, p.8] 把「為段落加上摘要」和階層式 index（每個節點存摘要）列為優化方法；但 [03-anthropic-contextual-retrieval.pdf, p.5] 實驗發現，把**通用的文件摘要**加到 chunk 上提升非常有限，**以摘要為基礎的 indexing** 表現也很差。另一方面，[06-edge2024-graphrag.pdf, §5.1, p.9] 的 GraphRAG 正是用階層式的社群摘要當 index，在全局問題上勝過一般 RAG。
+> 三者衡量的東西不同：03 衡量「能不能找到特定的 chunk」[03-anthropic-contextual-retrieval.pdf, p.7]，06 衡量「全局問題的答案夠不夠全面、多元」[06-edge2024-graphrag.pdf, §3.3, p.7]，02 則沒有提供實測數字。所以比較合理的結論是：摘要類的 index 對「找特定事實」幫助有限，但對「理解整批資料」有幫助。
+
+### Chunk 大小與 LLM 抽取資訊
+
+- GraphRAG 要用 LLM 從每個 chunk 抽取資訊：chunk 越長，需要的 LLM 呼叫越少，成本越低，但資訊比較容易被漏掉 [06-edge2024-graphrag.pdf, §3.1.1, p.4]。
+- **實例**：在 HotPotQA 資料上，GPT-4 從 600-token 的 chunk 抽出的實體，幾乎是從 2400-token 的 chunk 抽出的兩倍 [06-edge2024-graphrag.pdf, App. A.2, p.18]。
+- **解法**：抽完後再問 LLM「還有沒有漏掉的？」，反覆幾次（作者稱為 self-reflection），就能使用較大的 chunk 而不降低品質 [06-edge2024-graphrag.pdf, App. A.2, p.18]。
+- GraphRAG 的實驗用的是 600 tokens 的 chunk，相鄰 chunk 重疊 100 tokens [06-edge2024-graphrag.pdf, §4.1.1, p.8]。
 
 ### 特殊資料：表格與 PDF
 

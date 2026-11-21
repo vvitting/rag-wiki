@@ -2,7 +2,7 @@
 type: concept
 title: "RAG 評估"
 tags: [concept, evaluation, metrics, benchmark]
-sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf]
+sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -71,6 +71,18 @@ Self-RAG 論文用了幾個衡量「有沒有根據」的指標 [05-asai2023-sel
 | Answer relevance | 答案是否直接回答問題 [02-gao2023-survey.pdf, §VI-C, p.12] | ISUSE | 回答對問題是否有用（不論是否符合事實）[05-asai2023-self-rag.pdf, App. A.1, p.17] |
 
 差別在於：02 列的是「評估者」用的指標；Self-RAG 則讓模型在生成過程中**自己**評估這些面向 [05-asai2023-self-rag.pdf, §3.1, p.4]。
+
+### 實例：沒有標準答案時怎麼評估（LLM-as-a-judge）
+
+GraphRAG 論文要評估「這批資料的主要主題是什麼？」這類全局問題，但這種問題沒有標準答案 [06-edge2024-graphrag.pdf, §3.3, p.7]。
+
+- **自動出題**：讓 LLM 依資料集的描述，想像使用者和他們的任務，再產生問題 [06-edge2024-graphrag.pdf, §3.2, p.6]。
+- **兩兩比較**：讓 LLM 看同一題的兩個答案，依標準選出比較好的那個，或判定平手；每次比較重複 5 次再平均 [06-edge2024-graphrag.pdf, §3.3, p.8; Fig.2, p.10]。
+- **四個標準**：comprehensiveness（全面性）、diversity（多樣性）、empowerment（幫助讀者做判斷），以及當作對照組的 directness（直接、簡潔）[06-edge2024-graphrag.pdf, §3.3, p.7–8]。
+- **為什麼要有對照組**：directness 和全面性、多樣性本來就互相衝突，所以不應該有任何方法四項全勝；用它來檢查結果是否合理 [06-edge2024-graphrag.pdf, §3.3, p.8]。
+- **用另一種方法驗證**：從答案中抽出事實陳述（claim），用 claim 的數量和群集數重新衡量；在雙方有明確勝負的比較中，和 LLM 評審的判斷一致的比例是 78%（全面性）和 69%–70%（多樣性）[06-edge2024-graphrag.pdf, §5.2, p.11]。
+
+> ⚠️ **爭議／更新**：[02-gao2023-survey.pdf, §VI-C, p.12] 把 context relevance、answer faithfulness、answer relevance 列為 RAG 的三個主要品質分數；[06-edge2024-graphrag.pdf, §2.4, p.4] 則認為這三個（以 RAGAS 為例）只適用於一般的 vector RAG，和全局理解類的問題無關。兩者適用的問題類型不同：找特定事實時用前者，理解整批資料時則需要全面性、多樣性這類標準。
 
 ### 傳統的任務指標
 

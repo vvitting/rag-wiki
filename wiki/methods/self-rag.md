@@ -2,7 +2,7 @@
 type: method
 title: "Self-RAG（自我反思的 RAG）"
 tags: [method, self-rag, adaptive-retrieval, reflection-tokens, modular-rag]
-sources: [05-asai2023-self-rag.pdf, 02-gao2023-survey.pdf]
+sources: [05-asai2023-self-rag.pdf, 02-gao2023-survey.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -60,6 +60,13 @@ updated: 2026-11-22
 - 仍可能產生沒有被引用完全支持的內容 [05-asai2023-self-rag.pdf, Ethical Concerns, p.11]。
 - **權重的取捨**：重視「有根據」，引用 precision 會上升，但流暢度會下降 [05-asai2023-self-rag.pdf, §5.2, p.9–10]。
 - **檢索頻率的取捨**：少檢索可以省時間，但在 PopQA 這類冷門知識題上表現下降較多 [05-asai2023-self-rag.pdf, §5.2, p.10]。
+
+## 容易混淆：GraphRAG 的「self-reflection」
+
+GraphRAG 也用了名為 self-reflection 的技巧，但兩者不同 [06-edge2024-graphrag.pdf, App. A.2, p.18]：
+
+- **Self-RAG**：**訓練**模型產生 reflection tokens，在回答時自我評分 [05-asai2023-self-rag.pdf, §3.2, p.4]。
+- **GraphRAG**：只是一種 **prompt 技巧**，抽完實體後再問 LLM「還有沒有漏掉的？」，不需要訓練 [06-edge2024-graphrag.pdf, App. A.2, p.18]。
 
 ## 出處
 

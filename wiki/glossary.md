@@ -2,7 +2,7 @@
 type: glossary
 title: "術語表"
 tags: [glossary]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -21,7 +21,10 @@ updated: 2026-11-22
 - **Chunk overlap**：相鄰的 chunk 之間重疊的部分；和 chunk 大小、切分邊界一樣，會影響檢索表現 [03-anthropic-contextual-retrieval.pdf, p.8] → [詳見](concepts/chunking.md)
 - **Chunk**：把長文件切成的小段落；常見大小是 100、256、512 個 token [02-gao2023-survey.pdf, §III-B, p.8] → [詳見](concepts/chunking.md)
 - **Citation precision／recall**：評估引用品質的指標；precision 衡量模型的說法是否完全被引用的證據支持 [05-asai2023-self-rag.pdf, §4.1, p.7; §5.1, p.8] → [詳見](concepts/rag-evaluation.md)
+- **Claim**：明確陳述某個可查證事實的句子；GraphRAG 也會從文件中抽出關於實體的 claim [06-edge2024-graphrag.pdf, §3.1.2, p.5; §4.2, p.9] → [詳見](methods/graphrag.md)
 - **Closed-book**：不查資料、只靠模型自己記住的知識回答 [01-lewis2020-rag.pdf, §3.1, p.4; §4.1, p.5] → [詳見](comparisons/closed-book-vs-open-book.md)
+- **Community detection**：把圖切分成關係緊密的社群的演算法，GraphRAG 用的是 Leiden [06-edge2024-graphrag.pdf, §3.1.4, p.5] → [詳見](methods/graphrag.md)
+- **Community（社群）**：knowledge graph 中一群關係緊密的節點；GraphRAG 為每個社群寫摘要 [06-edge2024-graphrag.pdf, §1, p.2] → [詳見](methods/graphrag.md)
 - **Context relevance**：檢索到的 context 是否精確、切題 [02-gao2023-survey.pdf, §VI-C, p.12] → [詳見](concepts/rag-evaluation.md)
 - **Context window**：模型一次能接受的最大輸入長度，以 token 計算，例如 GPT-3.5-Turbo 是 4K tokens [04-liu2023-lost-in-middle.pdf, §2.2, p.5]；02 撰寫時，LLM 已能處理超過 200,000 tokens [02-gao2023-survey.pdf, §VII-A, p.14] → [詳見](concepts/context-window.md)
 - **Contextual BM25**：為 chunk 加上說明文字後再建立的 BM25 index [03-anthropic-contextual-retrieval.pdf, p.5] → [詳見](methods/contextual-retrieval.md)
@@ -36,12 +39,15 @@ updated: 2026-11-22
 - **Distractor document（干擾文件）**：和問題相關、但不含答案的文件，用來測試模型能不能找出真正有用的資訊 [04-liu2023-lost-in-middle.pdf, §2.1, p.3] → [詳見](concepts/lost-in-the-middle.md)
 - **DPR（Dense Passage Retriever）**：原始 RAG 使用的 retriever，以 BERT-base 為基礎 [01-lewis2020-rag.pdf, §1, p.2; §2.2, p.3] → [詳見](concepts/retriever.md)
 - **Embedding**：把一段文字轉成的一串數字（dense representation）[01-lewis2020-rag.pdf, §2.2, p.3] → [詳見](concepts/embedding.md)
+- **Entity（實體）**：文件中重要的人、地點、組織等；GraphRAG 把它們當作 knowledge graph 的節點 [06-edge2024-graphrag.pdf, §3.1.2, p.4–5] → [詳見](methods/graphrag.md)
 - **Exact Match（EM）**：模型答案和標準答案「完全一樣」才算對的評分方式；問答任務常用 [01-lewis2020-rag.pdf, §3.1, p.4; 02-gao2023-survey.pdf, §VI-B, p.12]。（「完全一樣」是依名稱的白話說明，原文沒有給出定義 [待補來源]）
 - **Extractive QA**：從檢索到的文件中「挑出」一段文字當答案 [01-lewis2020-rag.pdf, §3.1, p.4] → [詳見](concepts/generator.md)
 - **FactScore**：評估長篇生成（例如傳記）事實性的指標 [05-asai2023-self-rag.pdf, §4.1, p.7] → [詳見](concepts/rag-evaluation.md)
 - **FAISS**：用來建立向量 index、快速找出相似向量的工具 [01-lewis2020-rag.pdf, §3, p.4] → [詳見](concepts/embedding.md)
 - **Fine-tuning（FT）**：用額外的資料再訓練模型，像學生花時間把知識內化 [02-gao2023-survey.pdf, §II-D, p.5] → [詳見](comparisons/rag-vs-fine-tuning.md)
 - **Generator**：讀完問題和檢索到的文件後寫出答案的模型 [01-lewis2020-rag.pdf, §2, p.2–3] → [詳見](concepts/generator.md)
+- **Global question／Sensemaking question**：需要理解整批資料才能回答的問題，例如「資料集的主要主題是什麼？」[06-edge2024-graphrag.pdf, Abstract, p.1; §1, p.2] → [詳見](methods/graphrag.md)
+- **GraphRAG**：用 LLM 建 knowledge graph 和階層式社群摘要，再用 map-reduce 回答全局問題的方法 [06-edge2024-graphrag.pdf, Abstract, p.1] → [詳見](methods/graphrag.md)
 - **Hallucination**：模型講出聽起來像真的、但其實是錯的內容，或檢索內容沒有支持的說法 [01-lewis2020-rag.pdf, §1, p.1; 02-gao2023-survey.pdf, §II-A, p.3] → [詳見](concepts/hallucination.md)
 - **Hybrid retrieval**：結合 sparse（關鍵字）和 dense（語意）檢索，讓兩者互補 [02-gao2023-survey.pdf, §III-D, p.9] → [詳見](concepts/retriever.md)
 - **HyDE**：先讓 LLM 寫一份假設的答案，再用它去找相似的真實文件 [02-gao2023-survey.pdf, §III-C, p.9] → [詳見](concepts/query-optimization.md)
@@ -50,10 +56,12 @@ updated: 2026-11-22
 - **Information integration**：能否整合多份文件的資訊，回答複雜的問題 [02-gao2023-survey.pdf, §VI-C, p.12] → [詳見](concepts/rag-evaluation.md)
 - **Instruction fine-tuning**：預訓練之後，再用「指令與回應」的資料集做監督式微調 [04-liu2023-lost-in-middle.pdf, §4.3, p.8] → [詳見](concepts/lost-in-the-middle.md)
 - **Iterative retrieval**：依照原始問題和目前已生成的內容，反覆搜尋知識庫 [02-gao2023-survey.pdf, §V-A, p.10] → [詳見](methods/modular-rag.md)
-- **Knowledge graph（KG）**：用節點和關係表示知識的結構化資料，通常經過驗證、資訊較精確 [02-gao2023-survey.pdf, §III-A, p.7] → [詳見](concepts/retriever.md)
+- **Knowledge graph（KG）**：用節點（實體）和邊（關係）表示知識的結構化資料；既有的 KG 通常經過驗證 [02-gao2023-survey.pdf, §III-A, p.7]，GraphRAG 的 KG 則是 LLM 從文字中抽出來的 [06-edge2024-graphrag.pdf, §3.1.3, p.5] → [詳見](methods/graphrag.md)
 - **Knowledge-intensive task**：人類沒有外部知識來源就不太可能完成的任務 [01-lewis2020-rag.pdf, §1, p.2] → [詳見](sources/01-lewis2020-rag.md)
 - **Language model / LLM**：從資料中學到大量知識，並存在參數裡的預訓練模型；LLM 能力很強，但有 hallucination、知識過時等問題 [01-lewis2020-rag.pdf, §1, p.1; 02-gao2023-survey.pdf, Abstract, p.1]。給完全新手的白話定義 [待補來源] → [詳見](concepts/parametric-vs-non-parametric-memory.md)
+- **LLM-as-a-judge**：讓 LLM 當評審，比較兩個系統的答案哪個比較好；適合沒有標準答案的情況 [06-edge2024-graphrag.pdf, §2.4, p.4] → [詳見](concepts/rag-evaluation.md)
 - **Lost in the middle**：相關資訊放在 context 中間時，LLM 的表現明顯比放在開頭或結尾差，呈現 U 形曲線 [04-liu2023-lost-in-middle.pdf, Abstract, p.1; 02-gao2023-survey.pdf, §IV-A, p.10] → [詳見](concepts/lost-in-the-middle.md)
+- **Map-reduce**：先把資料分塊、平行產生部分答案（map），再把部分答案彙整成最終答案（reduce）[06-edge2024-graphrag.pdf, §1, p.2] → [詳見](methods/graphrag.md)
 - **Metadata**：附在 chunk 上的額外資訊，例如頁碼、檔名、作者、時間戳，可以用來過濾檢索結果 [02-gao2023-survey.pdf, §III-B, p.8] → [詳見](concepts/chunking.md)
 - **MIPS（Maximum Inner Product Search）**：在 index 中找出和問題向量內積最大的 k 份文件 [01-lewis2020-rag.pdf, §2.2, p.3] → [詳見](concepts/retriever.md)
 - **Modular RAG**：把 RAG 拆成可以新增、替換、重排的模組，流程不再固定 [02-gao2023-survey.pdf, §II-C, p.4–5] → [詳見](methods/modular-rag.md)
@@ -73,6 +81,7 @@ updated: 2026-11-22
 - **Proposition**：一段只包含一個事實、意思自足的簡潔敘述，可以當作檢索單位 [02-gao2023-survey.pdf, §III-A, p.8] → [詳見](concepts/chunking.md)
 - **Query rewriting**：檢索前先讓 LLM 改寫使用者的問題 [02-gao2023-survey.pdf, §III-C, p.9] → [詳見](concepts/query-optimization.md)
 - **Query-aware contextualization**：把問題同時放在文件的前面和後面；對 key-value 檢索幫助很大，對多文件問答幾乎沒有幫助 [04-liu2023-lost-in-middle.pdf, §4.2, p.8] → [詳見](concepts/lost-in-the-middle.md)
+- **Query-focused summarization（QFS）**：針對某個問題，對一批文件做摘要；全局問題本質上就是這類任務 [06-edge2024-graphrag.pdf, Abstract, p.1] → [詳見](methods/graphrag.md)
 - **RAG（Retrieval-Augmented Generation）**：結合 parametric 與 non-parametric memory 來生成文字的模型 [01-lewis2020-rag.pdf, Abstract, p.1] → [詳見](methods/original-rag.md)
 - **RAG-Sequence**：整個答案都根據同一份檢索文件的 RAG 版本 [01-lewis2020-rag.pdf, §2.1, p.3] → [詳見](methods/original-rag.md)
 - **RAG-Token**：每個 token 都可以根據不同檢索文件的 RAG 版本 [01-lewis2020-rag.pdf, §2.1, p.3] → [詳見](methods/original-rag.md)
@@ -91,9 +100,10 @@ updated: 2026-11-22
 - **Serial-position effect（序列位置效應）**：心理學現象，人在回想一串項目時，最記得第一個和最後一個 [04-liu2023-lost-in-middle.pdf, §6.3, p.10] → [詳見](concepts/lost-in-the-middle.md)
 - **Sparse retrieval**：以關鍵字或字詞權重為基礎的檢索，例如 BM25 [02-gao2023-survey.pdf, §III-D, p.9] → [詳見](concepts/retriever.md)
 - **TF-IDF（Term Frequency-Inverse Document Frequency）**：衡量一個詞對某份文件有多重要的方法，是 BM25 的基礎 [03-anthropic-contextual-retrieval.pdf, p.3] → [詳見](concepts/retriever.md)
-- **Token**：模型逐一產生的文字單位；原始 RAG 以 token 為單位生成答案 [01-lewis2020-rag.pdf, §2, p.2–3]。對 token 的白話定義 [待補來源] → [詳見](concepts/generator.md)
+- **Token**：文字的單位，LLM 的輸入長度和輸出都以 token 計算 [06-edge2024-graphrag.pdf, §1, p.1]；原始 RAG 也以 token 為單位逐一生成答案 [01-lewis2020-rag.pdf, §2, p.2–3] → [詳見](concepts/context-window.md)
 - **Top-k**：檢索時取出最相關的前 k 份文件 [01-lewis2020-rag.pdf, §3, p.4; 02-gao2023-survey.pdf, §II-A, p.3] → [詳見](concepts/retriever.md)
 - **Vector database**：存放 chunk 向量、支援相似度搜尋的資料庫 [02-gao2023-survey.pdf, §II-A, p.3] → [詳見](concepts/embedding.md)
+- **Vector RAG**：GraphRAG 論文對一般 RAG 的稱呼：用 text embedding 找出語意相近的資料 [06-edge2024-graphrag.pdf, §2.1, p.2] → [詳見](methods/naive-rag.md)
 
 ## 相關頁面
 - [目錄](index.md)

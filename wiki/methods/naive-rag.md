@@ -2,7 +2,7 @@
 type: method
 title: "Naive RAG"
 tags: [method, rag, naive-rag, paradigm]
-sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf]
+sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -42,6 +42,7 @@ LLM 回答時，可以使用自己的 parametric knowledge，也可以被要求�
 - **一次檢索不夠**：遇到複雜問題時，只用原始問題檢索一次，可能找不到足夠的資訊 [02-gao2023-survey.pdf, §II-A, p.3]。
 - **過度依賴檢索內容**：模型可能只是照抄檢索內容，沒有加入自己的整合或見解 [02-gao2023-survey.pdf, §II-A, p.3]。
 - **直接用原始問題檢索**：使用者的問題不一定清楚精確，這會讓檢索效果變差 [02-gao2023-survey.pdf, §III-C, p.8]。
+- **回答不了全局問題**：像「這批資料的主要主題是什麼？」這種需要理解整個資料集的問題，一般的 vector RAG 無法回答 [06-edge2024-graphrag.pdf, Abstract, p.1; §1, p.2]。它可能把「抽樣找到的幾個事實」錯誤地當成全局摘要 [06-edge2024-graphrag.pdf, §6.2, p.12]。解法見 [GraphRAG](graphrag.md)。
 - **Chunk 失去上下文**：切塊時把 context 去掉了，常常導致找不到相關資訊 [03-anthropic-contextual-retrieval.pdf, p.1, p.4]。解法見 [Contextual Retrieval](contextual-retrieval.md)。
 
 這些缺點正是發展 [Advanced RAG](advanced-rag.md) 和 [Modular RAG](modular-rag.md) 的原因 [02-gao2023-survey.pdf, §II, p.2]。

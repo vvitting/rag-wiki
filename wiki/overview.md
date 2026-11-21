@@ -2,13 +2,13 @@
 type: overview
 title: "RAG 總覽"
 tags: [rag, overview]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
 # RAG 總覽
 
-> 本頁會在每次 ingest 時更新，結構對齊簡報。目前已 ingest：01、02、03、04、05。
+> 本頁會在每次 ingest 時更新，結構對齊簡報。目前已 ingest：01、02、03、04、05、06。
 
 ## 1. 為什麼需要 RAG
 
@@ -19,6 +19,7 @@ updated: 2026-11-22
 ## 2. RAG 是什麼
 
 - RAG 讓 LLM 先從外部知識庫找出相關資料，再根據資料回答，藉此減少錯誤內容 [02-gao2023-survey.pdf, §I, p.1]。
+- 最適合用 RAG 的情況：資料量太大，超過 LLM 一次能處理的 context window [06-edge2024-graphrag.pdf, §2.1, p.2]。
 - 它結合了兩種記憶：模型參數裡的知識，以及外部的資料 [01-lewis2020-rag.pdf, Abstract, p.1; 02-gao2023-survey.pdf, §VIII, p.16]。詳見 [兩種記憶](concepts/parametric-vs-non-parametric-memory.md)。
 - **比喻一**：閉書考 vs 開書考，RAG 屬於開書考 [01-lewis2020-rag.pdf, §4.1, p.5]。
 - **比喻二**：RAG 像給模型一本量身訂做的教科書；fine-tuning 則像把知識內化 [02-gao2023-survey.pdf, §II-D, p.5]。詳見 [比喻集](analogies.md)、[RAG vs fine-tuning](comparisons/rag-vs-fine-tuning.md)。
@@ -50,12 +51,13 @@ updated: 2026-11-22
 
 - **[Self-RAG](methods/self-rag.md)**：不是每個問題都需要查資料。Self-RAG 訓練模型自己決定何時檢索，並為文件和自己的回答打分數 [05-asai2023-self-rag.pdf, Abstract, p.1]；7B 和 13B 的 Self-RAG 在多個任務上勝過 ChatGPT [05-asai2023-self-rag.pdf, §5.1, p.8]。
 
-> GraphRAG 將在 ingest 06 後補充。
+- **[GraphRAG](methods/graphrag.md)**：一般 RAG 擅長找特定事實，卻回答不了「這批資料的主要主題是什麼？」。GraphRAG 先用 LLM 建 knowledge graph 和社群摘要，在這類全局問題上，答案的全面性勝率達 72%–83% [06-edge2024-graphrag.pdf, Abstract, p.1; §5.1, p.9]。
 
 ## 5. 怎麼評估
 
 - 要分開評估「找得好不好」（retrieval quality）和「寫得好不好」（generation quality）[02-gao2023-survey.pdf, §VI-B, p.12]。
 - 三個品質分數是 context relevance、answer faithfulness、answer relevance [02-gao2023-survey.pdf, §VI-C, p.12]。詳見 [RAG 評估](concepts/rag-evaluation.md)。
+- 沒有標準答案的問題（例如全局問題），可以讓 LLM 當評審，兩兩比較答案（LLM-as-a-judge）[06-edge2024-graphrag.pdf, §2.4, p.4]。
 - 原始 RAG 用 Exact Match 評估問答，並用人工評估比較事實性 [01-lewis2020-rag.pdf, §3.1, p.4; §3.3, p.5]。
 
 > RAGAS 的原始論文將在 ingest 07 後補充。

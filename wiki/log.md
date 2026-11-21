@@ -68,3 +68,16 @@
 - 其他小瑕疵（已註明，不加 ⚠️）：訓練資料總數 150k vs 145,619；「1,2594」數字格式有誤
 - 自我修正：closed-book 頁原本寫「需要推理的任務檢索幫助有限」，改回作者原話「不能直接從文件複製或擷取片段的任務」，並註明 TriviaQA 的退步作者沒有解釋
 - lint：0 error, 0 warning；語意檢查抽查 33 處引用，全部吻合
+
+## [2026-11-22] ingest | 06-edge2024-graphrag.pdf
+- 新增（2）：sources/06-edge2024-graphrag.md、methods/graphrag.md
+- 修改（18）：concepts/（rag-evaluation、context-window、chunking、lost-in-the-middle、reranking、retriever）、methods/（naive-rag、self-rag）、comparisons/（rag-techniques、rag-timeline）、sources/（02、03、04）、glossary.md（84 → 94 條）、analogies.md（+1，共 10 個）、overview.md、index.md、log.md
+- ⚠️ 新標註：
+  1. 06 對 04 的引用有誤：06 §3.1.1 引用 04（已在 References p.14 確認是 Lost in the Middle），說 chunk「前段」的資訊容易被漏掉；但 04 的發現是開頭最好、中間最差（標在 lost-in-the-middle、04、06 頁）
+  2. 品質分數適用範圍：06 §2.4 認為 RAGAS 的 context relevance、faithfulness、answer relevance 和全局理解無關；02 §VI-C 把它們列為主要品質分數（標在 rag-evaluation、02、06 頁）
+  3. 摘要類 index：06 用社群摘要當 index 並勝過一般 RAG，和 03 p.5「以摘要為基礎的 indexing 表現很差」對照；在 chunking 頁整合成「摘要類 index 對找特定事實幫助有限，對理解整批資料有幫助」（標在 chunking、03、06 頁）
+- ⚠️ 既有標註的更新：文件數量加入第六種說法（06 App. C：一般 RAG 的 context 用 8k 勝過 16k–64k）
+- 已補上的待補來源：Token 的定義（06 §1「tokens (units of text)」）
+- 自我修正：App. C 的 context 大小實驗是在一般 RAG（SS）上做的，不是在 GraphRAG 上；已在 context-window、06 頁補上這個前提
+- 釐清容易混淆的名詞：GraphRAG 的「self-reflection」是 prompt 技巧，Self-RAG 的 reflection tokens 需要訓練（寫在 self-rag 頁）
+- lint：0 error, 0 warning；語意檢查抽查 36 處引用，全部吻合
