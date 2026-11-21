@@ -21,7 +21,7 @@
 - [Generator](concepts/generator.md) — 負責寫答案：BART → LLM、extractive vs generative、LLM 不一定照著文件寫（sources: 3, updated: 2026-11-22）
 - [Embedding 與 vector index](concepts/embedding.md) — 把文字的意思編碼成向量；相似度、選 embedding model、成本（sources: 3, updated: 2026-11-22）
 - [Chunking](concepts/chunking.md) — 把文件切成小段；chunk 大小的取捨、失去上下文的問題、metadata；⚠️ 摘要類方法的效果（03 vs 06）、chunk 大小與 LLM 抽取（sources: 4, updated: 2026-11-22）
-- [Hallucination](concepts/hallucination.md) — 模型講錯卻像真的；兩種類型；讓模型自我檢查有沒有根據；怎麼偵測（sources: 5, updated: 2026-11-22）
+- [Hallucination](concepts/hallucination.md) — 模型講錯卻像真的；兩種類型；讓模型自我檢查有沒有根據；怎麼偵測（sources: 6, updated: 2026-11-22）
 - [Reranking](concepts/reranking.md) — 檢索後重新排序；實際流程、延遲取捨；⚠️ 01 vs 02、03、04 對它是否必要看法不同；Self-RAG 的 soft re-ranking、GraphRAG 的分數排序（sources: 6, updated: 2026-11-22）
 - [Query 優化](concepts/query-optimization.md) — 檢索前修整問題：expansion、rewrite、HyDE、step-back、routing（sources: 2, updated: 2026-11-22）
 - [Context window 與「放多少文件」](concepts/context-window.md) — 定義、上限從哪來；⚠️ 文件越多越好嗎（六種說法與整合）；⚠️ 小型知識庫需要 RAG 嗎（sources: 5, updated: 2026-11-22）

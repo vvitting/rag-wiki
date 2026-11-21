@@ -128,3 +128,13 @@
 - [x] 初學者可讀性：19 頁完全沒有連到術語表，已在「相關頁面」補上連結（逐一檢查每個術語的第一次出現仍是人工項目）
 - [x] 待補來源清單：0 處，index 已同步
 - 修改後：lint 0 error, 0 warning；結構檢查 0 issues；數字核對只剩 13 處已確認的誤判
+
+## [2026-11-22] lint | 修正 topic-slides ⓪ reviewer 指出的問題（嚴重 1 + 輕微 #3、#8、#10）
+- 修改：comparisons/rag-techniques.md — Reranking 列的 67% 原本寫成「和上一列（Hybrid retrieval）合用」，改為「在 Contextual Embeddings + Contextual BM25 之上再加 reranking，5.7% → 1.9%」，和 contextual-retrieval.md、sources/03 一致（嚴重）
+- 修改：concepts/hallucination.md — 「RAG 能有效減少錯誤內容」（02 §I）加 ⚠️，對照 04 Table 6／Table 1 與 05 App. C.1；frontmatter sources 補 04；相關頁面補 closed-book-vs-open-book
+- 修改：overview.md — §2 同一句加 ⚠️；§3 原始 RAG 改寫為「文件分別交給 generator 再 marginalize、retriever 與 generator 一起訓練」，和 naive-rag、reranking 頁一致；LLM、hallucination、context window 改在第一次出現時連結
+- 修改：index.md — Hallucination 的 sources 計數 5 → 6
+- ⚠️ 新標註：hallucination.md、overview.md 各 1 個（RAG 是否減少錯誤內容）
+- 待補來源：無
+- 未處理：reviewer 其餘 13 項輕微問題與 5 處待核對 raw 的引用，見 output/what-is-rag/lint.md
+- lint：0 error, 0 warning

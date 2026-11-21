@@ -12,15 +12,18 @@ updated: 2026-11-22
 
 ## 1. 為什麼需要 RAG
 
-- LLM 很強，但有三個主要問題：hallucination、知識過時、推理過程不透明又無法追溯 [02-gao2023-survey.pdf, Abstract, p.1]。
+- [LLM](glossary.md) 很強，但有三個主要問題：[hallucination](concepts/hallucination.md)、知識過時、推理過程不透明又無法追溯 [02-gao2023-survey.pdf, Abstract, p.1]。
 - Language model 把知識存在參數裡，很難更新或擴充，也無法說明答案的出處 [01-lewis2020-rag.pdf, §1, p.1]。
-- 遇到超出訓練資料範圍、或需要最新資訊的問題時，LLM 特別容易產生 [hallucination](concepts/hallucination.md) [02-gao2023-survey.pdf, §I, p.1]。
+- 遇到超出訓練資料範圍、或需要最新資訊的問題時，LLM 特別容易產生 hallucination [02-gao2023-survey.pdf, §I, p.1]。
 - 兩個根本限制：LLM 不知道訓練之後才發生的事，也很難記住訓練資料中很少出現的知識 [07-es2023-ragas.pdf, §1, p.1]。
 
 ## 2. RAG 是什麼
 
 - RAG 讓 LLM 先從外部知識庫找出相關資料，再根據資料回答，藉此減少錯誤內容 [02-gao2023-survey.pdf, §I, p.1]。
-- 最適合用 RAG 的情況：資料量太大，超過 LLM 一次能處理的 context window [06-edge2024-graphrag.pdf, §2.1, p.2]。
+
+> ⚠️ **爭議／更新**：「減少錯誤內容」是 02 的整體概括 [02-gao2023-survey.pdf, §I, p.1]；但檢索不一定有幫助，答案文件放在中間，或加上檢索後，表現都可能比完全不給文件還差 [04-liu2023-lost-in-middle.pdf, §2.3, p.5] [05-asai2023-self-rag.pdf, Table 2, p.8]。詳見 [Hallucination](concepts/hallucination.md)、[Closed-book vs open-book](comparisons/closed-book-vs-open-book.md)。
+
+- 最適合用 RAG 的情況：資料量太大，超過 LLM 一次能處理的 [context window](concepts/context-window.md) [06-edge2024-graphrag.pdf, §2.1, p.2]。
 - 它結合了兩種記憶：模型參數裡的知識，以及外部的資料 [01-lewis2020-rag.pdf, Abstract, p.1] [02-gao2023-survey.pdf, §VIII, p.16]。詳見 [兩種記憶](concepts/parametric-vs-non-parametric-memory.md)。
 - **比喻一**：閉書考 vs 開書考，RAG 屬於開書考 [01-lewis2020-rag.pdf, §4.1, p.5]。
 - **比喻二**：RAG 像給模型一本量身訂做的教科書；fine-tuning 則像把知識內化 [02-gao2023-survey.pdf, §II-D, p.5]。詳見 [比喻集](analogies.md)、[RAG vs fine-tuning](comparisons/rag-vs-fine-tuning.md)。
@@ -34,7 +37,7 @@ updated: 2026-11-22
 2. **Retrieval**：[Retriever](concepts/retriever.md) 把問題轉成向量，找出最相似的 top-k 個 chunk [02-gao2023-survey.pdf, §II-A, p.3]。
 3. **Generation**：把問題和 chunk 組成 prompt，交給 LLM（[generator](concepts/generator.md)）寫出答案 [02-gao2023-survey.pdf, §II-A, p.3]。
 
-原始的 RAG（2020）流程相同，但 retriever 和 generator 是一起訓練的，詳見 [原始 RAG](methods/original-rag.md) [01-lewis2020-rag.pdf, §2.4, p.3] [02-gao2023-survey.pdf, Ref. 4, p.17]。
+原始的 RAG（2020）[02-gao2023-survey.pdf, Ref. 4, p.17] 也是「先查再寫」，但有兩點不同：每份文件分別交給 generator，再按檢索機率加權合併（marginalize），不是把所有文件串成一個長 prompt [01-lewis2020-rag.pdf, §2.1, p.3]；而且 retriever 和 generator 是一起訓練的 [01-lewis2020-rag.pdf, §2.4, p.3]。詳見 [原始 RAG](methods/original-rag.md)。
 
 **放進 prompt 之後的陷阱**：LLM 最會利用開頭和結尾的資訊，放在中間的容易被忽略（[lost in the middle](concepts/lost-in-the-middle.md)）。GPT-3.5-Turbo 在 20 份文件中，答案在第 1 份時是 75.8%，在第 10 份時只有 53.8%，比完全不給文件的 56.1% 還低 [04-liu2023-lost-in-middle.pdf, Table 6, p.18; Table 1, p.5]。
 

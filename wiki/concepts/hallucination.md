@@ -2,7 +2,7 @@
 type: concept
 title: "Hallucination（幻覺）"
 tags: [concept, hallucination, factuality]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 05-asai2023-self-rag.pdf, 07-es2023-ragas.pdf, 06-edge2024-graphrag.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf, 07-es2023-ragas.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -17,6 +17,8 @@ Hallucination 指模型講出聽起來很像真的、但其實是錯的內容。
 - 這正是 RAG 想解決的問題之一：作者認為，RAG 的生成更紮根在真實的知識上（這裡指 Wikipedia），所以比較少「hallucinate」[01-lewis2020-rag.pdf, Broader Impact, p.10]。
 - LLM 在處理超出訓練資料範圍、或需要最新資訊的問題時，特別容易產生 hallucination [02-gao2023-survey.pdf, §I, p.1]。
 - 透過參考外部知識，RAG 能有效減少產生錯誤內容的問題 [02-gao2023-survey.pdf, §I, p.1]。
+
+> ⚠️ **爭議／更新**：[02-gao2023-survey.pdf, §I, p.1] 認為 RAG 能有效減少錯誤內容；但檢索不一定有幫助：[04-liu2023-lost-in-middle.pdf, Table 6, p.18; Table 1, p.5] 發現 GPT-3.5-Turbo 在 20 份文件、答案位於中間時，準確率是 53.8%，低於完全不給文件的 56.1%；[05-asai2023-self-rag.pdf, App. C.1, p.20] 也指出，文件不相關時，一般 instruction-tuned 模型仍會產生看似合理的答案。注意 04 量的是答題準確率，不等於 hallucination 的比例。詳見 [Closed-book vs open-book](../comparisons/closed-book-vs-open-book.md)。
 
 ## 兩種 hallucination
 
@@ -61,6 +63,7 @@ Hallucination 指模型講出聽起來很像真的、但其實是錯的內容。
 
 ## 相關頁面
 
+- [Closed-book vs open-book](../comparisons/closed-book-vs-open-book.md)
 - [Generator](generator.md)
 - [Parametric 與 non-parametric memory](parametric-vs-non-parametric-memory.md)
 - [RAG 評估](rag-evaluation.md)
