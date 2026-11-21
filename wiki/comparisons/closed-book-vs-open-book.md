@@ -2,7 +2,7 @@
 type: comparison
 title: "Closed-book vs open-book：只靠記憶 vs 可以查資料"
 tags: [comparison, closed-book, open-book, open-domain-qa]
-sources: [01-lewis2020-rag.pdf, 04-liu2023-lost-in-middle.pdf]
+sources: [01-lewis2020-rag.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf]
 updated: 2026-11-22
 ---
 
@@ -50,6 +50,22 @@ RAG 結合了兩邊的優點：closed-book 能自由生成文字，open-book 有
 
 - 答案放在中間時，open-book 的表現反而**低於** closed-book [04-liu2023-lost-in-middle.pdf, §2.3, p.5]。
 - 所以開書考要考得好，不只要「帶對書」，還要「把重點翻到前面」。詳見 [Lost in the middle](../concepts/lost-in-the-middle.md) [04-liu2023-lost-in-middle.pdf, §5, p.10]。
+
+### 第二份證據：05 的 Table 2
+
+Self-RAG 論文也觀察到，加上檢索後，部分任務的表現反而下降 [05-asai2023-self-rag.pdf, §5.1, p.8]：
+
+| 模型 | 任務 | 不檢索 | 加上檢索 | 出處 |
+|---|---|---|---|---|
+| ChatGPT | TriviaQA | 74.3 | 65.7 | [05-asai2023-self-rag.pdf, Table 2, p.8] |
+| ChatGPT | PubHealth | 70.1 | 54.7 | [05-asai2023-self-rag.pdf, Table 2, p.8] |
+| Llama2-13B | ARC-Challenge | 29.4 | 26.0 | [05-asai2023-self-rag.pdf, Table 2, p.8] |
+| ChatGPT | PopQA（冷門知識） | 29.3 | 50.8 | [05-asai2023-self-rag.pdf, Table 2, p.8] |
+
+- PopQA 是冷門實體的問題（維基百科月瀏覽量少於 100）[05-asai2023-self-rag.pdf, §4.1, p.7]，加上檢索後大幅進步 [05-asai2023-self-rag.pdf, Table 2, p.8]。
+- 作者的解釋是：對於不能直接從文件「複製或擷取片段」來回答的任務（例如 PubHealth、ARC-Challenge），這些加上檢索的基準模型幫助有限 [05-asai2023-self-rag.pdf, §5.1, p.8]。
+- ChatGPT 在 TriviaQA 上的退步，作者沒有特別解釋 [05-asai2023-self-rag.pdf, §5.1, p.8]。
+- Self-RAG 的解法是讓模型自己判斷要不要查，詳見 [Self-RAG](../methods/self-rag.md) [05-asai2023-self-rag.pdf, §1, p.1]。
 
 ## 相關頁面
 

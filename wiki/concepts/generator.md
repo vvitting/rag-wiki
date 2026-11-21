@@ -2,7 +2,7 @@
 type: concept
 title: "Generator（生成器）"
 tags: [concept, generation, bart, seq2seq]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 05-asai2023-self-rag.pdf]
 updated: 2026-11-22
 ---
 
@@ -37,6 +37,8 @@ Generator 是 RAG 裡負責「寫答案」的部分：它讀了問題和 [retrie
 - LLM 可以使用自己的 parametric knowledge，也可以被要求只根據提供的文件回答 [02-gao2023-survey.pdf, §II-A, p.3]。
 - 把檢索到的資訊全部直接丟給 LLM 並不是好做法；檢索後通常要先整理內容（[reranking](reranking.md)、壓縮），或調整 LLM 本身 [02-gao2023-survey.pdf, §IV, p.10]。
 - **調整 LLM**：針對特定情境 fine-tune，可以補充領域知識，也能讓輸出符合特定格式或風格 [02-gao2023-survey.pdf, §IV-B, p.10]。
+- **問題：LLM 不一定照著文件寫**：一般的 LLM 沒有被明確訓練去遵循文件中的事實，所以輸出不一定和檢索到的文件一致 [05-asai2023-self-rag.pdf, §1, p.1]。
+- **Self-RAG 的做法**：訓練 generator 一邊寫、一邊用 reflection tokens 檢查自己寫的內容有沒有被文件支持 [05-asai2023-self-rag.pdf, §3, p.3–4]。詳見 [Self-RAG](../methods/self-rag.md)。
 
 ## 各論文怎麼說
 

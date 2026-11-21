@@ -2,7 +2,7 @@
 type: analogy
 title: "比喻集"
 tags: [analogy, teaching]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf]
 updated: 2026-11-22
 ---
 
@@ -73,6 +73,13 @@ updated: 2026-11-22
 - **對應到 RAG 的哪個部分**：[Retriever](concepts/retriever.md)（hybrid retrieval）
 - **比喻的極限**：真的館員會同時用兩種方式思考；RAG 系統則是分開跑兩種檢索，再用 rank fusion 合併結果。
 - **對應的技術事實**：embedding 擅長語意，但可能漏掉「TS-999」這類精確比對，BM25 則專門找精確字串 [03-anthropic-contextual-retrieval.pdf, p.3]；兩者合用比只用 embedding 好 [03-anthropic-contextual-retrieval.pdf, p.11]。
+
+### 會自我檢查的學生
+
+- **比喻**：一個好學生寫開書考時，不會每題都翻書。寫作文直接寫；遇到要引用數據的題目才翻書。翻到資料後，先問自己「這頁跟題目有關嗎？」，寫完一句再問「這句話書上真的有寫嗎？」，最後問「這樣回答有沒有切題？」。
+- **對應到 RAG 的哪個部分**：[Self-RAG](methods/self-rag.md)（Retrieve、ISREL、ISSUP、ISUSE 四種 reflection tokens）
+- **比喻的極限**：真實的學生是邊想邊決定；Self-RAG 的「自我檢查」是先用 GPT-4 標註的資料訓練出來的固定能力。而且它的自我評分也不是百分之百準：critic 和 GPT-4 判斷一致的比例，在「有不有用」這一項只有 73.5%。
+- **對應的技術事實**：Self-RAG 用 Retrieve 判斷要不要查、ISREL 判斷文件相不相關、ISSUP 判斷有沒有根據、ISUSE 判斷有不有用 [05-asai2023-self-rag.pdf, Table 1, p.4]；寫暑假作文的例子不需要檢索 [05-asai2023-self-rag.pdf, Fig.1, p.2]；critic 在 ISUSE 上和 GPT-4 的一致度是 73.5% [05-asai2023-self-rag.pdf, App. A.2, p.18]。
 
 ## 相關頁面
 - [目錄](index.md)

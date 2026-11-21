@@ -2,7 +2,7 @@
 type: concept
 title: "RAG 評估"
 tags: [concept, evaluation, metrics, benchmark]
-sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf]
+sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf]
 updated: 2026-11-22
 ---
 
@@ -52,6 +52,25 @@ Context relevance 和 noise robustness 用來評估檢索；其餘五項用來�
 - 04 提出一種評估方式：要宣稱模型能好好使用長 context，就必須證明相關資訊放在哪個位置都不太影響表現，也就是最好和最差情況的差距要很小 [04-liu2023-lost-in-middle.pdf, §1, p.3]。
 - 04 也把結果和兩個基準比較：closed-book（不給文件）和 oracle（只給答案文件）[04-liu2023-lost-in-middle.pdf, §2.3, p.5]。
 - **Noise robustness 的實例**：用「和問題相關但沒有答案」的文件當干擾時，模型表現比用隨機文件當干擾還差 [04-liu2023-lost-in-middle.pdf, App. B, p.14]。這正對應 02 對 noise robustness 的定義：處理「相關但沒有實質資訊」的文件 [02-gao2023-survey.pdf, §VI-C, p.12]。
+
+### 實例：評估「有沒有根據」與引用品質
+
+Self-RAG 論文用了幾個衡量「有沒有根據」的指標 [05-asai2023-self-rag.pdf, §4.1, p.7]：
+
+- **FactScore**：評估傳記生成的事實性 [05-asai2023-self-rag.pdf, §4.1, p.7]。
+- **引用 precision 和 recall**：用在長篇問答 ASQA；precision 衡量「模型的說法是否完全被引用的證據支持」[05-asai2023-self-rag.pdf, §4.1, p.7; §5.1, p.8]。
+- **短答案的判分方式**：只要標準答案出現在模型輸出中就算對，不要求完全一致（不是 Exact Match）[05-asai2023-self-rag.pdf, §4.1, p.7]。
+- **人工評估 S&P**：答案是否合理（plausible），以及證據是否足以驗證答案（supported）[05-asai2023-self-rag.pdf, §5.2, p.10]。
+
+**和綜述的三個品質分數對照**（wiki 的整理，依兩篇的定義比對 [02-gao2023-survey.pdf, §VI-C, p.12; 05-asai2023-self-rag.pdf, Table 1, p.4]）：
+
+| 02 的品質分數 | 定義 | 05 的對應 reflection token | 定義 |
+|---|---|---|---|
+| Context relevance | 檢索到的 context 是否精確、切題 [02-gao2023-survey.pdf, §VI-C, p.12] | ISREL | 文件是否提供解決問題的有用資訊 [05-asai2023-self-rag.pdf, Table 1, p.4] |
+| Answer faithfulness | 答案是否忠於 context [02-gao2023-survey.pdf, §VI-C, p.12] | ISSUP | 輸出中值得查證的說法，是否都被文件支持 [05-asai2023-self-rag.pdf, Table 1, p.4] |
+| Answer relevance | 答案是否直接回答問題 [02-gao2023-survey.pdf, §VI-C, p.12] | ISUSE | 回答對問題是否有用（不論是否符合事實）[05-asai2023-self-rag.pdf, App. A.1, p.17] |
+
+差別在於：02 列的是「評估者」用的指標；Self-RAG 則讓模型在生成過程中**自己**評估這些面向 [05-asai2023-self-rag.pdf, §3.1, p.4]。
 
 ### 傳統的任務指標
 

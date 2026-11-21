@@ -2,7 +2,7 @@
 type: comparison
 title: "RAG 進階技巧比較"
 tags: [comparison, techniques, advanced-rag]
-sources: [02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf]
+sources: [02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf]
 updated: 2026-11-22
 ---
 
@@ -21,7 +21,8 @@ updated: 2026-11-22
 | Ranked list truncation（少取幾份） | post-retrieval | 文件多了，效益小、成本高 [04-liu2023-lost-in-middle.pdf, §5, p.10] | 50 份 vs 20 份只多約 1%–1.5% [04-liu2023-lost-in-middle.pdf, §5, p.10] | [Context window](../concepts/context-window.md) |
 | Query-aware contextualization（問題放在文件前後） | prompt 排版 | decoder-only 模型讀文件時還看不到問題 [04-liu2023-lost-in-middle.pdf, §4.2, p.7–8] | key-value 檢索幾乎變成完美，多文件問答幾乎沒有變化 [04-liu2023-lost-in-middle.pdf, §4.2, p.8] | [Lost in the middle](../concepts/lost-in-the-middle.md) |
 | Context 壓縮 | post-retrieval | context 太長，雜訊太多 [02-gao2023-survey.pdf, §IV-A, p.10] | 無 [02-gao2023-survey.pdf, §IV-A, p.10] | [Context window](../concepts/context-window.md) |
-| Iterative／recursive／adaptive retrieval | 整個流程 | 只檢索一次，不夠應付需要多步推理的問題 [02-gao2023-survey.pdf, §V, p.10] | 無 [02-gao2023-survey.pdf, §V, p.10–12] | [Modular RAG](../methods/modular-rag.md) |
+| Iterative／recursive／adaptive retrieval | 整個流程 | 只檢索一次，不夠應付需要多步推理的問題 [02-gao2023-survey.pdf, §V, p.10] | 02 沒有提供（Self-RAG 的數字見下一列）[02-gao2023-survey.pdf, §V, p.10–12] | [Modular RAG](../methods/modular-rag.md) |
+| Self-RAG（adaptive retrieval＋自我評分） | 整個流程（需要訓練） | 不管需不需要都檢索；生成後不檢查品質 [05-asai2023-self-rag.pdf, §1, p.1–2] | 7B 模型的 PopQA 54.9、PubHealth 72.4，都高於加上檢索的 Llama2-7B（38.2、30.0）[05-asai2023-self-rag.pdf, Table 2, p.8] | [Self-RAG](../methods/self-rag.md) |
 
 ## 重點
 

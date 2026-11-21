@@ -2,7 +2,7 @@
 type: concept
 title: "Reranking（重新排序）"
 tags: [concept, reranking, post-retrieval]
-sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf]
+sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf]
 updated: 2026-11-22
 ---
 
@@ -46,6 +46,8 @@ updated: 2026-11-22
 - **[03-anthropic-contextual-retrieval.pdf](../sources/03-anthropic-contextual-retrieval.md)**：在 Contextual Embeddings 加 Contextual BM25 之上再做 reranking，檢索失敗率從 2.9% 降到 1.9%；和基準（5.7%）相比，總共降低 67% [03-anthropic-contextual-retrieval.pdf, p.7, p.10]。結論是有 reranking 比沒有好 [03-anthropic-contextual-retrieval.pdf, p.11]。
 
 - **[04-liu2023-lost-in-middle.pdf](../sources/04-liu2023-lost-in-middle.md)**：LLM 最會利用 context 開頭和結尾的資訊，所以建議 rerank 時把相關資訊推向 context 的開頭 [04-liu2023-lost-in-middle.pdf, §5, p.10]。在 20 份文件中，答案在第 1 份時，GPT-3.5-Turbo 的準確率是 75.8%；在第 10 份時只有 53.8% [04-liu2023-lost-in-middle.pdf, Table 6, p.18]。
+
+- **[05-asai2023-self-rag.pdf](../sources/05-asai2023-self-rag.md)**：提出另一種排序方式：不是排「文件」，而是根據 reflection tokens 的分數，為「用不同文件寫出的回答」排序，作者稱為 soft re-ranking [05-asai2023-self-rag.pdf, §3.2.2, p.6]。消融實驗中，不管相關性、一律用第 1 份文件，PopQA 從 45.5 掉到 41.8，ASQA 從 32.1 掉到 28.6 [05-asai2023-self-rag.pdf, Fig.3a, p.9]。
 
 > ⚠️ **爭議／更新**：[01-lewis2020-rag.pdf, §4.1, p.5] 認為，要達到當時的最佳表現，re-ranker 不是必要的；但 [02-gao2023-survey.pdf, §II-B, p.4] 把 reranking 視為 Advanced RAG 的關鍵策略，[03-anthropic-contextual-retrieval.pdf, p.10–11] 的實驗顯示 reranking 能進一步降低檢索失敗率，[04-liu2023-lost-in-middle.pdf, §5, p.10] 也建議用 reranking 來應對位置效應。
 > 情境不同：01 是在 open-domain QA 上端到端訓練的 BART 模型，每份文件分別交給 generator 再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，所以沒有「文件排在 prompt 哪個位置」的問題；02、03、04 談的則是把多份文件串成一個 prompt 交給 LLM 的情境 [02-gao2023-survey.pdf, §II-A, p.3; 04-liu2023-lost-in-middle.pdf, §5, p.9]。在這種情境下，reranking 的價值已經有 03（檢索失敗率）和 04（位置效應）兩方面的證據 [03-anthropic-contextual-retrieval.pdf, p.10; 04-liu2023-lost-in-middle.pdf, §2.3, p.5]。

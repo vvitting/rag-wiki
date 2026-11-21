@@ -2,13 +2,13 @@
 type: overview
 title: "RAG 總覽"
 tags: [rag, overview]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf]
 updated: 2026-11-22
 ---
 
 # RAG 總覽
 
-> 本頁會在每次 ingest 時更新，結構對齊簡報。目前已 ingest：01、02、03、04。
+> 本頁會在每次 ingest 時更新，結構對齊簡報。目前已 ingest：01、02、03、04、05。
 
 ## 1. 為什麼需要 RAG
 
@@ -48,7 +48,9 @@ updated: 2026-11-22
 
 > 各種技巧的整理：[RAG 進階技巧比較](comparisons/rag-techniques.md)
 
-> Self-RAG、GraphRAG 將在 ingest 05、06 後補充。
+- **[Self-RAG](methods/self-rag.md)**：不是每個問題都需要查資料。Self-RAG 訓練模型自己決定何時檢索，並為文件和自己的回答打分數 [05-asai2023-self-rag.pdf, Abstract, p.1]；7B 和 13B 的 Self-RAG 在多個任務上勝過 ChatGPT [05-asai2023-self-rag.pdf, §5.1, p.8]。
+
+> GraphRAG 將在 ingest 06 後補充。
 
 ## 5. 怎麼評估
 
@@ -65,6 +67,7 @@ updated: 2026-11-22
 - RAG 和 fine-tuning 可以互補，不是二選一 [02-gao2023-survey.pdf, §II-D, p.5]。
 - 即使 LLM 能讀很長的 context，RAG 在效率和可驗證性上仍有優勢 [02-gao2023-survey.pdf, §VII-A, p.14]。
 - 反過來說，知識庫小於 200,000 tokens（約 500 頁）時，不一定需要 RAG，直接全部放進 prompt 可能就夠了 [03-anthropic-contextual-retrieval.pdf, p.2]。這點和上一條有 ⚠️ 爭議，詳見 [Context window](concepts/context-window.md)。
+- **檢索不一定有幫助**：ChatGPT 加上檢索後，PubHealth 從 70.1 降到 54.7 [05-asai2023-self-rag.pdf, Table 2, p.8]；所以「什麼時候該查」也是一個問題 [05-asai2023-self-rag.pdf, §1, p.1]。
 - **放得進去，不代表用得好**：支援長 context 的模型，不一定比較會用 context [04-liu2023-lost-in-middle.pdf, §2.3, p.5]。文件也不是越多越好：取 50 份和取 20 份相比，只多進步約 1%–1.5% [04-liu2023-lost-in-middle.pdf, §5, p.10]。
 - 但 RAG 不是萬靈丹：外部資料本身可能有錯 [01-lewis2020-rag.pdf, Broader Impact, p.10]，雜訊或互相矛盾的資訊也會影響輸出品質 [02-gao2023-survey.pdf, §VII-B, p.14]。
 

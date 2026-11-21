@@ -56,3 +56,15 @@
 - 新發現（適合放進簡報）：答案在中間時，GPT-3.5-Turbo 給 20 份文件的準確率（53.8%）低於完全不給文件（56.1%），已寫進 closed-book-vs-open-book 頁
 - 已補上的待補來源：context window 的定義（04 §2.2）、Prompt 的白話定義（04 §1）
 - lint：0 error, 0 warning；語意檢查抽查 24 處引用，修正 1 處頁碼（App. C 應為 p.14–15）
+
+## [2026-11-22] ingest | 05-asai2023-self-rag.pdf
+- 新增（2）：sources/05-asai2023-self-rag.md、methods/self-rag.md
+- 修改（17）：concepts/（parametric-vs-non-parametric-memory、hallucination、rag-evaluation、reranking、generator、lost-in-the-middle）、methods/modular-rag.md、comparisons/（closed-book-vs-open-book、rag-vs-fine-tuning、rag-techniques、rag-timeline）、sources/（01、02）、glossary.md（76 → 84 條）、analogies.md（+1，共 9 個）、overview.md、index.md
+- ⚠️ 新標註：
+  1. 該不該用模型自己的知識：01 §4.1 把「文件沒答案也答對 11.8%」視為優點；05 App. C.1 把「只有 2% 答案不在文件中」視為優點（標在 parametric-vs-non-parametric-memory、01、05 頁）
+  2. 原文內部不一致：§3.2.1 說 critic 和 GPT-4 的一致度「在大多數類別上超過 90%」，但 App. A.2 的表只有 4 類中的 2 類超過 90%（標在 05 頁）
+  3. 原文內部不一致：App. C.1 出現「Alpaca 30B」，但只評估了 7B 和 13B（標在 05 頁）
+- 和既有內容一致之處：02 §V-C 對 Self-RAG 的描述和原始論文相符；05 Table 2「加上檢索反而退步」（ChatGPT 的 PubHealth 70.1 → 54.7）和 04 的「放錯位置時比 closed-book 差」，是 open-book 不一定比較好的兩份證據（已寫進 closed-book-vs-open-book 頁）
+- 其他小瑕疵（已註明，不加 ⚠️）：訓練資料總數 150k vs 145,619；「1,2594」數字格式有誤
+- 自我修正：closed-book 頁原本寫「需要推理的任務檢索幫助有限」，改回作者原話「不能直接從文件複製或擷取片段的任務」，並註明 TriviaQA 的退步作者沒有解釋
+- lint：0 error, 0 warning；語意檢查抽查 33 處引用，全部吻合

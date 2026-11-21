@@ -2,7 +2,7 @@
 type: concept
 title: "Hallucination（幻覺）"
 tags: [concept, hallucination, factuality]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 05-asai2023-self-rag.pdf]
 updated: 2026-11-22
 ---
 
@@ -23,6 +23,14 @@ Hallucination 指模型講出聽起來很像真的、但其實是錯的內容。
 - **模型「背錯」的知識**：純參數模型講出錯誤的事實，例如下面 BART 的中耳例子 [01-lewis2020-rag.pdf, Table 3, p.7]。
 - **沒有依據檢索內容**：即使用了 RAG，模型仍可能產生「檢索內容沒有支持」的說法 [02-gao2023-survey.pdf, §II-A, p.3]。評估時對應的是 answer faithfulness，詳見 [RAG 評估](rag-evaluation.md) [02-gao2023-survey.pdf, §VI-C, p.12]。
 
+## 讓模型自己檢查「有沒有根據」
+
+- Self-RAG 訓練模型在每段回答後產生 ISSUP token，自我評估這段話有沒有被文件支持：完全支持、部分支持，或沒有支持／矛盾 [05-asai2023-self-rag.pdf, Table 1, p.4; App. A.1, p.17]。
+- 推論時可以設硬性規則：只要產生「沒有支持」就丟掉那段回答 [05-asai2023-self-rag.pdf, §3.3, p.6]。
+- **例子**：模型寫「此人從 2010 年起擔任 CEO」，但文件說他 2015 年就卸任了，於是模型標出 Contradictory [05-asai2023-self-rag.pdf, App. C.3, p.21]。
+- 但作者也承認，Self-RAG 仍可能產生沒有被引用完全支持的內容 [05-asai2023-self-rag.pdf, Ethical Concerns, p.11]。
+- **「看似合理」的陷阱**：文件不相關時，一般 instruction-tuned 模型仍會繼續產生看似合理的答案 [05-asai2023-self-rag.pdf, App. C.1, p.20]。
+
 ## 實際例子
 
 - 問 BART「define middle ear」，它回答「中耳是介於中耳和鼻子之間的部分」，這是錯的答案 [01-lewis2020-rag.pdf, Table 3, p.7]。
@@ -42,6 +50,7 @@ Hallucination 指模型講出聽起來很像真的、但其實是錯的內容。
 ## 各論文怎麼說
 
 - **[01-lewis2020-rag.pdf](../sources/01-lewis2020-rag.md)**：用人工評估和範例展示 RAG 比 BART 更符合事實 [01-lewis2020-rag.pdf, §4.2–4.3, p.6]。
+- **[05-asai2023-self-rag.pdf](../sources/05-asai2023-self-rag.md)**：傳統 RAG 的模型沒有被明確訓練去遵循文件中的事實，所以輸出不一定和文件一致 [05-asai2023-self-rag.pdf, §1, p.1]。
 - **[02-gao2023-survey.pdf](../sources/02-gao2023-survey.md)**：把 hallucination 列為 LLM 的主要挑戰之一，也是 Naive RAG 在生成階段的缺點 [02-gao2023-survey.pdf, Abstract, p.1; §II-A, p.3]。還提到 Chain-of-Verification 這類驗證查詢的方法可以減少 hallucination [02-gao2023-survey.pdf, §III-C, p.8]。
 
 ## 相關頁面
@@ -49,4 +58,5 @@ Hallucination 指模型講出聽起來很像真的、但其實是錯的內容。
 - [Generator](generator.md)
 - [Parametric 與 non-parametric memory](parametric-vs-non-parametric-memory.md)
 - [RAG 評估](rag-evaluation.md)
+- [Self-RAG](../methods/self-rag.md)
 - [術語表](../glossary.md)

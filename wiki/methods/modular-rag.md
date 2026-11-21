@@ -2,7 +2,7 @@
 type: method
 title: "Modular RAG"
 tags: [method, rag, modular-rag, paradigm, adaptive-retrieval, iterative-retrieval]
-sources: [02-gao2023-survey.pdf]
+sources: [02-gao2023-survey.pdf, 05-asai2023-self-rag.pdf]
 updated: 2026-11-22
 ---
 
@@ -50,7 +50,8 @@ Modular RAG 沒有單一固定的步驟，而是從下面這些「模組」和�
 
 - Iterative 檢索的缺點：可能出現語意不連貫，也可能累積不相關的資訊 [02-gao2023-survey.pdf, §V-A, p.11]。
 - FLARE 會監看生成時的信心（詞的機率），低於門檻時才觸發檢索 [02-gao2023-survey.pdf, §V-C, p.11–12]。
-- Self-RAG 用「reflection tokens」讓模型檢視自己的輸出，自行決定何時檢索 [02-gao2023-survey.pdf, §V-C, p.12]。Self-RAG 的原始論文會在 ingest 05 時補充。
+- Self-RAG 用「reflection tokens」讓模型檢視自己的輸出，自行決定何時檢索 [02-gao2023-survey.pdf, §V-C, p.12]。原始論文的完整說明見 [Self-RAG](self-rag.md)。
+- **Adaptive retrieval 的實測**：在 Self-RAG 中，推論時完全不檢索，PopQA 會從 45.5 掉到 24.7；但 PubHealth 幾乎不受影響（73.5 vs 73.0）[05-asai2023-self-rag.pdf, Fig.3a, p.9]。可見不同任務對檢索的需求差很多。
 
 ## 優點
 
@@ -70,4 +71,5 @@ Modular RAG 沒有單一固定的步驟，而是從下面這些「模組」和�
 - [Naive RAG](naive-rag.md)
 - [Advanced RAG](advanced-rag.md)
 - [三種 RAG 典範比較](../comparisons/rag-paradigms.md)
+- [Self-RAG](self-rag.md)
 - [Query 優化](../concepts/query-optimization.md)

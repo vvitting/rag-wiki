@@ -2,7 +2,7 @@
 type: concept
 title: "Lost in the middle（中間迷失）"
 tags: [concept, lost-in-the-middle, positional-bias, long-context]
-sources: [04-liu2023-lost-in-middle.pdf, 02-gao2023-survey.pdf, 01-lewis2020-rag.pdf]
+sources: [04-liu2023-lost-in-middle.pdf, 02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 05-asai2023-self-rag.pdf]
 updated: 2026-11-22
 ---
 
@@ -55,6 +55,7 @@ updated: 2026-11-22
 - **[04-liu2023-lost-in-middle.pdf](../sources/04-liu2023-lost-in-middle.md)**：提出這個現象的原始研究 [04-liu2023-lost-in-middle.pdf, Abstract, p.1]。
 - **[02-gao2023-survey.pdf](../sources/02-gao2023-survey.md)**：引用這個現象，說明為什麼檢索後要先整理內容，不能把所有文件直接丟給 LLM [02-gao2023-survey.pdf, §IV-A, p.10]。
 - **[01-lewis2020-rag.pdf](../sources/01-lewis2020-rag.md)**：原始 RAG 是把每份文件「分別」和問題串接後交給 generator，再把結果加權合併 [01-lewis2020-rag.pdf, §2.1, §2.3, p.3]，並不是把所有文件串成一個長 prompt；所以 lost in the middle 描述的情境，和它不完全相同。
+- **[05-asai2023-self-rag.pdf](../sources/05-asai2023-self-rag.md)**：Self-RAG 也是對每份文件分別、平行產生回答，再依評分挑選 [05-asai2023-self-rag.pdf, §3.1, p.4]。不過 05 沒有討論位置效應，所以無法判斷這種做法能否避免 lost in the middle [05-asai2023-self-rag.pdf, §3.3, p.6]。
 
 ## 常見誤解
 

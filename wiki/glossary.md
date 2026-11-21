@@ -2,7 +2,7 @@
 type: glossary
 title: "術語表"
 tags: [glossary]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf]
 updated: 2026-11-22
 ---
 
@@ -10,15 +10,17 @@ updated: 2026-11-22
 
 > 依英文字母排序。格式：`- **Term**：一句白話解釋 [raw 檔名, 位置] → [詳見](concepts/xxx.md)`
 
-- **Adaptive retrieval**：讓 LLM 自己決定什麼時候需要檢索、什麼時候停止 [02-gao2023-survey.pdf, §V-C, p.11] → [詳見](methods/modular-rag.md)
+- **Adaptive retrieval**：讓 LLM 自己決定什麼時候需要檢索、什麼時候停止；Self-RAG 是代表例子 [02-gao2023-survey.pdf, §V-C, p.11; 05-asai2023-self-rag.pdf, §3.3, p.6] → [詳見](methods/self-rag.md)
 - **Advanced RAG**：在 Naive RAG 的前後加上 pre-retrieval 和 post-retrieval 優化 [02-gao2023-survey.pdf, §II-B, p.3] → [詳見](methods/advanced-rag.md)
 - **Answer faithfulness**：答案是否忠於檢索到的 context，沒有互相矛盾 [02-gao2023-survey.pdf, §VI-C, p.12] → [詳見](concepts/rag-evaluation.md)
 - **Answer relevance**：答案是否直接回答了問題 [02-gao2023-survey.pdf, §VI-C, p.12] → [詳見](concepts/rag-evaluation.md)
+- **Attribution**：輸出的內容是否被某份證據完全支持 [05-asai2023-self-rag.pdf, App. A.1, p.17] → [詳見](concepts/hallucination.md)
 - **BART**：原始 RAG 用來寫答案的預訓練 seq2seq 模型，BART-large 有 400M 參數 [01-lewis2020-rag.pdf, §2.3, p.3] → [詳見](concepts/generator.md)
 - **Bi-encoder**：用兩個 encoder 分別把「問題」和「文件」轉成向量，再比對兩者；DPR 就是這種架構 [01-lewis2020-rag.pdf, §2.2, p.3] → [詳見](concepts/retriever.md)
 - **BM25（Best Matching 25）**：靠字面比對找出精確詞句的傳統檢索方法，以 TF-IDF 為基礎，屬於 sparse encoder；特別適合含有代碼或專業術語的查詢 [01-lewis2020-rag.pdf, §4.5, p.7; 02-gao2023-survey.pdf, §III-D, p.9; 03-anthropic-contextual-retrieval.pdf, p.3] → [詳見](concepts/retriever.md)
 - **Chunk overlap**：相鄰的 chunk 之間重疊的部分；和 chunk 大小、切分邊界一樣，會影響檢索表現 [03-anthropic-contextual-retrieval.pdf, p.8] → [詳見](concepts/chunking.md)
 - **Chunk**：把長文件切成的小段落；常見大小是 100、256、512 個 token [02-gao2023-survey.pdf, §III-B, p.8] → [詳見](concepts/chunking.md)
+- **Citation precision／recall**：評估引用品質的指標；precision 衡量模型的說法是否完全被引用的證據支持 [05-asai2023-self-rag.pdf, §4.1, p.7; §5.1, p.8] → [詳見](concepts/rag-evaluation.md)
 - **Closed-book**：不查資料、只靠模型自己記住的知識回答 [01-lewis2020-rag.pdf, §3.1, p.4; §4.1, p.5] → [詳見](comparisons/closed-book-vs-open-book.md)
 - **Context relevance**：檢索到的 context 是否精確、切題 [02-gao2023-survey.pdf, §VI-C, p.12] → [詳見](concepts/rag-evaluation.md)
 - **Context window**：模型一次能接受的最大輸入長度，以 token 計算，例如 GPT-3.5-Turbo 是 4K tokens [04-liu2023-lost-in-middle.pdf, §2.2, p.5]；02 撰寫時，LLM 已能處理超過 200,000 tokens [02-gao2023-survey.pdf, §VII-A, p.14] → [詳見](concepts/context-window.md)
@@ -27,6 +29,8 @@ updated: 2026-11-22
 - **Contextual Retrieval**：建 index 前先用 LLM 為每個 chunk 寫一段 50–100 tokens 的背景說明，貼在 chunk 前面 [03-anthropic-contextual-retrieval.pdf, p.5–6] → [詳見](methods/contextual-retrieval.md)
 - **Cosine similarity**：計算兩個 embedding 有多相似的一種方式 [02-gao2023-survey.pdf, §III-D, p.9] → [詳見](concepts/embedding.md)
 - **Counterfactual robustness**：能否辨認並忽略文件中已知的錯誤 [02-gao2023-survey.pdf, §VI-C, p.12] → [詳見](concepts/rag-evaluation.md)
+- **Critic model**：Self-RAG 中模仿 GPT-4 判斷、負責為訓練資料標註 reflection tokens 的模型 [05-asai2023-self-rag.pdf, §3.2.1, p.5] → [詳見](methods/self-rag.md)
+- **Critique token**：Self-RAG 中用來評分的 reflection tokens，包括 ISREL、ISSUP、ISUSE 三種 [05-asai2023-self-rag.pdf, Table 1, p.4] → [詳見](methods/self-rag.md)
 - **Decoder-only／Encoder-decoder**：兩種模型架構。Decoder-only 每一步只能看到前面的 token；encoder-decoder 有雙向的 encoder，在訓練時見過的長度內，對資訊位置比較不敏感 [04-liu2023-lost-in-middle.pdf, §4.1, p.7] → [詳見](concepts/lost-in-the-middle.md)
 - **Dense retriever**：用預訓練模型（例如 BERT）把文字轉成 dense vector 來檢索 [02-gao2023-survey.pdf, §III-D, p.9] → [詳見](concepts/retriever.md)
 - **Distractor document（干擾文件）**：和問題相關、但不含答案的文件，用來測試模型能不能找出真正有用的資訊 [04-liu2023-lost-in-middle.pdf, §2.1, p.3] → [詳見](concepts/lost-in-the-middle.md)
@@ -34,6 +38,7 @@ updated: 2026-11-22
 - **Embedding**：把一段文字轉成的一串數字（dense representation）[01-lewis2020-rag.pdf, §2.2, p.3] → [詳見](concepts/embedding.md)
 - **Exact Match（EM）**：模型答案和標準答案「完全一樣」才算對的評分方式；問答任務常用 [01-lewis2020-rag.pdf, §3.1, p.4; 02-gao2023-survey.pdf, §VI-B, p.12]。（「完全一樣」是依名稱的白話說明，原文沒有給出定義 [待補來源]）
 - **Extractive QA**：從檢索到的文件中「挑出」一段文字當答案 [01-lewis2020-rag.pdf, §3.1, p.4] → [詳見](concepts/generator.md)
+- **FactScore**：評估長篇生成（例如傳記）事實性的指標 [05-asai2023-self-rag.pdf, §4.1, p.7] → [詳見](concepts/rag-evaluation.md)
 - **FAISS**：用來建立向量 index、快速找出相似向量的工具 [01-lewis2020-rag.pdf, §3, p.4] → [詳見](concepts/embedding.md)
 - **Fine-tuning（FT）**：用額外的資料再訓練模型，像學生花時間把知識內化 [02-gao2023-survey.pdf, §II-D, p.5] → [詳見](comparisons/rag-vs-fine-tuning.md)
 - **Generator**：讀完問題和檢索到的文件後寫出答案的模型 [01-lewis2020-rag.pdf, §2, p.2–3] → [詳見](concepts/generator.md)
@@ -76,9 +81,12 @@ updated: 2026-11-22
 - **Ranked list truncation**：在適當時候少取幾份文件，不把排序清單全部交給模型 [04-liu2023-lost-in-middle.pdf, §5, p.10] → [詳見](concepts/context-window.md)
 - **Recall@k**：相關文件有出現在前 k 個檢索結果裡的比例；03 用「1 − recall@20」衡量檢索失敗率 [03-anthropic-contextual-retrieval.pdf, p.7] → [詳見](concepts/rag-evaluation.md)
 - **Recursive retrieval**：依照前一次的搜尋結果逐步修正查詢，把問題拆成子問題 [02-gao2023-survey.pdf, §V-B, p.11] → [詳見](methods/modular-rag.md)
+- **Reflection token**：Self-RAG 讓模型產生的特殊 token，用來決定要不要檢索，並為文件和自己的輸出評分 [05-asai2023-self-rag.pdf, Abstract, p.1; Table 1, p.4] → [詳見](methods/self-rag.md)
 - **Reranking**：把檢索到的文件重新排序，讓最相關的排在前面 [02-gao2023-survey.pdf, §IV-A, p.10] → [詳見](concepts/reranking.md)
 - **Retrieval collapse**：retriever 不管輸入是什麼都找同一批文件，generator 也就開始忽略文件 [01-lewis2020-rag.pdf, App. H, p.19] → [詳見](concepts/retriever.md)
 - **Retriever**：根據問題找出相關文件的模型 [01-lewis2020-rag.pdf, §2, p.2] → [詳見](concepts/retriever.md)
+- **Segment-level beam search**：每寫一段（實驗中是一個句子）就保留分數最高的幾個候選，再繼續寫 [05-asai2023-self-rag.pdf, §3.3, p.6; §3.1, p.3] → [詳見](methods/self-rag.md)
+- **Self-RAG**：訓練 LLM 自己決定何時檢索，並用 reflection tokens 自我評分的方法 [05-asai2023-self-rag.pdf, Abstract, p.1] → [詳見](methods/self-rag.md)
 - **Seq2seq**：讀入一段文字、輸出另一段文字的模型，原始 RAG 稱它為「NLP 的主力」[01-lewis2020-rag.pdf, §1, p.2] → [詳見](concepts/generator.md)
 - **Serial-position effect（序列位置效應）**：心理學現象，人在回想一串項目時，最記得第一個和最後一個 [04-liu2023-lost-in-middle.pdf, §6.3, p.10] → [詳見](concepts/lost-in-the-middle.md)
 - **Sparse retrieval**：以關鍵字或字詞權重為基礎的檢索，例如 BM25 [02-gao2023-survey.pdf, §III-D, p.9] → [詳見](concepts/retriever.md)
