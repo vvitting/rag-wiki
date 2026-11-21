@@ -2,7 +2,7 @@
 type: analogy
 title: "比喻集"
 tags: [analogy, teaching]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf]
 updated: 2026-11-22
 ---
 
@@ -52,6 +52,20 @@ updated: 2026-11-22
 - **對應到 RAG 的哪個部分**：[Context window](concepts/context-window.md)、[Reranking](concepts/reranking.md)
 - **比喻的極限**：人會累、會分心，LLM 不會；這個現象背後的原因和人不同。Lost in the middle 的原始研究會在 ingest 04 時補充。
 - **對應的技術事實**：綜述的描述是「Like humans, LLM tends to only focus on the beginning and end of long texts」[02-gao2023-survey.pdf, §IV-A, p.10]；所以有一種策略是把最相關的內容移到 prompt 的頭尾 [02-gao2023-survey.pdf, §II-B, p.4]。
+
+### 從書上撕下來的一頁
+
+- **比喻**：從一本財報裡撕下一頁，上面只寫著「公司營收比上一季成長 3%」。拿到這一頁的人，根本不知道是哪家公司、哪一季。Contextual Retrieval 就是在每一頁的頁首補上一行「本頁出自 ACME 公司 2023 年 Q2 財報」。
+- **對應到 RAG 的哪個部分**：[Chunking](concepts/chunking.md)、[Contextual Retrieval](methods/contextual-retrieval.md)
+- **比喻的極限**：撕下來的書頁至少還有頁碼和版面可以推敲；chunk 只剩純文字。另外，那行補充說明是由 LLM 寫的，也可能寫錯。
+- **對應的技術事實**：「The company's revenue grew by 3%…」這個 chunk 沒有說明公司和時期，所以很難被找到 [03-anthropic-contextual-retrieval.pdf, p.4]；補上 50–100 tokens 的說明後，檢索失敗率降低 35%–49% [03-anthropic-contextual-retrieval.pdf, p.6–7]。
+
+### 用意思找 vs 用字找
+
+- **比喻**：在圖書館問館員「有沒有講心臟病的書」，館員會依「意思」推薦相關的書，這就像 embedding；但如果你要找的是書號「TS-999」，就該直接在目錄裡比對字串，這就像 BM25。兩種找法一起用，最不容易漏掉。
+- **對應到 RAG 的哪個部分**：[Retriever](concepts/retriever.md)（hybrid retrieval）
+- **比喻的極限**：真的館員會同時用兩種方式思考；RAG 系統則是分開跑兩種檢索，再用 rank fusion 合併結果。
+- **對應的技術事實**：embedding 擅長語意，但可能漏掉「TS-999」這類精確比對，BM25 則專門找精確字串 [03-anthropic-contextual-retrieval.pdf, p.3]；兩者合用比只用 embedding 好 [03-anthropic-contextual-retrieval.pdf, p.11]。
 
 ## 相關頁面
 - [目錄](index.md)

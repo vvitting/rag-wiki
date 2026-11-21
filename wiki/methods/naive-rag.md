@@ -2,7 +2,7 @@
 type: method
 title: "Naive RAG"
 tags: [method, rag, naive-rag, paradigm]
-sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf]
+sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf]
 updated: 2026-11-22
 ---
 
@@ -26,6 +26,8 @@ updated: 2026-11-22
 
 LLM 回答時，可以使用自己的 parametric knowledge，也可以被要求只根據提供的文件作答，看任務需求而定 [02-gao2023-survey.pdf, §II-A, p.3]。
 
+03 稱這種做法為「traditional RAG」，描述的步驟一致：把知識庫切成通常不超過幾百 tokens 的 chunk，轉成 embedding 存進 vector database，查詢時找出語意最相近的 chunk 加進 prompt [03-anthropic-contextual-retrieval.pdf, p.2–3]。
+
 ## 優點
 
 - 成本效益高，而且表現勝過沒有 RAG 的 LLM [02-gao2023-survey.pdf, §II, p.2]。
@@ -40,6 +42,7 @@ LLM 回答時，可以使用自己的 parametric knowledge，也可以被要求�
 - **一次檢索不夠**：遇到複雜問題時，只用原始問題檢索一次，可能找不到足夠的資訊 [02-gao2023-survey.pdf, §II-A, p.3]。
 - **過度依賴檢索內容**：模型可能只是照抄檢索內容，沒有加入自己的整合或見解 [02-gao2023-survey.pdf, §II-A, p.3]。
 - **直接用原始問題檢索**：使用者的問題不一定清楚精確，這會讓檢索效果變差 [02-gao2023-survey.pdf, §III-C, p.8]。
+- **Chunk 失去上下文**：切塊時把 context 去掉了，常常導致找不到相關資訊 [03-anthropic-contextual-retrieval.pdf, p.1, p.4]。解法見 [Contextual Retrieval](contextual-retrieval.md)。
 
 這些缺點正是發展 [Advanced RAG](advanced-rag.md) 和 [Modular RAG](modular-rag.md) 的原因 [02-gao2023-survey.pdf, §II, p.2]。
 

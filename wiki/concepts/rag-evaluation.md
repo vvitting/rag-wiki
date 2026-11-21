@@ -2,7 +2,7 @@
 type: concept
 title: "RAG 評估"
 tags: [concept, evaluation, metrics, benchmark]
-sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf]
+sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf]
 updated: 2026-11-22
 ---
 
@@ -40,6 +40,12 @@ updated: 2026-11-22
 - **Counterfactual robustness**：能不能辨認並忽略文件中已知的錯誤 [02-gao2023-survey.pdf, §VI-C, p.12]。
 
 Context relevance 和 noise robustness 用來評估檢索；其餘五項用來評估生成 [02-gao2023-survey.pdf, §VI-C, p.12]。
+
+### 實例：只評估檢索
+
+- 03 用「1 − recall@20」當評估指標，也就是「相關文件沒出現在前 20 個 chunk 裡」的比例 [03-anthropic-contextual-retrieval.pdf, p.7]。
+- 這個指標只衡量檢索，不衡量最終答案。03 主張檢索準確度的提升會直接轉化為下游任務更好的表現 [03-anthropic-contextual-retrieval.pdf, p.2]，但 raw 檔中沒有附上答案品質的數字 [03-anthropic-contextual-retrieval.pdf, p.7–11]。
+- 03 的建議是：一定要做評估（always run evals）[03-anthropic-contextual-retrieval.pdf, p.9]。
 
 ### 傳統的任務指標
 

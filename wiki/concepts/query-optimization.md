@@ -2,7 +2,7 @@
 type: concept
 title: "Query 優化（改寫、擴展、路由）"
 tags: [concept, query, pre-retrieval, hyde, query-rewriting]
-sources: [02-gao2023-survey.pdf]
+sources: [02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf]
 updated: 2026-11-22
 ---
 
@@ -29,7 +29,7 @@ updated: 2026-11-22
 
 - **Query Rewrite**：讓 LLM 或專門的小模型（例如 RRR）改寫問題 [02-gao2023-survey.pdf, §III-C, p.9]。
 - **實際案例**：淘寶的 BEQUE 改寫方法提升了長尾查詢的 recall [02-gao2023-survey.pdf, §III-C, p.9]。
-- **HyDE**：先讓 LLM 寫一份「假設的答案文件」，再用它去找相似的真實文件；比對的是「答案和答案」的相似度，而不是「問題和答案」[02-gao2023-survey.pdf, §III-C, p.9]。
+- **HyDE**：先讓 LLM 寫一份「假設的答案文件」，再用它去找相似的真實文件；比對的是「答案和答案」的相似度，而不是「問題和答案」[02-gao2023-survey.pdf, §III-C, p.9]。03 也把 HyDE 列為「用 context 改善檢索」的既有方法之一，並說它和 Contextual Retrieval 不同 [03-anthropic-contextual-retrieval.pdf, p.5]。
 - **Step-back Prompting**：把原始問題抽象成一個更高層次的問題，兩個問題都拿去檢索 [02-gao2023-survey.pdf, §III-C, p.9]。
 
 ### 3. Query routing：把不同的問題送往不同的流程

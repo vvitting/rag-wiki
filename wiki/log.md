@@ -28,3 +28,18 @@
 - 新增的待補來源：context window 的正式定義、Prompt／In-context learning 的白話定義
 - 備註：02 原文有重複的句子（§III-A p.7）和錯字（bge-raranker-large），wiki 採用正確拼法 bge-reranker-large
 - lint：0 error, 0 warning；語意檢查抽查 19 處引用，全部吻合
+
+## [2026-11-22] ingest | 03-anthropic-contextual-retrieval.pdf
+- 新增（3）：sources/03-anthropic-contextual-retrieval.md、methods/contextual-retrieval.md、comparisons/rag-techniques.md
+- 修改（17）：concepts/（retriever、reranking、context-window、chunking、embedding、rag-evaluation、query-optimization）、methods/（advanced-rag、naive-rag）、sources/02-gao2023-survey.md、comparisons/rag-timeline.md、glossary.md（59 → 67 條）、analogies.md（+2，共 7 個）、overview.md、index.md、log.md
+- ⚠️ 新標註：
+  1. 小型知識庫需要 RAG 嗎：03 p.2 說小於 200k tokens 可以直接全放進 prompt；02 §VII-A 說 RAG 仍無可取代（標在 context-window、02、03 頁）
+  2. 摘要類方法：02 §III-B 把段落摘要、階層式摘要 index 列為優化方法；03 p.5 實測通用文件摘要提升非常有限、以摘要為基礎的 indexing 表現很差（標在 chunking、02 頁）
+- ⚠️ 既有標註的更新：
+  - Reranking：03 p.10–11 支持 02，變成「01 vs 02＋03」；補註 03 衡量的是檢索失敗率，不是答案的 EM
+  - 文件數量：03 p.8 加入第四種說法（越多越有機會，但會分心；實測 5／10／20 中 20 最好）
+- 和既有內容一致之處：03 p.3 說 BM25 適合含有代碼或術語的查詢，和 01 §4.5（FEVER 以實體為中心，BM25 最佳）一致，已寫進 retriever 頁
+- 已補上的待補來源：embedding 的直覺說明（03 p.2「vector embeddings that encode meaning」）
+- 來源限制：03 是網頁列印的 PDF，沒有章節編號，只能用 p.N 引用；附錄 I、II 的分資料集結果是圖片，抽不到文字，無法引用
+- 自我修正：刪掉「prompt caching 是 Claude 才有的功能」（原文只說 Claude 的 prompt caching 讓它能低成本實現）；「推廣自家產品」改成客觀描述
+- lint：0 error, 0 warning；語意檢查抽查 26 處引用，全部吻合（其中 2 處是 PDF 換行造成的比對誤差，已人工確認）

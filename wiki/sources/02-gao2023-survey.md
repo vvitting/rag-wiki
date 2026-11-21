@@ -5,7 +5,7 @@ raw: 02-gao2023-survey.pdf
 authors: [Yunfan Gao, Yun Xiong, Xinyu Gao, Kangxiang Jia, Jinliu Pan, Yuxi Bi, Yi Dai, Jiawei Sun, Meng Wang, Haofen Wang]
 year: 2023
 tags: [rag, survey, naive-rag, advanced-rag, modular-rag, evaluation]
-sources: [02-gao2023-survey.pdf]
+sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf]
 updated: 2026-11-22
 ---
 
@@ -75,7 +75,11 @@ updated: 2026-11-22
 
 > ⚠️ **爭議／更新**：本篇說 Naive RAG 是「最早的方法」，在 ChatGPT 普及後不久受到重視 [02-gao2023-survey.pdf, §II-A, p.2–3]；但 RAG 這個名稱和「先檢索、再生成」的架構早在 2020 年就出現了 [01-lewis2020-rag.pdf, §1, p.2]，而本篇把這類早期研究歸在「透過預訓練模型加強」的階段 [02-gao2023-survey.pdf, §I, p.1]。詳見 [Naive RAG](../methods/naive-rag.md)。
 
-> ⚠️ **爭議／更新**：本篇把 reranking 列為 Advanced RAG 的關鍵策略 [02-gao2023-survey.pdf, §II-B, p.4]；但 [01-lewis2020-rag.pdf, §4.1, p.5] 認為，要達到當時的最佳表現並不需要 re-ranker。詳見 [Reranking](../concepts/reranking.md)。
+> ⚠️ **爭議／更新**：本篇把 reranking 列為 Advanced RAG 的關鍵策略 [02-gao2023-survey.pdf, §II-B, p.4]，[03-anthropic-contextual-retrieval.pdf, p.11] 的實驗也支持；但 [01-lewis2020-rag.pdf, §4.1, p.5] 認為，要達到當時的最佳表現並不需要 re-ranker。詳見 [Reranking](../concepts/reranking.md)。
+
+> ⚠️ **爭議／更新**：本篇認為即使 LLM 能處理長 context，RAG 仍無可取代 [02-gao2023-survey.pdf, §VII-A, p.14]；[03-anthropic-contextual-retrieval.pdf, p.2] 則說，知識庫小於 200,000 tokens 時可以直接全放進 prompt，不需要 RAG。詳見 [Context window](../concepts/context-window.md)。
+
+> ⚠️ **爭議／更新**：本篇把段落摘要、階層式摘要 index 列為優化方法 [02-gao2023-survey.pdf, §III-B, p.8]；[03-anthropic-contextual-retrieval.pdf, p.5] 實測通用文件摘要提升非常有限，以摘要為基礎的 indexing 表現很差。詳見 [Chunking](../concepts/chunking.md)。
 
 > ⚠️ **爭議／更新**：本篇說「盡量多檢索文件」是常見的誤解，太多 context 會帶來雜訊 [02-gao2023-survey.pdf, §IV-A, p.10]；但 [01-lewis2020-rag.pdf, §4.5, p.8] 發現 RAG-Sequence 取越多份文件，NQ 表現就越好。詳見 [Context window](../concepts/context-window.md)。
 

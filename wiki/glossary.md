@@ -2,7 +2,7 @@
 type: glossary
 title: "術語表"
 tags: [glossary]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf]
 updated: 2026-11-22
 ---
 
@@ -16,11 +16,15 @@ updated: 2026-11-22
 - **Answer relevance**：答案是否直接回答了問題 [02-gao2023-survey.pdf, §VI-C, p.12] → [詳見](concepts/rag-evaluation.md)
 - **BART**：原始 RAG 用來寫答案的預訓練 seq2seq 模型，BART-large 有 400M 參數 [01-lewis2020-rag.pdf, §2.3, p.3] → [詳見](concepts/generator.md)
 - **Bi-encoder**：用兩個 encoder 分別把「問題」和「文件」轉成向量，再比對兩者；DPR 就是這種架構 [01-lewis2020-rag.pdf, §2.2, p.3] → [詳見](concepts/retriever.md)
-- **BM25**：靠字詞重疊來找文件的傳統檢索方法，屬於 sparse encoder [01-lewis2020-rag.pdf, §4.5, p.7; 02-gao2023-survey.pdf, §III-D, p.9] → [詳見](concepts/retriever.md)
+- **BM25（Best Matching 25）**：靠字面比對找出精確詞句的傳統檢索方法，以 TF-IDF 為基礎，屬於 sparse encoder；特別適合含有代碼或專業術語的查詢 [01-lewis2020-rag.pdf, §4.5, p.7; 02-gao2023-survey.pdf, §III-D, p.9; 03-anthropic-contextual-retrieval.pdf, p.3] → [詳見](concepts/retriever.md)
 - **Chunk**：把長文件切成的小段落；常見大小是 100、256、512 個 token [02-gao2023-survey.pdf, §III-B, p.8] → [詳見](concepts/chunking.md)
+- **Chunk overlap**：相鄰的 chunk 之間重疊的部分；和 chunk 大小、切分邊界一樣，會影響檢索表現 [03-anthropic-contextual-retrieval.pdf, p.8] → [詳見](concepts/chunking.md)
 - **Closed-book**：不查資料、只靠模型自己記住的知識回答 [01-lewis2020-rag.pdf, §3.1, p.4; §4.1, p.5] → [詳見](comparisons/closed-book-vs-open-book.md)
 - **Context relevance**：檢索到的 context 是否精確、切題 [02-gao2023-survey.pdf, §VI-C, p.12] → [詳見](concepts/rag-evaluation.md)
 - **Context window**：LLM 一次能處理的文字量；當時的 LLM 已能處理超過 200,000 tokens [02-gao2023-survey.pdf, §VII-A, p.14]。正式定義 [待補來源] → [詳見](concepts/context-window.md)
+- **Contextual BM25**：為 chunk 加上說明文字後再建立的 BM25 index [03-anthropic-contextual-retrieval.pdf, p.5] → [詳見](methods/contextual-retrieval.md)
+- **Contextual Embeddings**：為 chunk 加上說明文字後再轉成的 embedding [03-anthropic-contextual-retrieval.pdf, p.5] → [詳見](methods/contextual-retrieval.md)
+- **Contextual Retrieval**：建 index 前先用 LLM 為每個 chunk 寫一段 50–100 tokens 的背景說明，貼在 chunk 前面 [03-anthropic-contextual-retrieval.pdf, p.5–6] → [詳見](methods/contextual-retrieval.md)
 - **Cosine similarity**：計算兩個 embedding 有多相似的一種方式 [02-gao2023-survey.pdf, §III-D, p.9] → [詳見](concepts/embedding.md)
 - **Counterfactual robustness**：能否辨認並忽略文件中已知的錯誤 [02-gao2023-survey.pdf, §VI-C, p.12] → [詳見](concepts/rag-evaluation.md)
 - **Dense retriever**：用預訓練模型（例如 BERT）把文字轉成 dense vector 來檢索 [02-gao2023-survey.pdf, §III-D, p.9] → [詳見](concepts/retriever.md)
@@ -53,6 +57,7 @@ updated: 2026-11-22
 - **Open-domain QA**：可以問任何主題的問答任務，是測試 knowledge-intensive 任務的常用基準 [01-lewis2020-rag.pdf, §3.1, p.4] → [詳見](sources/01-lewis2020-rag.md)
 - **Parametric memory**：存在模型參數裡、模型自己「背起來」的知識 [01-lewis2020-rag.pdf, §2.3, p.3] → [詳見](concepts/parametric-vs-non-parametric-memory.md)
 - **Prompt**：交給 LLM 的輸入；Naive RAG 把問題和檢索到的文件組成 prompt [02-gao2023-survey.pdf, §II-A, p.3]。白話定義 [待補來源] → [詳見](methods/naive-rag.md)
+- **Prompt caching**：把常用的 prompt 快取起來，讓之後的 API 呼叫更快、更便宜；03 說它能讓延遲降低超過 2 倍、成本最多降低 90% [03-anthropic-contextual-retrieval.pdf, p.2] → [詳見](concepts/context-window.md)
 - **Prompt engineering**：不改模型、只靠設計輸入來發揮模型本身能力的方法 [02-gao2023-survey.pdf, §II-D, p.5] → [詳見](comparisons/rag-vs-fine-tuning.md)
 - **Proposition**：一段只包含一個事實、意思自足的簡潔敘述，可以當作檢索單位 [02-gao2023-survey.pdf, §III-A, p.8] → [詳見](concepts/chunking.md)
 - **Query rewriting**：檢索前先讓 LLM 改寫使用者的問題 [02-gao2023-survey.pdf, §III-C, p.9] → [詳見](concepts/query-optimization.md)
@@ -60,12 +65,15 @@ updated: 2026-11-22
 - **RAG-Sequence**：整個答案都根據同一份檢索文件的 RAG 版本 [01-lewis2020-rag.pdf, §2.1, p.3] → [詳見](methods/original-rag.md)
 - **RAG-Token**：每個 token 都可以根據不同檢索文件的 RAG 版本 [01-lewis2020-rag.pdf, §2.1, p.3] → [詳見](methods/original-rag.md)
 - **RAGAS**：用 LLM 自動評估 context relevance、faithfulness、answer relevance 的工具 [02-gao2023-survey.pdf, §VI-D, p.14; Table IV, p.15] → [詳見](concepts/rag-evaluation.md)
+- **Rank fusion**：把不同檢索方法（例如 BM25 和 embedding）的結果合併、去除重複 [03-anthropic-contextual-retrieval.pdf, p.3] → [詳見](concepts/retriever.md)
+- **Recall@k**：相關文件有出現在前 k 個檢索結果裡的比例；03 用「1 − recall@20」衡量檢索失敗率 [03-anthropic-contextual-retrieval.pdf, p.7] → [詳見](concepts/rag-evaluation.md)
 - **Recursive retrieval**：依照前一次的搜尋結果逐步修正查詢，把問題拆成子問題 [02-gao2023-survey.pdf, §V-B, p.11] → [詳見](methods/modular-rag.md)
 - **Reranking**：把檢索到的文件重新排序，讓最相關的排在前面 [02-gao2023-survey.pdf, §IV-A, p.10] → [詳見](concepts/reranking.md)
 - **Retrieval collapse**：retriever 不管輸入是什麼都找同一批文件，generator 也就開始忽略文件 [01-lewis2020-rag.pdf, App. H, p.19] → [詳見](concepts/retriever.md)
 - **Retriever**：根據問題找出相關文件的模型 [01-lewis2020-rag.pdf, §2, p.2] → [詳見](concepts/retriever.md)
 - **Seq2seq**：讀入一段文字、輸出另一段文字的模型，原始 RAG 稱它為「NLP 的主力」[01-lewis2020-rag.pdf, §1, p.2] → [詳見](concepts/generator.md)
 - **Sparse retrieval**：以關鍵字或字詞權重為基礎的檢索，例如 BM25 [02-gao2023-survey.pdf, §III-D, p.9] → [詳見](concepts/retriever.md)
+- **TF-IDF（Term Frequency-Inverse Document Frequency）**：衡量一個詞對某份文件有多重要的方法，是 BM25 的基礎 [03-anthropic-contextual-retrieval.pdf, p.3] → [詳見](concepts/retriever.md)
 - **Token**：模型逐一產生的文字單位；原始 RAG 以 token 為單位生成答案 [01-lewis2020-rag.pdf, §2, p.2–3]。對 token 的白話定義 [待補來源] → [詳見](concepts/generator.md)
 - **Top-k**：檢索時取出最相關的前 k 份文件 [01-lewis2020-rag.pdf, §3, p.4; 02-gao2023-survey.pdf, §II-A, p.3] → [詳見](concepts/retriever.md)
 - **Vector database**：存放 chunk 向量、支援相似度搜尋的資料庫 [02-gao2023-survey.pdf, §II-A, p.3] → [詳見](concepts/embedding.md)

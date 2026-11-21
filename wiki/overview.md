@@ -2,13 +2,13 @@
 type: overview
 title: "RAG 總覽"
 tags: [rag, overview]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf]
 updated: 2026-11-22
 ---
 
 # RAG 總覽
 
-> 本頁會在每次 ingest 時更新，結構對齊簡報。目前已 ingest：01、02。
+> 本頁會在每次 ingest 時更新，結構對齊簡報。目前已 ingest：01、02、03。
 
 ## 1. 為什麼需要 RAG
 
@@ -40,7 +40,12 @@ updated: 2026-11-22
 - [Advanced RAG](methods/advanced-rag.md)：檢索前改善 index 和 [query](concepts/query-optimization.md)，檢索後做 [reranking](concepts/reranking.md) 和壓縮 [02-gao2023-survey.pdf, §II-B, p.4]。
 - [Modular RAG](methods/modular-rag.md)：把流程拆成模組，支援 iterative、recursive、adaptive 檢索 [02-gao2023-survey.pdf, §II-C, p.4–5; Fig.5, p.11]。
 
-> 特定方法（Contextual Retrieval、Self-RAG、GraphRAG）將在 ingest 03、05、06 後補充。
+- **[Contextual Retrieval](methods/contextual-retrieval.md)**：切塊會讓 chunk 失去上下文，所以先用 LLM 為每個 chunk 補上說明；檢索失敗率降低 49%，再加上 reranking 降低 67% [03-anthropic-contextual-retrieval.pdf, p.2, p.4–5]。
+- **Hybrid retrieval**：embedding（找意思）加上 BM25（找精確字串），比只用 embedding 好 [03-anthropic-contextual-retrieval.pdf, p.3, p.11]。
+
+> 各種技巧的整理：[RAG 進階技巧比較](comparisons/rag-techniques.md)
+
+> Self-RAG、GraphRAG 將在 ingest 05、06 後補充。
 
 ## 5. 怎麼評估
 
@@ -56,6 +61,7 @@ updated: 2026-11-22
 - 更新知識只要換掉 index，不用重新訓練 [01-lewis2020-rag.pdf, §4.5, p.8]。
 - RAG 和 fine-tuning 可以互補，不是二選一 [02-gao2023-survey.pdf, §II-D, p.5]。
 - 即使 LLM 能讀很長的 context，RAG 在效率和可驗證性上仍有優勢 [02-gao2023-survey.pdf, §VII-A, p.14]。
+- 反過來說，知識庫小於 200,000 tokens（約 500 頁）時，不一定需要 RAG，直接全部放進 prompt 可能就夠了 [03-anthropic-contextual-retrieval.pdf, p.2]。這點和上一條有 ⚠️ 爭議，詳見 [Context window](concepts/context-window.md)。
 - 但 RAG 不是萬靈丹：外部資料本身可能有錯 [01-lewis2020-rag.pdf, Broader Impact, p.10]，雜訊或互相矛盾的資訊也會影響輸出品質 [02-gao2023-survey.pdf, §VII-B, p.14]。
 
 ## 相關頁面
