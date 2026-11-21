@@ -2,7 +2,7 @@
 type: concept
 title: "Lost in the middle（中間迷失）"
 tags: [concept, lost-in-the-middle, positional-bias, long-context]
-sources: [04-liu2023-lost-in-middle.pdf, 02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf]
+sources: [04-liu2023-lost-in-middle.pdf, 02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf, 07-es2023-ragas.pdf]
 updated: 2026-11-22
 ---
 
@@ -60,6 +60,7 @@ updated: 2026-11-22
 - **[01-lewis2020-rag.pdf](../sources/01-lewis2020-rag.md)**：原始 RAG 是把每份文件「分別」和問題串接後交給 generator，再把結果加權合併 [01-lewis2020-rag.pdf, §2.1, §2.3, p.3]，並不是把所有文件串成一個長 prompt；所以 lost in the middle 描述的情境，和它不完全相同。
 - **[05-asai2023-self-rag.pdf](../sources/05-asai2023-self-rag.md)**：Self-RAG 也是對每份文件分別、平行產生回答，再依評分挑選 [05-asai2023-self-rag.pdf, §3.1, p.4]。不過 05 沒有討論位置效應，所以無法判斷這種做法能否避免 lost in the middle [05-asai2023-self-rag.pdf, §3.3, p.6]。
 
+- **[07-es2023-ragas.pdf](../sources/07-es2023-ragas.md)**：設計 context relevance 指標的理由之一，就是 context 太長時，LLM 比較難利用其中的資訊，尤其是中間的資訊；這裡引用 04 的描述是正確的 [07-es2023-ragas.pdf, §3, p.3]。
 - **[06-edge2024-graphrag.pdf](../sources/06-edge2024-graphrag.md)**：因為擔心 lost in the middle，才為一般 RAG 測試不同大小的 context window [06-edge2024-graphrag.pdf, App. C, p.19]。
 
 > ⚠️ **爭議／更新**：[06-edge2024-graphrag.pdf, §3.1.1, p.4] 說較長的 chunk 會讓「出現在 chunk **前段**的資訊」比較難被找到，並引用了 04 和 Kuratov et al. 2024；但 04 的實際發現是開頭的資訊用得最好，**中間**的最差 [04-liu2023-lost-in-middle.pdf, Abstract, p.1; Table 6, p.18]。Kuratov et al. 不在 raw/ 中，無法核對。引用 06 的這句話時，建議以 04 的原始結果為準。

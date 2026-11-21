@@ -2,7 +2,7 @@
 type: concept
 title: "Parametric memory 與 non-parametric memory"
 tags: [concept, memory, foundational, knowledge-update]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 05-asai2023-self-rag.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 05-asai2023-self-rag.pdf, 07-es2023-ragas.pdf]
 updated: 2026-11-22
 ---
 
@@ -13,6 +13,8 @@ updated: 2026-11-22
 模型的知識可以存在兩個地方：一是模型自己「背起來」的部分（parametric memory），二是需要時才去「翻」的外部資料（non-parametric memory）。RAG 就是把這兩種記憶結合起來 [01-lewis2020-rag.pdf, Abstract, p.1]。
 
 ## 為什麼重要
+
+- **只靠 parametric memory 的兩個根本限制**：一是無法回答訓練之後才發生的事；二是即使是最大的模型，也很難記住訓練資料中很少出現的知識 [07-es2023-ragas.pdf, §1, p.1]。
 
 - 只靠 parametric memory 的模型，很難擴充或修改記憶、無法說明答案的出處，還可能產生 [hallucination](hallucination.md) [01-lewis2020-rag.pdf, §1, p.1]。
 - 加上 non-parametric memory 之後，知識可以直接修改和擴充，取用了哪些知識也能被檢查和解讀 [01-lewis2020-rag.pdf, §1, p.1]。

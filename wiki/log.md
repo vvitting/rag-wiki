@@ -81,3 +81,23 @@
 - 自我修正：App. C 的 context 大小實驗是在一般 RAG（SS）上做的，不是在 GraphRAG 上；已在 context-window、06 頁補上這個前提
 - 釐清容易混淆的名詞：GraphRAG 的「self-reflection」是 prompt 技巧，Self-RAG 的 reflection tokens 需要訓練（寫在 self-rag 頁）
 - lint：0 error, 0 warning；語意檢查抽查 36 處引用，全部吻合
+
+## [2026-11-22] ingest | 07-es2023-ragas.pdf
+- 新增（2）：sources/07-es2023-ragas.md、concepts/ragas.md
+- 修改（14）：concepts/（rag-evaluation：新增「評估方式總覽」表和「LLM 當評審，可靠嗎？」一節；hallucination、parametric-vs-non-parametric-memory、lost-in-the-middle）、comparisons/rag-timeline.md、sources/（02、04、06）、glossary.md（94 → 98 條）、analogies.md（+1，共 11 個）、overview.md、index.md、log.md
+- ⚠️ 新標註：
+  1. LLM 評審的可靠度：07 Table 1 的 GPT Ranking（ChatGPT 直接挑選）和人類一致度只有 0.40–0.54，§2 也提醒答案順序會影響判斷；06 的主要結果靠 LLM 兩兩比較得出，raw 檔中沒有找到處理順序的說明。補註 06 用 GPT-4，並用 claim 指標交叉驗證（69%–78%）（標在 rag-evaluation、06、07 頁）
+- ⚠️ 既有標註的更新：品質分數適用範圍（02 vs 06）補上 07 的原始設定是「標準 RAG」，支持 06 的範圍界定
+- 和既有內容一致之處：02 對 RAGAS 的描述（§VI-D、Table IV）和原始論文相符；07 §3 引用 04 時描述正確（中間的資訊最難利用），和 06 的誤引形成對照
+- 已補上的待補來源（共 3 項，至此全部清空）：LLM 的白話定義（04 §1＋07 §1）、In-context learning（06 §3.1.2）、Exact Match（05 §4.1 的反面說明）
+- 自我修正：rag-evaluation 的表格導言原本寫「每一格都附上出處」，改成「每一列」（「評估什麼」欄有些格子沒有單獨附出處）；index 原本寫「13 處待補來源」，核對 log 後改成正確的 9 項
+- lint：0 error, 0 warning；語意檢查抽查 27 處引用，全部吻合
+
+## [2026-11-22] lint | 全部 ingest 完成後的總檢查
+- 機械性檢查：36 頁，0 error，0 warning，[待補來源] 0 處
+- ⚠️ 標註共 37 個，分布在 19 頁
+- 語意檢查清單：
+  - [x] 沒有殘留「預計 ingest」「之後補充」等過時說明（grep 確認）
+  - [x] 矛盾都已加 ⚠️；跨頁的同一組爭議已互相連結
+  - [x] 待補來源清單已清空，index 已同步
+  - [ ] 待建頁面「Robustness」：相關內容分散在 context-window（04 App. B、02 §VII-B）和 rag-evaluation（四種能力），目前決定不獨立成頁，產生簡報時再評估

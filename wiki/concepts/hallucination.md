@@ -2,7 +2,7 @@
 type: concept
 title: "Hallucination（幻覺）"
 tags: [concept, hallucination, factuality]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 05-asai2023-self-rag.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 05-asai2023-self-rag.pdf, 07-es2023-ragas.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -31,6 +31,12 @@ Hallucination 指模型講出聽起來很像真的、但其實是錯的內容。
 - 但作者也承認，Self-RAG 仍可能產生沒有被引用完全支持的內容 [05-asai2023-self-rag.pdf, Ethical Concerns, p.11]。
 - **「看似合理」的陷阱**：文件不相關時，一般 instruction-tuned 模型仍會繼續產生看似合理的答案 [05-asai2023-self-rag.pdf, App. C.1, p.20]。
 
+## 怎麼偵測 hallucination？
+
+- **RAGAS 的 faithfulness**：把答案拆成小陳述，逐一檢查能不能從檢索到的 context 推論出來；這正是為了避免 hallucination [07-es2023-ragas.pdf, §3, p.3]。在 WikiEval 上，它和人類判斷的一致度是 0.95 [07-es2023-ragas.pdf, Table 1, p.5]。
+- **偵測並不容易**：既有研究顯示，用一般的 prompt 讓模型偵測 hallucination，效果不好 [07-es2023-ragas.pdf, §2, p.2]。
+- **SelfCheckGPT**：對同一個問題取樣多個答案；如果答案是事實，多次取樣的內容應該相近，hallucination 則不太會這樣 [07-es2023-ragas.pdf, §2, p.2]。06 也建議用這類方法比較捏造率 [06-edge2024-graphrag.pdf, §6.1, p.11]。
+
 ## 實際例子
 
 - 問 BART「define middle ear」，它回答「中耳是介於中耳和鼻子之間的部分」，這是錯的答案 [01-lewis2020-rag.pdf, Table 3, p.7]。
@@ -58,5 +64,6 @@ Hallucination 指模型講出聽起來很像真的、但其實是錯的內容。
 - [Generator](generator.md)
 - [Parametric 與 non-parametric memory](parametric-vs-non-parametric-memory.md)
 - [RAG 評估](rag-evaluation.md)
+- [RAGAS](ragas.md)
 - [Self-RAG](../methods/self-rag.md)
 - [術語表](../glossary.md)

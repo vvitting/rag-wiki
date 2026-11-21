@@ -5,7 +5,7 @@ raw: 06-edge2024-graphrag.pdf
 authors: [Darren Edge, Ha Trinh, Newman Cheng, Joshua Bradley, Alex Chao, Apurva Mody, Steven Truitt, Dasha Metropolitansky, Robert Osazuwa Ness, Jonathan Larson]
 year: 2024
 tags: [graphrag, knowledge-graph, global-questions, summarization, llm-as-a-judge]
-sources: [06-edge2024-graphrag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf]
+sources: [06-edge2024-graphrag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 07-es2023-ragas.pdf]
 updated: 2026-11-22
 ---
 
@@ -99,7 +99,9 @@ updated: 2026-11-22
 
 > ⚠️ **爭議／更新**：本篇說較長的 chunk 會讓「出現在 chunk **前段**的資訊」比較難被找到，並引用了 04 和 Kuratov et al. 2024 [06-edge2024-graphrag.pdf, §3.1.1, p.4; References, p.14]。但 04 的發現是：開頭的資訊用得最好（primacy bias），**中間**的資訊最容易被忽略 [04-liu2023-lost-in-middle.pdf, Abstract, p.1]。Kuratov et al. 不在 raw/ 中，無法核對它是否支持「前段」的說法。
 
-> ⚠️ **爭議／更新**：本篇說 RAGAS 的 context relevance、faithfulness、answer relevance 是「一般 vector RAG 適用、但和全局理解無關」的評估標準 [06-edge2024-graphrag.pdf, §2.4, p.4]；02 則把這三個列為 RAG 的主要品質分數 [02-gao2023-survey.pdf, §VI-C, p.12]。兩者適用的問題類型不同。詳見 [RAG 評估](../concepts/rag-evaluation.md)。
+> ⚠️ **爭議／更新**：本篇說 RAGAS 的 context relevance、faithfulness、answer relevance 是「一般 vector RAG 適用、但和全局理解無關」的評估標準 [06-edge2024-graphrag.pdf, §2.4, p.4]；02 則把這三個列為 RAG 的主要品質分數 [02-gao2023-survey.pdf, §VI-C, p.12]。RAGAS 原始論文的設定確實是標準 RAG [07-es2023-ragas.pdf, §3, p.2]。兩者適用的問題類型不同。詳見 [RAG 評估](../concepts/rag-evaluation.md)。
+
+> ⚠️ **爭議／更新**：本篇的主要結果靠 LLM 兩兩比較答案得出；但 [07-es2023-ragas.pdf, Table 1, p.5] 發現，直接讓 ChatGPT 從兩個答案中挑選，和人類判斷一致的比例只有 0.40–0.54，而且答案的順序會影響判斷 [07-es2023-ragas.pdf, §2, p.2]。本篇的 raw 檔中沒有找到處理答案順序的說明。不過本篇用的是 GPT-4 [06-edge2024-graphrag.pdf, §1, p.2]，也用 claim 指標交叉驗證過（69%–78% 一致）[06-edge2024-graphrag.pdf, §5.2, p.11]。詳見 [RAG 評估](../concepts/rag-evaluation.md)。
 
 > ⚠️ **爭議／更新**：本篇的核心就是「以摘要為基礎的 index」，而且在全局問題上勝過一般 RAG [06-edge2024-graphrag.pdf, §5.1, p.9]；但 [03-anthropic-contextual-retrieval.pdf, p.5] 發現以摘要為基礎的 indexing 表現很差。兩者的任務不同：03 衡量的是「能不能找到特定的 chunk」，本篇衡量的是「全局問題的答案夠不夠全面」。詳見 [Chunking](../concepts/chunking.md)。
 

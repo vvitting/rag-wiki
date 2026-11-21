@@ -2,7 +2,7 @@
 type: glossary
 title: "術語表"
 tags: [glossary]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf, 07-es2023-ragas.pdf]
 updated: 2026-11-22
 ---
 
@@ -12,8 +12,8 @@ updated: 2026-11-22
 
 - **Adaptive retrieval**：讓 LLM 自己決定什麼時候需要檢索、什麼時候停止；Self-RAG 是代表例子 [02-gao2023-survey.pdf, §V-C, p.11; 05-asai2023-self-rag.pdf, §3.3, p.6] → [詳見](methods/self-rag.md)
 - **Advanced RAG**：在 Naive RAG 的前後加上 pre-retrieval 和 post-retrieval 優化 [02-gao2023-survey.pdf, §II-B, p.3] → [詳見](methods/advanced-rag.md)
-- **Answer faithfulness**：答案是否忠於檢索到的 context，沒有互相矛盾 [02-gao2023-survey.pdf, §VI-C, p.12] → [詳見](concepts/rag-evaluation.md)
-- **Answer relevance**：答案是否直接回答了問題 [02-gao2023-survey.pdf, §VI-C, p.12] → [詳見](concepts/rag-evaluation.md)
+- **Answer faithfulness（Faithfulness）**：答案是否忠於檢索到的 context；RAGAS 的算法是「能從 context 推論出來的陳述數 ÷ 陳述總數」[02-gao2023-survey.pdf, §VI-C, p.12; 07-es2023-ragas.pdf, §3, p.3] → [詳見](concepts/ragas.md)
+- **Answer relevance**：答案是否直接回答了問題，不考慮事實是否正確 [02-gao2023-survey.pdf, §VI-C, p.12; 07-es2023-ragas.pdf, §3, p.3] → [詳見](concepts/ragas.md)
 - **Attribution**：輸出的內容是否被某份證據完全支持 [05-asai2023-self-rag.pdf, App. A.1, p.17] → [詳見](concepts/hallucination.md)
 - **BART**：原始 RAG 用來寫答案的預訓練 seq2seq 模型，BART-large 有 400M 參數 [01-lewis2020-rag.pdf, §2.3, p.3] → [詳見](concepts/generator.md)
 - **Bi-encoder**：用兩個 encoder 分別把「問題」和「文件」轉成向量，再比對兩者；DPR 就是這種架構 [01-lewis2020-rag.pdf, §2.2, p.3] → [詳見](concepts/retriever.md)
@@ -25,7 +25,7 @@ updated: 2026-11-22
 - **Closed-book**：不查資料、只靠模型自己記住的知識回答 [01-lewis2020-rag.pdf, §3.1, p.4; §4.1, p.5] → [詳見](comparisons/closed-book-vs-open-book.md)
 - **Community detection**：把圖切分成關係緊密的社群的演算法，GraphRAG 用的是 Leiden [06-edge2024-graphrag.pdf, §3.1.4, p.5] → [詳見](methods/graphrag.md)
 - **Community（社群）**：knowledge graph 中一群關係緊密的節點；GraphRAG 為每個社群寫摘要 [06-edge2024-graphrag.pdf, §1, p.2] → [詳見](methods/graphrag.md)
-- **Context relevance**：檢索到的 context 是否精確、切題 [02-gao2023-survey.pdf, §VI-C, p.12] → [詳見](concepts/rag-evaluation.md)
+- **Context relevance**：檢索到的 context 是否精確、切題，只包含回答問題需要的資訊 [02-gao2023-survey.pdf, §VI-C, p.12; 07-es2023-ragas.pdf, §3, p.3] → [詳見](concepts/ragas.md)
 - **Context window**：模型一次能接受的最大輸入長度，以 token 計算，例如 GPT-3.5-Turbo 是 4K tokens [04-liu2023-lost-in-middle.pdf, §2.2, p.5]；02 撰寫時，LLM 已能處理超過 200,000 tokens [02-gao2023-survey.pdf, §VII-A, p.14] → [詳見](concepts/context-window.md)
 - **Contextual BM25**：為 chunk 加上說明文字後再建立的 BM25 index [03-anthropic-contextual-retrieval.pdf, p.5] → [詳見](methods/contextual-retrieval.md)
 - **Contextual Embeddings**：為 chunk 加上說明文字後再轉成的 embedding [03-anthropic-contextual-retrieval.pdf, p.5] → [詳見](methods/contextual-retrieval.md)
@@ -40,7 +40,7 @@ updated: 2026-11-22
 - **DPR（Dense Passage Retriever）**：原始 RAG 使用的 retriever，以 BERT-base 為基礎 [01-lewis2020-rag.pdf, §1, p.2; §2.2, p.3] → [詳見](concepts/retriever.md)
 - **Embedding**：把一段文字轉成的一串數字（dense representation）[01-lewis2020-rag.pdf, §2.2, p.3] → [詳見](concepts/embedding.md)
 - **Entity（實體）**：文件中重要的人、地點、組織等；GraphRAG 把它們當作 knowledge graph 的節點 [06-edge2024-graphrag.pdf, §3.1.2, p.4–5] → [詳見](methods/graphrag.md)
-- **Exact Match（EM）**：模型答案和標準答案「完全一樣」才算對的評分方式；問答任務常用 [01-lewis2020-rag.pdf, §3.1, p.4; 02-gao2023-survey.pdf, §VI-B, p.12]。（「完全一樣」是依名稱的白話說明，原文沒有給出定義 [待補來源]）
+- **Exact Match（EM）**：模型答案必須和標準答案完全一致才算對的評分方式，問答任務常用 [01-lewis2020-rag.pdf, §3.1, p.4; 02-gao2023-survey.pdf, §VI-B, p.12]；05 為了放寬標準，改成「標準答案出現在輸出中就算對」，而不是嚴格要求完全一致 [05-asai2023-self-rag.pdf, §4.1, p.7] → [詳見](concepts/rag-evaluation.md)
 - **Extractive QA**：從檢索到的文件中「挑出」一段文字當答案 [01-lewis2020-rag.pdf, §3.1, p.4] → [詳見](concepts/generator.md)
 - **FactScore**：評估長篇生成（例如傳記）事實性的指標 [05-asai2023-self-rag.pdf, §4.1, p.7] → [詳見](concepts/rag-evaluation.md)
 - **FAISS**：用來建立向量 index、快速找出相似向量的工具 [01-lewis2020-rag.pdf, §3, p.4] → [詳見](concepts/embedding.md)
@@ -51,14 +51,14 @@ updated: 2026-11-22
 - **Hallucination**：模型講出聽起來像真的、但其實是錯的內容，或檢索內容沒有支持的說法 [01-lewis2020-rag.pdf, §1, p.1; 02-gao2023-survey.pdf, §II-A, p.3] → [詳見](concepts/hallucination.md)
 - **Hybrid retrieval**：結合 sparse（關鍵字）和 dense（語意）檢索，讓兩者互補 [02-gao2023-survey.pdf, §III-D, p.9] → [詳見](concepts/retriever.md)
 - **HyDE**：先讓 LLM 寫一份假設的答案，再用它去找相似的真實文件 [02-gao2023-survey.pdf, §III-C, p.9] → [詳見](concepts/query-optimization.md)
-- **In-context learning（ICL）**：ChatGPT 之後 LLM 展現的能力，讓 RAG 研究轉向在推論階段提供資訊 [02-gao2023-survey.pdf, §I, p.1]。白話定義 [待補來源] → [詳見](comparisons/rag-timeline.md)
+- **In-context learning（ICL）**：不訓練模型，只在 prompt 裡放幾個範例（few-shot exemplars），讓模型照著做 [06-edge2024-graphrag.pdf, §3.1.2, p.5]；ChatGPT 之後 LLM 展現的這種能力，讓 RAG 研究轉向在推論階段提供資訊 [02-gao2023-survey.pdf, §I, p.1] → [詳見](comparisons/rag-timeline.md)
 - **Index（document index）**：所有文件 embedding 的集合，也就是 RAG 的 non-parametric memory [01-lewis2020-rag.pdf, §2.2, p.3] → [詳見](concepts/embedding.md)
 - **Information integration**：能否整合多份文件的資訊，回答複雜的問題 [02-gao2023-survey.pdf, §VI-C, p.12] → [詳見](concepts/rag-evaluation.md)
 - **Instruction fine-tuning**：預訓練之後，再用「指令與回應」的資料集做監督式微調 [04-liu2023-lost-in-middle.pdf, §4.3, p.8] → [詳見](concepts/lost-in-the-middle.md)
 - **Iterative retrieval**：依照原始問題和目前已生成的內容，反覆搜尋知識庫 [02-gao2023-survey.pdf, §V-A, p.10] → [詳見](methods/modular-rag.md)
 - **Knowledge graph（KG）**：用節點（實體）和邊（關係）表示知識的結構化資料；既有的 KG 通常經過驗證 [02-gao2023-survey.pdf, §III-A, p.7]，GraphRAG 的 KG 則是 LLM 從文字中抽出來的 [06-edge2024-graphrag.pdf, §3.1.3, p.5] → [詳見](methods/graphrag.md)
 - **Knowledge-intensive task**：人類沒有外部知識來源就不太可能完成的任務 [01-lewis2020-rag.pdf, §1, p.2] → [詳見](sources/01-lewis2020-rag.md)
-- **Language model / LLM**：從資料中學到大量知識，並存在參數裡的預訓練模型；LLM 能力很強，但有 hallucination、知識過時等問題 [01-lewis2020-rag.pdf, §1, p.1; 02-gao2023-survey.pdf, Abstract, p.1]。給完全新手的白話定義 [待補來源] → [詳見](concepts/parametric-vs-non-parametric-memory.md)
+- **Language model / LLM**：讀進一段文字（prompt）、再接著產生文字的模型 [04-liu2023-lost-in-middle.pdf, §1, p.1]；它從大量資料中學到很多世界知識，不查外部資料也能回答問題 [07-es2023-ragas.pdf, §1, p.1]，但有 hallucination、知識過時等問題 [02-gao2023-survey.pdf, Abstract, p.1] → [詳見](concepts/parametric-vs-non-parametric-memory.md)
 - **LLM-as-a-judge**：讓 LLM 當評審，比較兩個系統的答案哪個比較好；適合沒有標準答案的情況 [06-edge2024-graphrag.pdf, §2.4, p.4] → [詳見](concepts/rag-evaluation.md)
 - **Lost in the middle**：相關資訊放在 context 中間時，LLM 的表現明顯比放在開頭或結尾差，呈現 U 形曲線 [04-liu2023-lost-in-middle.pdf, Abstract, p.1; 02-gao2023-survey.pdf, §IV-A, p.10] → [詳見](concepts/lost-in-the-middle.md)
 - **Map-reduce**：先把資料分塊、平行產生部分答案（map），再把部分答案彙整成最終答案（reduce）[06-edge2024-graphrag.pdf, §1, p.2] → [詳見](methods/graphrag.md)
@@ -74,6 +74,7 @@ updated: 2026-11-22
 - **Open-domain QA**：可以問任何主題的問答任務，是測試 knowledge-intensive 任務的常用基準 [01-lewis2020-rag.pdf, §3.1, p.4] → [詳見](sources/01-lewis2020-rag.md)
 - **Oracle（設定）**：只給模型那份含有答案的文件，代表「檢索完美」時的上限表現 [04-liu2023-lost-in-middle.pdf, §2.3, p.5] → [詳見](comparisons/closed-book-vs-open-book.md)
 - **Parametric memory**：存在模型參數裡、模型自己「背起來」的知識 [01-lewis2020-rag.pdf, §2.3, p.3] → [詳見](concepts/parametric-vs-non-parametric-memory.md)
+- **Perplexity**：衡量語言模型預測文字能力的指標；用它評估 RAG 不一定能預測實際任務的表現 [07-es2023-ragas.pdf, §1, p.1] → [詳見](concepts/rag-evaluation.md)
 - **Primacy bias／Recency bias**：模型比較會利用放在開頭（primacy）或結尾（recency）的資訊 [04-liu2023-lost-in-middle.pdf, Fig.1, p.1] → [詳見](concepts/lost-in-the-middle.md)
 - **Prompt caching**：把常用的 prompt 快取起來，讓之後的 API 呼叫更快、更便宜；03 說它能讓延遲降低超過 2 倍、成本最多降低 90% [03-anthropic-contextual-retrieval.pdf, p.2] → [詳見](concepts/context-window.md)
 - **Prompt engineering**：不改模型、只靠設計輸入來發揮模型本身能力的方法 [02-gao2023-survey.pdf, §II-D, p.5] → [詳見](comparisons/rag-vs-fine-tuning.md)
@@ -85,17 +86,19 @@ updated: 2026-11-22
 - **RAG（Retrieval-Augmented Generation）**：結合 parametric 與 non-parametric memory 來生成文字的模型 [01-lewis2020-rag.pdf, Abstract, p.1] → [詳見](methods/original-rag.md)
 - **RAG-Sequence**：整個答案都根據同一份檢索文件的 RAG 版本 [01-lewis2020-rag.pdf, §2.1, p.3] → [詳見](methods/original-rag.md)
 - **RAG-Token**：每個 token 都可以根據不同檢索文件的 RAG 版本 [01-lewis2020-rag.pdf, §2.1, p.3] → [詳見](methods/original-rag.md)
-- **RAGAS**：用 LLM 自動評估 context relevance、faithfulness、answer relevance 的工具 [02-gao2023-survey.pdf, §VI-D, p.14; Table IV, p.15] → [詳見](concepts/rag-evaluation.md)
+- **RAGAS**：不需要標準答案、用 LLM 自動評估 faithfulness、answer relevance、context relevance 的框架 [07-es2023-ragas.pdf, Abstract, p.1; 02-gao2023-survey.pdf, §VI-D, p.14] → [詳見](concepts/ragas.md)
 - **Rank fusion**：把不同檢索方法（例如 BM25 和 embedding）的結果合併、去除重複 [03-anthropic-contextual-retrieval.pdf, p.3] → [詳見](concepts/retriever.md)
 - **Ranked list truncation**：在適當時候少取幾份文件，不把排序清單全部交給模型 [04-liu2023-lost-in-middle.pdf, §5, p.10] → [詳見](concepts/context-window.md)
 - **Recall@k**：相關文件有出現在前 k 個檢索結果裡的比例；03 用「1 − recall@20」衡量檢索失敗率 [03-anthropic-contextual-retrieval.pdf, p.7] → [詳見](concepts/rag-evaluation.md)
 - **Recursive retrieval**：依照前一次的搜尋結果逐步修正查詢，把問題拆成子問題 [02-gao2023-survey.pdf, §V-B, p.11] → [詳見](methods/modular-rag.md)
+- **Reference-free evaluation**：不需要人工標準答案的評估方式，RAGAS 就是一例 [07-es2023-ragas.pdf, Abstract, p.1; §3, p.3] → [詳見](concepts/ragas.md)
 - **Reflection token**：Self-RAG 讓模型產生的特殊 token，用來決定要不要檢索，並為文件和自己的輸出評分 [05-asai2023-self-rag.pdf, Abstract, p.1; Table 1, p.4] → [詳見](methods/self-rag.md)
 - **Reranking**：把檢索到的文件重新排序，讓最相關的排在前面 [02-gao2023-survey.pdf, §IV-A, p.10] → [詳見](concepts/reranking.md)
 - **Retrieval collapse**：retriever 不管輸入是什麼都找同一批文件，generator 也就開始忽略文件 [01-lewis2020-rag.pdf, App. H, p.19] → [詳見](concepts/retriever.md)
 - **Retriever**：根據問題找出相關文件的模型 [01-lewis2020-rag.pdf, §2, p.2] → [詳見](concepts/retriever.md)
 - **Segment-level beam search**：每寫一段（實驗中是一個句子）就保留分數最高的幾個候選，再繼續寫 [05-asai2023-self-rag.pdf, §3.3, p.6; §3.1, p.3] → [詳見](methods/self-rag.md)
 - **Self-RAG**：訓練 LLM 自己決定何時檢索，並用 reflection tokens 自我評分的方法 [05-asai2023-self-rag.pdf, Abstract, p.1] → [詳見](methods/self-rag.md)
+- **SelfCheckGPT**：對同一問題取樣多個答案，用答案是否一致來判斷有沒有 hallucination 的方法 [07-es2023-ragas.pdf, §2, p.2] → [詳見](concepts/hallucination.md)
 - **Seq2seq**：讀入一段文字、輸出另一段文字的模型，原始 RAG 稱它為「NLP 的主力」[01-lewis2020-rag.pdf, §1, p.2] → [詳見](concepts/generator.md)
 - **Serial-position effect（序列位置效應）**：心理學現象，人在回想一串項目時，最記得第一個和最後一個 [04-liu2023-lost-in-middle.pdf, §6.3, p.10] → [詳見](concepts/lost-in-the-middle.md)
 - **Sparse retrieval**：以關鍵字或字詞權重為基礎的檢索，例如 BM25 [02-gao2023-survey.pdf, §III-D, p.9] → [詳見](concepts/retriever.md)
@@ -104,6 +107,7 @@ updated: 2026-11-22
 - **Top-k**：檢索時取出最相關的前 k 份文件 [01-lewis2020-rag.pdf, §3, p.4; 02-gao2023-survey.pdf, §II-A, p.3] → [詳見](concepts/retriever.md)
 - **Vector database**：存放 chunk 向量、支援相似度搜尋的資料庫 [02-gao2023-survey.pdf, §II-A, p.3] → [詳見](concepts/embedding.md)
 - **Vector RAG**：GraphRAG 論文對一般 RAG 的稱呼：用 text embedding 找出語意相近的資料 [06-edge2024-graphrag.pdf, §2.1, p.2] → [詳見](methods/naive-rag.md)
+- **WikiEval**：RAGAS 論文建立的驗證資料集，用 50 個 Wikipedia 頁面和人工判斷來檢驗評估指標 [07-es2023-ragas.pdf, §4, p.4] → [詳見](concepts/ragas.md)
 
 ## 相關頁面
 - [目錄](index.md)

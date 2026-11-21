@@ -2,19 +2,20 @@
 type: overview
 title: "RAG 總覽"
 tags: [rag, overview]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf, 07-es2023-ragas.pdf]
 updated: 2026-11-22
 ---
 
 # RAG 總覽
 
-> 本頁會在每次 ingest 時更新，結構對齊簡報。目前已 ingest：01、02、03、04、05、06。
+> 本頁會在每次 ingest 時更新，結構對齊簡報。目前已 ingest：01–07（全部）。
 
 ## 1. 為什麼需要 RAG
 
 - LLM 很強，但有三個主要問題：hallucination、知識過時、推理過程不透明又無法追溯 [02-gao2023-survey.pdf, Abstract, p.1]。
 - Language model 把知識存在參數裡，很難更新或擴充，也無法說明答案的出處 [01-lewis2020-rag.pdf, §1, p.1]。
 - 遇到超出訓練資料範圍、或需要最新資訊的問題時，LLM 特別容易產生 [hallucination](concepts/hallucination.md) [02-gao2023-survey.pdf, §I, p.1]。
+- 兩個根本限制：LLM 不知道訓練之後才發生的事，也很難記住訓練資料中很少出現的知識 [07-es2023-ragas.pdf, §1, p.1]。
 
 ## 2. RAG 是什麼
 
@@ -60,7 +61,8 @@ updated: 2026-11-22
 - 沒有標準答案的問題（例如全局問題），可以讓 LLM 當評審，兩兩比較答案（LLM-as-a-judge）[06-edge2024-graphrag.pdf, §2.4, p.4]。
 - 原始 RAG 用 Exact Match 評估問答，並用人工評估比較事實性 [01-lewis2020-rag.pdf, §3.1, p.4; §3.3, p.5]。
 
-> RAGAS 的原始論文將在 ingest 07 後補充。
+- **[RAGAS](concepts/ragas.md)**：不需要標準答案，讓 LLM 分步驟計算三個分數；faithfulness 和人類判斷的一致度達 0.95 [07-es2023-ragas.pdf, Abstract, p.1; Table 1, p.5]。
+- **小心 LLM 評審**：直接讓 ChatGPT 挑比較好的答案，和人類判斷一致的比例只有 0.40–0.54 [07-es2023-ragas.pdf, Table 1, p.5]。拆成小步驟、重複多次、交叉驗證會比較可靠，詳見 [RAG 評估](concepts/rag-evaluation.md) [06-edge2024-graphrag.pdf, §3.3, p.8]。
 
 ## 6. 總結
 

@@ -2,7 +2,7 @@
 type: analogy
 title: "比喻集"
 tags: [analogy, teaching]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf, 07-es2023-ragas.pdf]
 updated: 2026-11-22
 ---
 
@@ -87,6 +87,13 @@ updated: 2026-11-22
 - **對應到 RAG 的哪個部分**：[GraphRAG](methods/graphrag.md)、[Naive RAG](methods/naive-rag.md)
 - **比喻的極限**：真人做摘要時會判斷哪些重要；GraphRAG 的關係圖和摘要都是 LLM 自動產生的，可能漏掉細節，也可能出錯。而且事先整理很花時間。
 - **對應的技術事實**：一般 RAG 適合答案集中在少數文件裡的問題，無法回答「資料集的主要主題是什麼？」這類全局問題 [06-edge2024-graphrag.pdf, Abstract, p.1; §1, p.2]；GraphRAG 為約 100 萬 tokens 的資料建 index，花了 281 分鐘 [06-edge2024-graphrag.pdf, §4.1.3, p.9]。
+
+### 改開書考的考卷
+
+- **比喻**：老師改開書考時，會分開看三件事：「你翻的那幾頁跟題目有關嗎？」（翻對頁了沒）、「你寫的每一句，書上真的有嗎？」（有沒有亂掰）、「你有沒有回答到題目問的？」（有沒有離題）。三項分開打分數，才知道學生是哪裡出問題。
+- **對應到 RAG 的哪個部分**：[RAGAS](concepts/ragas.md) 的 context relevance、faithfulness、answer relevance
+- **比喻的極限**：RAGAS 的「老師」是另一個 LLM，它自己也會判斷錯；而且它只檢查答案和「翻到的那幾頁」一致，如果書本身寫錯，它也看不出來。
+- **對應的技術事實**：RAGAS 的三個指標分別衡量 context 是否切題、答案是否能從 context 推論、答案是否回答問題 [07-es2023-ragas.pdf, §3, p.3]；和人類判斷的一致度分別是 0.70、0.95、0.78 [07-es2023-ragas.pdf, Table 1, p.5]。
 
 ## 相關頁面
 - [目錄](index.md)
