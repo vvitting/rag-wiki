@@ -5,7 +5,7 @@ raw: 02-gao2023-survey.pdf
 authors: [Yunfan Gao, Yun Xiong, Xinyu Gao, Kangxiang Jia, Jinliu Pan, Yuxi Bi, Yi Dai, Jiawei Sun, Meng Wang, Haofen Wang]
 year: 2023
 tags: [rag, survey, naive-rag, advanced-rag, modular-rag, evaluation]
-sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf]
+sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf]
 updated: 2026-11-22
 ---
 
@@ -81,7 +81,9 @@ updated: 2026-11-22
 
 > ⚠️ **爭議／更新**：本篇把段落摘要、階層式摘要 index 列為優化方法 [02-gao2023-survey.pdf, §III-B, p.8]；[03-anthropic-contextual-retrieval.pdf, p.5] 實測通用文件摘要提升非常有限，以摘要為基礎的 indexing 表現很差。詳見 [Chunking](../concepts/chunking.md)。
 
-> ⚠️ **爭議／更新**：本篇說「盡量多檢索文件」是常見的誤解，太多 context 會帶來雜訊 [02-gao2023-survey.pdf, §IV-A, p.10]；但 [01-lewis2020-rag.pdf, §4.5, p.8] 發現 RAG-Sequence 取越多份文件，NQ 表現就越好。詳見 [Context window](../concepts/context-window.md)。
+> ⚠️ **爭議／更新**：本篇說「盡量多檢索文件」是常見的誤解，太多 context 會帶來雜訊 [02-gao2023-survey.pdf, §IV-A, p.10]；但 [01-lewis2020-rag.pdf, §4.5, p.8] 發現 RAG-Sequence 取越多份文件，NQ 表現就越好。[04-liu2023-lost-in-middle.pdf, §5, p.10] 的結果支持本篇：在 LLM 上，取 20 份以上幾乎不再進步。詳見 [Context window](../concepts/context-window.md)。
+
+- **本篇引用的原始研究已經 ingest**：本篇對 lost in the middle 的描述 [02-gao2023-survey.pdf, §IV-A, p.10]，引用的是 04 這篇 [02-gao2023-survey.pdf, Ref.[98], p.19]，詳見 [04 來源頁](04-liu2023-lost-in-middle.md)。
 
 ## 關鍵圖表說明
 

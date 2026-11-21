@@ -5,7 +5,7 @@ raw: 03-anthropic-contextual-retrieval.pdf
 authors: [Anthropic]
 year: 2024
 tags: [rag, contextual-retrieval, bm25, hybrid-search, reranking, industry-blog]
-sources: [03-anthropic-contextual-retrieval.pdf, 01-lewis2020-rag.pdf, 02-gao2023-survey.pdf]
+sources: [03-anthropic-contextual-retrieval.pdf, 01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 04-liu2023-lost-in-middle.pdf]
 updated: 2026-11-22
 ---
 
@@ -75,7 +75,7 @@ Anthropic 在 2024 年 9 月 19 日發表的技術文章 [03-anthropic-contextua
 - **Reranking 的代價**：多了一個執行步驟，一定會增加一點延遲；要在「rerank 更多 chunk 換更好表現」和「rerank 更少換更低延遲與成本」之間取捨 [03-anthropic-contextual-retrieval.pdf, p.10]。
 - **其他方法的效果有限**：作者試過把通用的文件摘要加到 chunk 上，提升非常有限；也評估過以摘要為基礎的 indexing，表現很差 [03-anthropic-contextual-retrieval.pdf, p.5]。
 
-> ⚠️ **爭議／更新**：本篇說知識庫小於 200,000 tokens（約 500 頁）時，可以直接把整個知識庫放進 prompt，不需要 RAG [03-anthropic-contextual-retrieval.pdf, p.2]；但 [02-gao2023-survey.pdf, §VII-A, p.14] 認為即使 LLM 能處理長 context，RAG 在效率和可驗證性上仍無可取代。詳見 [Context window](../concepts/context-window.md)。
+> ⚠️ **爭議／更新**：本篇說知識庫小於 200,000 tokens（約 500 頁）時，可以直接把整個知識庫放進 prompt，不需要 RAG [03-anthropic-contextual-retrieval.pdf, p.2]；但 [02-gao2023-survey.pdf, §VII-A, p.14] 認為即使 LLM 能處理長 context，RAG 在效率和可驗證性上仍無可取代；[04-liu2023-lost-in-middle.pdf, §2.3, p.5] 也發現，支援長 context 的模型不一定比較會用 context，中間的資訊容易被忽略（測的是 2023 年的模型）。詳見 [Context window](../concepts/context-window.md)。
 
 > ⚠️ **爭議／更新**：本篇的結論是「有 reranking 比沒有好」[03-anthropic-contextual-retrieval.pdf, p.11]，支持 [02-gao2023-survey.pdf, §II-B, p.4] 的看法；而 [01-lewis2020-rag.pdf, §4.1, p.5] 認為 re-ranker 不是必要的。詳見 [Reranking](../concepts/reranking.md)。
 

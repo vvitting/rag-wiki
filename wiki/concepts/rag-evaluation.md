@@ -2,7 +2,7 @@
 type: concept
 title: "RAG 評估"
 tags: [concept, evaluation, metrics, benchmark]
-sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf]
+sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf]
 updated: 2026-11-22
 ---
 
@@ -46,6 +46,12 @@ Context relevance 和 noise robustness 用來評估檢索；其餘五項用來�
 - 03 用「1 − recall@20」當評估指標，也就是「相關文件沒出現在前 20 個 chunk 裡」的比例 [03-anthropic-contextual-retrieval.pdf, p.7]。
 - 這個指標只衡量檢索，不衡量最終答案。03 主張檢索準確度的提升會直接轉化為下游任務更好的表現 [03-anthropic-contextual-retrieval.pdf, p.2]，但 raw 檔中沒有附上答案品質的數字 [03-anthropic-contextual-retrieval.pdf, p.7–11]。
 - 03 的建議是：一定要做評估（always run evals）[03-anthropic-contextual-retrieval.pdf, p.9]。
+
+### 實例：評估「模型會不會用 context」
+
+- 04 提出一種評估方式：要宣稱模型能好好使用長 context，就必須證明相關資訊放在哪個位置都不太影響表現，也就是最好和最差情況的差距要很小 [04-liu2023-lost-in-middle.pdf, §1, p.3]。
+- 04 也把結果和兩個基準比較：closed-book（不給文件）和 oracle（只給答案文件）[04-liu2023-lost-in-middle.pdf, §2.3, p.5]。
+- **Noise robustness 的實例**：用「和問題相關但沒有答案」的文件當干擾時，模型表現比用隨機文件當干擾還差 [04-liu2023-lost-in-middle.pdf, App. B, p.14]。這正對應 02 對 noise robustness 的定義：處理「相關但沒有實質資訊」的文件 [02-gao2023-survey.pdf, §VI-C, p.12]。
 
 ### 傳統的任務指標
 

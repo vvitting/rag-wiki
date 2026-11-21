@@ -2,7 +2,7 @@
 type: concept
 title: "Retriever（檢索器）"
 tags: [concept, retrieval, dpr, bm25, mips]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf]
 updated: 2026-11-22
 ---
 
@@ -36,7 +36,9 @@ Retriever 是 RAG 裡負責「查資料」的部分：拿到問題後，它會�
 - 測試時取越多份，RAG-Sequence 在 NQ 上的表現就越好；RAG-Token 則在 10 份時最好 [01-lewis2020-rag.pdf, §4.5, p.8; Fig.3, p.8]。
 - 文件取得越多，執行時間也會受影響 [01-lewis2020-rag.pdf, §4.5, p.8]。
 
-> ⚠️ **爭議／更新**：[02-gao2023-survey.pdf, §IV-A, p.10] 認為「盡量多檢索文件」是常見的誤解，過多的 context 會帶來雜訊。詳見 [Context window](context-window.md)。
+- **Retriever 找到了，不代表 LLM 用得到**：04 發現 retriever 的 recall 隨文件數量持續上升，LLM 的表現卻在大約 20 份時就停止進步了 [04-liu2023-lost-in-middle.pdf, §5, p.10; Fig.11, p.10]。
+
+> ⚠️ **爭議／更新**：[02-gao2023-survey.pdf, §IV-A, p.10] 認為「盡量多檢索文件」是常見的誤解，過多的 context 會帶來雜訊；[04-liu2023-lost-in-middle.pdf, §5, p.10] 也發現取 50 份和取 20 份相比，進步只有約 1%–1.5%。詳見 [Context window](context-window.md)。
 
 ### Dense retriever vs BM25
 

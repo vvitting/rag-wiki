@@ -2,13 +2,13 @@
 type: overview
 title: "RAG 總覽"
 tags: [rag, overview]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf]
 updated: 2026-11-22
 ---
 
 # RAG 總覽
 
-> 本頁會在每次 ingest 時更新，結構對齊簡報。目前已 ingest：01、02、03。
+> 本頁會在每次 ingest 時更新，結構對齊簡報。目前已 ingest：01、02、03、04。
 
 ## 1. 為什麼需要 RAG
 
@@ -34,6 +34,8 @@ updated: 2026-11-22
 
 原始的 RAG（2020）流程相同，但 retriever 和 generator 是一起訓練的，詳見 [原始 RAG](methods/original-rag.md) [01-lewis2020-rag.pdf, §2.4, p.3]。
 
+**放進 prompt 之後的陷阱**：LLM 最會利用開頭和結尾的資訊，放在中間的容易被忽略（[lost in the middle](concepts/lost-in-the-middle.md)）。GPT-3.5-Turbo 在 20 份文件中，答案在第 1 份時是 75.8%，在第 10 份時只有 53.8%，比完全不給文件的 56.1% 還低 [04-liu2023-lost-in-middle.pdf, Table 6, p.18; Table 1, p.5]。
+
 ## 4. 進階變體
 
 - Naive RAG 有檢索不準、生成出錯、整合困難等問題，因此發展出 Advanced 和 Modular RAG [02-gao2023-survey.pdf, §II, p.2; §II-A, p.3]。詳見 [三種 RAG 典範比較](comparisons/rag-paradigms.md)。
@@ -42,6 +44,7 @@ updated: 2026-11-22
 
 - **[Contextual Retrieval](methods/contextual-retrieval.md)**：切塊會讓 chunk 失去上下文，所以先用 LLM 為每個 chunk 補上說明；檢索失敗率降低 49%，再加上 reranking 降低 67% [03-anthropic-contextual-retrieval.pdf, p.2, p.4–5]。
 - **Hybrid retrieval**：embedding（找意思）加上 BM25（找精確字串），比只用 embedding 好 [03-anthropic-contextual-retrieval.pdf, p.3, p.11]。
+- **Reranking**：把最相關的文件排到前面，同時應對 lost in the middle [04-liu2023-lost-in-middle.pdf, §5, p.10]；03 的實驗中，再加上 reranking 讓檢索失敗率降到 1.9% [03-anthropic-contextual-retrieval.pdf, p.10]。
 
 > 各種技巧的整理：[RAG 進階技巧比較](comparisons/rag-techniques.md)
 
@@ -62,6 +65,7 @@ updated: 2026-11-22
 - RAG 和 fine-tuning 可以互補，不是二選一 [02-gao2023-survey.pdf, §II-D, p.5]。
 - 即使 LLM 能讀很長的 context，RAG 在效率和可驗證性上仍有優勢 [02-gao2023-survey.pdf, §VII-A, p.14]。
 - 反過來說，知識庫小於 200,000 tokens（約 500 頁）時，不一定需要 RAG，直接全部放進 prompt 可能就夠了 [03-anthropic-contextual-retrieval.pdf, p.2]。這點和上一條有 ⚠️ 爭議，詳見 [Context window](concepts/context-window.md)。
+- **放得進去，不代表用得好**：支援長 context 的模型，不一定比較會用 context [04-liu2023-lost-in-middle.pdf, §2.3, p.5]。文件也不是越多越好：取 50 份和取 20 份相比，只多進步約 1%–1.5% [04-liu2023-lost-in-middle.pdf, §5, p.10]。
 - 但 RAG 不是萬靈丹：外部資料本身可能有錯 [01-lewis2020-rag.pdf, Broader Impact, p.10]，雜訊或互相矛盾的資訊也會影響輸出品質 [02-gao2023-survey.pdf, §VII-B, p.14]。
 
 ## 相關頁面

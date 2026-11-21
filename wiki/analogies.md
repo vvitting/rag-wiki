@@ -2,7 +2,7 @@
 type: analogy
 title: "比喻集"
 tags: [analogy, teaching]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf]
 updated: 2026-11-22
 ---
 
@@ -49,9 +49,16 @@ updated: 2026-11-22
 ### 讀長文章只記得頭尾
 
 - **比喻**：一口氣讀一份很長的講義，最後通常只記得開頭和結尾，中間的內容印象模糊。塞太多文件給 LLM，也會發生類似的事。
+- **對應到 RAG 的哪個部分**：[Lost in the middle](concepts/lost-in-the-middle.md)、[Reranking](concepts/reranking.md)
+- **比喻的極限**：人會累、會分心，LLM 不會。原始研究的作者也說，Transformer 的 self-attention 理論上能同等地取用任何位置，所以出現這種「像人一樣」的效應其實令人意外，背後的原因還不清楚。
+- **對應的技術事實**：心理學稱這個現象為「序列位置效應」（serial-position effect）：人最記得一串項目的第一個和最後一個 [04-liu2023-lost-in-middle.pdf, §6.3, p.10]。04 在 LLM 上也看到類似的 U 形曲線：GPT-3.5-Turbo 在 20 份文件中，答案在第 1 份時是 75.8%，在第 10 份時只有 53.8% [04-liu2023-lost-in-middle.pdf, Table 6, p.18]。對 self-attention 的說明見 [04-liu2023-lost-in-middle.pdf, §6.3, p.11]。
+
+### 書包塞太滿
+
+- **比喻**：考試可以帶參考資料進場，但書包塞了 50 本書，你只會翻最上面和最下面那幾本，中間的根本沒時間看。帶 20 本挑過、排好的書，比帶 50 本亂放的書更有用。
 - **對應到 RAG 的哪個部分**：[Context window](concepts/context-window.md)、[Reranking](concepts/reranking.md)
-- **比喻的極限**：人會累、會分心，LLM 不會；這個現象背後的原因和人不同。Lost in the middle 的原始研究會在 ingest 04 時補充。
-- **對應的技術事實**：綜述的描述是「Like humans, LLM tends to only focus on the beginning and end of long texts」[02-gao2023-survey.pdf, §IV-A, p.10]；所以有一種策略是把最相關的內容移到 prompt 的頭尾 [02-gao2023-survey.pdf, §II-B, p.4]。
+- **比喻的極限**：真人可以慢慢翻；LLM 是一次讀完全部的輸入，問題不在時間不夠，而在中間的資訊用得不好。
+- **對應的技術事實**：04 發現取 50 份文件和取 20 份相比，GPT-3.5-Turbo 只多進步約 1.5%，但延遲和成本都增加了；作者建議把相關文件 rerank 到前面，或少取幾份 [04-liu2023-lost-in-middle.pdf, §5, p.10]。
 
 ### 從書上撕下來的一頁
 

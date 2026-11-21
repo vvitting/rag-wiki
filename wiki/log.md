@@ -43,3 +43,16 @@
 - 來源限制：03 是網頁列印的 PDF，沒有章節編號，只能用 p.N 引用；附錄 I、II 的分資料集結果是圖片，抽不到文字，無法引用
 - 自我修正：刪掉「prompt caching 是 Claude 才有的功能」（原文只說 Claude 的 prompt caching 讓它能低成本實現）；「推廣自家產品」改成客觀描述
 - lint：0 error, 0 warning；語意檢查抽查 26 處引用，全部吻合（其中 2 處是 PDF 換行造成的比對誤差，已人工確認）
+
+## [2026-11-22] ingest | 04-liu2023-lost-in-middle.pdf
+- 新增（2）：sources/04-liu2023-lost-in-middle.md、concepts/lost-in-the-middle.md
+- 修改（14）：concepts/（context-window 整頁改寫、reranking、retriever、rag-evaluation）、comparisons/（closed-book-vs-open-book、rag-techniques、rag-timeline）、sources/（02、03）、glossary.md（67 → 76 條，並重新依字母排序）、analogies.md（改寫「讀長文只記頭尾」的依據，新增「書包塞太滿」，共 8 個）、overview.md、index.md、log.md
+- ⚠️ 既有標註的更新：
+  1. 文件數量：加入第五種說法（04 §5：20 份以上幾乎不再進步），並在 context-window 頁新增「目前最合理的整合」五點
+  2. Reranking：04 §5 也建議 reranking，變成「01 vs 02＋03＋04」；補註 01 是每份文件分別交給 generator，沒有位置問題
+  3. 小型知識庫需要 RAG 嗎：04 §2.3 發現支援長 context 的模型不一定比較會用 context，挑戰 03 p.2；補註兩者的模型世代不同
+- 新增的 ⚠️：無（04 沒有和既有內容正面衝突，主要是補證據）
+- 和既有內容一致之處：02 §IV-A 對 lost in the middle 的描述，引用的正是 04（02 Ref.[98], p.19）；04 App. B（隨機干擾文件的準確率較高）和 02 §VII-B 引用的 Cuconasu et al. 方向一致，但實驗設計不同
+- 新發現（適合放進簡報）：答案在中間時，GPT-3.5-Turbo 給 20 份文件的準確率（53.8%）低於完全不給文件（56.1%），已寫進 closed-book-vs-open-book 頁
+- 已補上的待補來源：context window 的定義（04 §2.2）、Prompt 的白話定義（04 §1）
+- lint：0 error, 0 warning；語意檢查抽查 24 處引用，修正 1 處頁碼（App. C 應為 p.14–15）
