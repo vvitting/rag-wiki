@@ -1,0 +1,1 @@
+{"time": "2026-11-22 01:46:22", "node": 0, "round": 1, "result": "fail", "detail": "lint.py 0 error 0 warning；reviewer 嚴重 1、輕微 16", "reason": "rag-techniques.md 第 20 行：67% 被說成 hybrid + reranking 的結果，實為 Contextual Embeddings + Contextual BM25 + reranking", "change": "", "pages": ""}
