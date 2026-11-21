@@ -73,7 +73,7 @@ updated: 2026-11-22
 - **仍待解決的挑戰**：RAG 與長 context 的關係、robustness、和 fine-tuning 混合使用、scaling law、能否上線使用（production-ready）、多模態 [02-gao2023-survey.pdf, §VII, p.14–16]。
 - **原文的文字瑕疵**：有重複的句子，例如「it requires additional effort to build, validate, and maintain structured databases」連續出現兩次 [02-gao2023-survey.pdf, §III-A, p.7]。這不影響內容，但引用原句時要留意。
 
-> ⚠️ **爭議／更新**：本篇說 Naive RAG 是「最早的方法」，在 ChatGPT 普及後不久受到重視 [02-gao2023-survey.pdf, §II-A, p.2–3]；但 RAG 這個名稱和「先檢索、再生成」的架構早在 2020 年就出現了 [01-lewis2020-rag.pdf, §1, p.2]，而本篇把這類早期研究歸在「透過預訓練模型加強」的階段 [02-gao2023-survey.pdf, §I, p.1]。詳見 [Naive RAG](../methods/naive-rag.md)。
+> ⚠️ **爭議／更新**：本篇說 Naive RAG 是「最早的方法」，在 ChatGPT 普及後不久受到重視 [02-gao2023-survey.pdf, §II-A, p.2–3]；但 RAG 這個名稱和「先檢索、再生成」的架構早在 2020 年就出現了 [01-lewis2020-rag.pdf, §1, p.2] [02-gao2023-survey.pdf, Ref. 4, p.17]，而本篇把這類早期研究歸在「透過預訓練模型加強」的階段 [02-gao2023-survey.pdf, §I, p.1]。詳見 [Naive RAG](../methods/naive-rag.md)。
 
 > ⚠️ **爭議／更新**：本篇把 reranking 列為 Advanced RAG 的關鍵策略 [02-gao2023-survey.pdf, §II-B, p.4]，[03-anthropic-contextual-retrieval.pdf, p.11] 的實驗也支持；但 [01-lewis2020-rag.pdf, §4.1, p.5] 認為，要達到當時的最佳表現並不需要 re-ranker。詳見 [Reranking](../concepts/reranking.md)。
 
@@ -86,7 +86,7 @@ updated: 2026-11-22
 - **RAGAS 的原始論文已經 ingest**：本篇對 RAGAS 的描述（用 LLM 評判三個品質分數、answer relevance 用 cosine similarity）[02-gao2023-survey.pdf, §VI-D, p.14; Table IV, p.15] 和原始論文一致 [07-es2023-ragas.pdf, §3, p.3]，詳見 [07 來源頁](07-es2023-ragas.md)。
 - **本篇的三個品質分數不適用於全局問題**：GraphRAG 論文認為 context relevance、faithfulness、answer relevance 只適用於一般 vector RAG，和全局理解類的問題無關 [06-edge2024-graphrag.pdf, §2.4, p.4]。詳見 [RAG 評估](../concepts/rag-evaluation.md)。
 - **本篇對 Self-RAG 的描述與原始論文一致**：本篇說 Self-RAG 用 retrieve 和 critic 兩類 reflection tokens [02-gao2023-survey.pdf, §V-C, p.12]，和原始論文的定義相符 [05-asai2023-self-rag.pdf, Table 1, p.4]，詳見 [05 來源頁](05-asai2023-self-rag.md)。
-- **本篇引用的原始研究已經 ingest**：本篇對 lost in the middle 的描述 [02-gao2023-survey.pdf, §IV-A, p.10]，引用的是 04 這篇 [02-gao2023-survey.pdf, Ref.[98], p.19]，詳見 [04 來源頁](04-liu2023-lost-in-middle.md)。
+- **本篇引用的原始研究已經 ingest**：本篇對 lost in the middle 的描述 [02-gao2023-survey.pdf, §IV-A, p.10]，引用的是 04 這篇 [02-gao2023-survey.pdf, Ref. 98, p.19]，詳見 [04 來源頁](04-liu2023-lost-in-middle.md)。
 
 ## 關鍵圖表說明
 
@@ -117,3 +117,4 @@ updated: 2026-11-22
 - [RAG 演進時間軸](../comparisons/rag-timeline.md)
 - [RAG 評估](../concepts/rag-evaluation.md)
 - [01 原始 RAG 論文](01-lewis2020-rag.md)
+- [術語表](../glossary.md)

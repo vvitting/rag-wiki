@@ -58,7 +58,7 @@ updated: 2026-11-22
 - RAG 在四個 open-domain QA 資料集上都創下當時的最佳成績；TriviaQA 只有在和 T5 可比較的那個 split 上是最佳 [01-lewis2020-rag.pdf, §4.1, p.5]。
 - 檢索到的文件裡都沒有正確答案時，RAG 在 NQ 上仍有 11.8% 答對，extractive 模型則是 0% [01-lewis2020-rag.pdf, §4.1, p.6]。
 
-> ⚠️ **爭議／更新**：本篇把這 11.8% 視為優點；[05-asai2023-self-rag.pdf, App. C.1, p.20] 則把「答案幾乎都來自文件」（Self-RAG 只有 2% 不在文件中）視為優點。詳見 [Parametric 與 non-parametric memory](../concepts/parametric-vs-non-parametric-memory.md)。
+> ⚠️ **爭議／更新**：本篇把這 11.8% 視為優點 [01-lewis2020-rag.pdf, §4.1, p.6]；[05-asai2023-self-rag.pdf, App. C.1, p.20] 則把「答案幾乎都來自文件」（Self-RAG 只有 2% 不在文件中）視為優點。詳見 [Parametric 與 non-parametric memory](../concepts/parametric-vs-non-parametric-memory.md)。
 - 模型大小：RAG 共有 626M 個可訓練參數；最好的 closed-book 模型 T5-11B 有 11B 個 [01-lewis2020-rag.pdf, App. G, p.18–19]。
 - 參數量最接近的 T5-large（770M）在 NQ 只有 28.9 EM，遠低於 RAG-Sequence 的 44.5 [01-lewis2020-rag.pdf, App. G, p.19]。
 

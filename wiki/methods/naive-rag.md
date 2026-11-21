@@ -2,7 +2,7 @@
 type: method
 title: "Naive RAG"
 tags: [method, rag, naive-rag, paradigm]
-sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf, 06-edge2024-graphrag.pdf]
+sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 05-asai2023-self-rag.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -33,6 +33,11 @@ LLM 回答時，可以使用自己的 parametric knowledge，也可以被要求�
 - 成本效益高，而且表現勝過沒有 RAG 的 LLM [02-gao2023-survey.pdf, §II, p.2]。
 - 對模型的修改需求很低 [02-gao2023-survey.pdf, Fig.4, p.7]。
 
+> ⚠️ **爭議／更新**：「勝過沒有 RAG 的 LLM」是 02 的整體概括 [02-gao2023-survey.pdf, §II, p.2]，但有兩份實驗顯示並非總是如此：
+> - [04-liu2023-lost-in-middle.pdf, Table 6, p.18; Table 1, p.5]：GPT-3.5-Turbo 在 20 份文件、答案位於中間時，準確率是 53.8%，低於完全不給文件的 56.1%。
+> - [05-asai2023-self-rag.pdf, Table 2, p.8]：ChatGPT 加上檢索後，PubHealth 從 70.1 降到 54.7，TriviaQA 從 74.3 降到 65.7。
+> 詳見 [Closed-book vs open-book](../comparisons/closed-book-vs-open-book.md)。
+
 ## 代價與限制
 
 - **檢索的問題**：precision 和 recall 都不夠好，會選到不對或不相關的 chunk，也可能漏掉關鍵資訊 [02-gao2023-survey.pdf, §II-A, p.3]。
@@ -49,7 +54,7 @@ LLM 回答時，可以使用自己的 parametric knowledge，也可以被要求�
 
 ## 和原始 RAG 的關係
 
-> ⚠️ **爭議／更新**：[02-gao2023-survey.pdf, §II-A, p.2–3] 說 Naive RAG 是「最早的方法」，在 ChatGPT 普及後不久受到重視。但「retrieval-augmented generation」這個名稱，以及「先檢索、再生成」的架構，早在 2020 年就由 [01-lewis2020-rag.pdf, §1, p.2] 提出。而綜述把這類早期研究歸在「Transformer 興起時、透過預訓練模型加強」的階段 [02-gao2023-survey.pdf, §I, p.1]。
+> ⚠️ **爭議／更新**：[02-gao2023-survey.pdf, §II-A, p.2–3] 說 Naive RAG 是「最早的方法」，在 ChatGPT 普及後不久受到重視。但「retrieval-augmented generation」這個名稱，以及「先檢索、再生成」的架構，早在 2020 年就由 [01-lewis2020-rag.pdf, §1, p.2] [02-gao2023-survey.pdf, Ref. 4, p.17] 提出。而綜述把這類早期研究歸在「Transformer 興起時、透過預訓練模型加強」的階段 [02-gao2023-survey.pdf, §I, p.1]。
 
 兩者的實際差異：
 
@@ -72,3 +77,4 @@ LLM 回答時，可以使用自己的 parametric knowledge，也可以被要求�
 - [Advanced RAG](advanced-rag.md)
 - [Modular RAG](modular-rag.md)
 - [原始 RAG](original-rag.md)
+- [術語表](../glossary.md)

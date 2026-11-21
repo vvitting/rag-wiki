@@ -79,3 +79,4 @@ GraphRAG 也用了名為 self-reflection 的技巧，但兩者不同 [06-edge202
 - [Hallucination](../concepts/hallucination.md)
 - [RAG 評估](../concepts/rag-evaluation.md)
 - [RAG 進階技巧比較](../comparisons/rag-techniques.md)
+- [術語表](../glossary.md)

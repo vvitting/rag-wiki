@@ -101,3 +101,30 @@
   - [x] 矛盾都已加 ⚠️；跨頁的同一組爭議已互相連結
   - [x] 待補來源清單已清空，index 已同步
   - [ ] 待建頁面「Robustness」：相關內容分散在 context-window（04 App. B、02 §VII-B）和 rag-evaluation（四種能力），目前決定不獨立成頁，產生簡報時再評估
+
+## [2026-11-22] lint | 全 wiki 檢查（AGENTS.md §9.3）
+### 機械性檢查
+- 修改前 tools/lint.py：0 error, 0 warning；但另寫結構檢查腳本，找到 lint 沒涵蓋的 7 個問題，並發現 lint.py 本身的漏洞
+- **lint.py 漏洞**：一個括號放多份來源（`[A, x; B, y]`）時，第二份檔案不會被驗證，頁碼也會被算到第一份檔案上；這也不符合 §7 的格式（一個括號一份來源）
+  - 修正：把 16 處合併引用拆成多個括號（glossary 10、rag-evaluation 2、reranking 2、overview 1、context-window 1），之後又多找到 1 處（rag-timeline，原本被 `Ref.[164]` 的方括號擋住）
+  - 未修改 AGENTS.md（修改規則需要使用者同意），改為讓內容符合既有規則
+- **lint.py 新增 3 項檢查**：一個括號放多份來源（error）、frontmatter sources 和內文實際引用不一致（error）、index 的 sources 計數和 frontmatter 不符（warning）；開發時 regex 誤判了一次（檔名比對太寬），已修正並用測試頁驗證
+- **frontmatter 不一致**：04 頁列了 01 但內文沒引用（已移除）；naive-rag 新增 ⚠️ 後缺 04、05（已補上）
+- **index 計數過時**：01（2→3）、02（4→7）、03（4→5）、04（4→5）、naive-rag（4→6）
+- **引用格式**：`Ref.[n]` 內含方括號會讓引用被提早截斷，4 處改為 `Ref. n`
+### 引用正確性（全面檢查，不只抽查）
+- 寫了腳本，逐行核對「說法中的數字」是否出現在所引用頁面上：標出 30 行，人工判讀後 17 行是真問題或格式問題，13 行是誤判（100 萬 vs 1 million、12 月 vs December、列表編號、第 15 份 vs Index 14）
+- **年份的出處錯誤**：「RAG 在 2020 年提出」有 6 行只引用 01，但 01 的 raw 檔沒有這個年份（PDF 上只有 2021 年的 v4 日期）；補上 [02, Ref. 4, p.17]（rag-timeline、naive-rag、original-rag、02、overview ×2）
+- **時間軸的 02 年份「2023」沒有出處**：補上 [06, References, p.13]
+- **推論當成事實**：「04 測的是 2023 年的模型」原文沒有這樣寫，4 處改成「04 發表於 2023 年 [04, p.1]，測的是當時的模型」（04 ×2、03、context-window）
+- **缺出處**：01 頁 ⚠️ 中的 11.8% 只引用 05，補上 [01, §4.1, p.6]；「約 100 萬 tokens 花了 281 分鐘」3 處只引用 p.9，補上 [06, §4.1.1, p.8]（analogies、graphrag、06）
+- 另抽查 6 處不含數字的引用，全部吻合
+### 語意檢查清單
+- [x] 未標註的矛盾：找到 1 處。naive-rag「表現勝過沒有 RAG 的 LLM」（02 §II）和 04 Table 6、05 Table 2 的反例衝突，已加 ⚠️（⚠️ 共 38 個）
+- [x] 被取代的舊說法：無新發現（既有的 ⚠️ 都已涵蓋）
+- [x] 多次被提到卻沒有頁面的概念：BM25／hybrid retrieval、knowledge graph、LLM-as-a-judge 都已是既有頁面中的獨立小節，暫不拆頁；Robustness 維持「待建」
+- [x] 應合併的頁面：context-window 和 lost-in-the-middle 有部分重疊，但前者談數量、後者談位置，已互相連結，不合併
+- [x] 引用位置是否正確：見上方全面檢查
+- [x] 初學者可讀性：19 頁完全沒有連到術語表，已在「相關頁面」補上連結（逐一檢查每個術語的第一次出現仍是人工項目）
+- [x] 待補來源清單：0 處，index 已同步
+- 修改後：lint 0 error, 0 warning；結構檢查 0 issues；數字核對只剩 13 處已確認的誤判

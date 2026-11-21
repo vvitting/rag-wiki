@@ -105,3 +105,4 @@ updated: 2026-11-22
 - [Hallucination](../concepts/hallucination.md)
 - [02 RAG 綜述](02-gao2023-survey.md)
 - [06 GraphRAG](06-edge2024-graphrag.md)
+- [術語表](../glossary.md)

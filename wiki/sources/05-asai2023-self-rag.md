@@ -148,3 +148,4 @@ updated: 2026-11-22
 - [RAG 評估](../concepts/rag-evaluation.md)
 - [Closed-book vs open-book](../comparisons/closed-book-vs-open-book.md)
 - [Parametric 與 non-parametric memory](../concepts/parametric-vs-non-parametric-memory.md)
+- [術語表](../glossary.md)

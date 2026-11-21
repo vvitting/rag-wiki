@@ -67,3 +67,4 @@ updated: 2026-11-22
 - [Reranking](../concepts/reranking.md)
 - [Advanced RAG](advanced-rag.md)
 - [RAG 進階技巧比較](../comparisons/rag-techniques.md)
+- [術語表](../glossary.md)

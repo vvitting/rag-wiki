@@ -5,7 +5,7 @@ raw: 04-liu2023-lost-in-middle.pdf
 authors: [Nelson F. Liu, Kevin Lin, John Hewitt, Ashwin Paranjape, Michele Bevilacqua, Fabio Petroni, Percy Liang]
 year: 2023
 tags: [long-context, lost-in-the-middle, positional-bias, context-window, evaluation]
-sources: [04-liu2023-lost-in-middle.pdf, 01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 06-edge2024-graphrag.pdf, 07-es2023-ragas.pdf]
+sources: [04-liu2023-lost-in-middle.pdf, 02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 06-edge2024-graphrag.pdf, 07-es2023-ragas.pdf]
 updated: 2026-11-22
 ---
 
@@ -88,7 +88,7 @@ updated: 2026-11-22
 
 ## 限制與後續爭議
 
-- **測試的模型較舊**：測的是 2023 年的模型，例如 GPT-3.5-Turbo、Claude-1.3 [04-liu2023-lost-in-middle.pdf, §2.2, p.4–5]。
+- **測試的模型較舊**：測的是 2023 年發表時的模型 [04-liu2023-lost-in-middle.pdf, p.1]，例如 GPT-3.5-Turbo、Claude-1.3 [04-liu2023-lost-in-middle.pdf, §2.2, p.4–5]。
 - **探討原因的實驗是初步的**：作者自己稱這些是「preliminary investigations」[04-liu2023-lost-in-middle.pdf, §4, p.7]。
 - **只用 greedy decoding**：其他 decoding 方法留給未來研究 [04-liu2023-lost-in-middle.pdf, §2.2, p.4]。
 - **排除其他解釋**：
@@ -96,11 +96,11 @@ updated: 2026-11-22
   - 把干擾文件換成隨機文件，準確率整體變高，但仍然無法好好使用整個 context [04-liu2023-lost-in-middle.pdf, App. B, p.14]。
   - 打亂干擾文件的順序，並在 prompt 中說明「結果是隨機排序的」，仍然是 U 形曲線 [04-liu2023-lost-in-middle.pdf, App. C, p.14–15]。
 
-> ⚠️ **爭議／更新**：[03-anthropic-contextual-retrieval.pdf, p.2] 建議知識庫小於 200,000 tokens 時，直接全部放進 prompt；但本篇發現，即使是支援長 context 的模型，也很難用好放在中間的資訊 [04-liu2023-lost-in-middle.pdf, §2.3, p.5]。兩篇測試的模型世代不同（本篇是 2023 年的 GPT-3.5、Claude-1.3），03 也沒有附上「整份放進 prompt」的準確率數據。詳見 [Context window](../concepts/context-window.md)。
+> ⚠️ **爭議／更新**：[03-anthropic-contextual-retrieval.pdf, p.2] 建議知識庫小於 200,000 tokens 時，直接全部放進 prompt；但本篇發現，即使是支援長 context 的模型，也很難用好放在中間的資訊 [04-liu2023-lost-in-middle.pdf, §2.3, p.5]。兩篇測試的模型世代不同（本篇發表於 2023 年 [04-liu2023-lost-in-middle.pdf, p.1]，測的是 GPT-3.5、Claude-1.3 [04-liu2023-lost-in-middle.pdf, §2.2, p.4–5]），03 也沒有附上「整份放進 prompt」的準確率數據。詳見 [Context window](../concepts/context-window.md)。
 
 ## 和既有頁面的關係
 
-- **印證 02**：02 說「LLM 和人一樣，傾向只注意長文的開頭和結尾」[02-gao2023-survey.pdf, §IV-A, p.10]，引用的正是這篇的研究 [02-gao2023-survey.pdf, Ref.[98], p.19]。
+- **印證 02**：02 說「LLM 和人一樣，傾向只注意長文的開頭和結尾」[02-gao2023-survey.pdf, §IV-A, p.10]，引用的正是這篇的研究 [02-gao2023-survey.pdf, Ref. 98, p.19]。
 - **心理學的對應**：本篇把 U 形曲線連結到心理學的「序列位置效應」（serial-position effect）：人在回想一串項目時，最記得第一個和最後一個 [04-liu2023-lost-in-middle.pdf, §6.3, p.10]。不過作者也指出，Transformer 的 self-attention 理論上能同等地取用任何位置的 token，所以這個現象其實有點令人意外 [04-liu2023-lost-in-middle.pdf, §6.3, p.11]。
 - **被 07 正確引用**：RAGAS 設計 context relevance 指標的理由之一，就是 LLM 比較難利用長 context 中間的資訊 [07-es2023-ragas.pdf, §3, p.3]。
 - **被 06 引用**：GraphRAG 因為擔心 lost in the middle，才為一般 RAG 測試不同大小的 context window，結果 8k 最好 [06-edge2024-graphrag.pdf, App. C, p.19]。但 06 在另一處把本篇的結論描述成「chunk **前段**的資訊容易被漏掉」[06-edge2024-graphrag.pdf, §3.1.1, p.4]，和本篇「中間最差」的發現不一致，詳見 [Lost in the middle](../concepts/lost-in-the-middle.md)。
@@ -130,3 +130,4 @@ updated: 2026-11-22
 - [Closed-book vs open-book](../comparisons/closed-book-vs-open-book.md)
 - [02 RAG 綜述](02-gao2023-survey.md)
 - [03 Contextual Retrieval](03-anthropic-contextual-retrieval.md)
+- [術語表](../glossary.md)

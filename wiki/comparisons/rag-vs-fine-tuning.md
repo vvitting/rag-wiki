@@ -37,3 +37,4 @@ updated: 2026-11-22
 - [Closed-book vs open-book](closed-book-vs-open-book.md)
 - [比喻集](../analogies.md)
 - [三種 RAG 典範比較](rag-paradigms.md)
+- [術語表](../glossary.md)

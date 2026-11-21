@@ -25,6 +25,8 @@ VALID_TYPES = {"source", "concept", "method", "comparison", "question",
 LINK_RE = re.compile(r"(?<!!)\[([^\]]*)\]\(([^)\s]+)\)")
 CITE_RE = re.compile(r"\[(\d{2}-[^,\]\s]+\.pdf)\s*,\s*([^\]]+)\]")
 BARE_PDF_RE = re.compile(r"\[(\d{2}-[^,\]\s]+\.pdf)\s*\](?!\()")   # 後面接 ( 是 Markdown 連結，不是引用
+MULTI_SRC_RE = re.compile(r"\[\d{2}-[^,\]\s]+\.pdf\s*,[^\]]*?;\s*\d{2}-[^,\]\s]+\.pdf[^\]]*\]")  # 一個括號放多份來源
+INDEX_COUNT_RE = re.compile(r"\]\(([^)]+\.md)\)[^\n]*?（sources: (\d+)")
 TODO_MARK = "[待補來源]"
 WIKILINK_RE = re.compile(r"\[\[[^\]]+\]\]")
 LABEL_ONLY_RE = re.compile(r"^-\s*\*\*(比喻|對應到 RAG 的哪個部分|比喻的極限)\*\*")
@@ -119,6 +121,8 @@ def iter_blocks(lines: list[str], offset: int):
 
 
 def check_block(path: Path, lineno: int, block: str):
+    for m in MULTI_SRC_RE.finditer(block):
+        errors.append(f"{rel(path)}:{lineno} 一個引用括號只能放一份來源，請拆開：{m.group(0)[:60]}")
     for m in BARE_PDF_RE.finditer(block):
         errors.append(f"{rel(path)}:{lineno} 引用缺少章節／頁碼：[{m.group(1)}]")
     for m in CITE_RE.finditer(block):
@@ -144,6 +148,7 @@ def check_block(path: Path, lineno: int, block: str):
 def check_wiki() -> None:
     pages = sorted(WIKI.rglob("*.md"))
     inbound: dict[Path, int] = {p.resolve(): 0 for p in pages}
+    source_counts: dict[Path, int] = {}
     todo_count = 0
 
     for path in pages:
@@ -190,9 +195,17 @@ def check_wiki() -> None:
                         errors.append(f"{rel(path)} 來源頁 frontmatter 缺少：{f}")
                 if fm.get("raw") and not (RAW / fm["raw"].strip("'\"")).exists():
                     errors.append(f"{rel(path)} frontmatter raw 檔不存在：{fm['raw']}")
-            for s in parse_list(fm.get("sources", "")):
+            fm_sources = set(parse_list(fm.get("sources", "")))
+            for s in fm_sources:
                 if not (RAW / s).exists():
                     errors.append(f"{rel(path)} frontmatter sources 的檔案不存在：{s}")
+            body = "\n".join(lines[body_start:])
+            cited = set(re.findall(r"(\d{2}-[A-Za-z0-9-]+\.pdf)\s*,", body))
+            for s in sorted(cited - fm_sources):
+                errors.append(f"{rel(path)} 內文引用了 {s}，但 frontmatter sources 沒有列出")
+            for s in sorted(fm_sources - cited):
+                errors.append(f"{rel(path)} frontmatter sources 列了 {s}，但內文沒有引用")
+            source_counts[path.resolve()] = len(fm_sources)
             if fm.get("updated") and not re.match(r"^\d{4}-\d{2}-\d{2}$", fm["updated"]):
                 errors.append(f"{rel(path)} frontmatter updated 格式應為 YYYY-MM-DD")
 
@@ -204,6 +217,15 @@ def check_wiki() -> None:
         todo_count += text.count(TODO_MARK)
         for lineno, block in iter_blocks(lines[body_start:], body_start):
             check_block(path, lineno, block)
+
+    # index.md 上的 sources 計數要和 frontmatter 一致
+    index = WIKI / "index.md"
+    if index.exists():
+        for m in INDEX_COUNT_RE.finditer(index.read_text(encoding="utf-8")):
+            target = (WIKI / m.group(1)).resolve()
+            if target in source_counts and source_counts[target] != int(m.group(2)):
+                warnings.append(f"wiki/index.md 的 {m.group(1)} 標 sources: {m.group(2)}，"
+                                f"frontmatter 實際是 {source_counts[target]}")
 
     for p, n in inbound.items():
         if n == 0 and p.name not in NO_ORPHAN_CHECK and not (p.name == "log.md" and p.parent == WIKI):

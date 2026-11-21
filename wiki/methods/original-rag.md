@@ -18,7 +18,7 @@ updated: 2026-11-22
 - 原始 RAG 則是把 retriever 的 query encoder 和 generator **一起訓練**，不是只把兩個現成的元件接起來 [01-lewis2020-rag.pdf, §2.4, p.3–4]。
 - 原始 RAG 的 generator 是 400M 參數的 BART，不是 LLM [01-lewis2020-rag.pdf, §2.3, p.3]。
 
-> ⚠️ **爭議／更新**：綜述說 Naive RAG 是「最早的方法」[02-gao2023-survey.pdf, §II-A, p.2]，但 RAG 這個名稱在 2020 年就由本篇提出了 [01-lewis2020-rag.pdf, §1, p.2]。兩者的完整對照見 [Naive RAG](naive-rag.md)。
+> ⚠️ **爭議／更新**：綜述說 Naive RAG 是「最早的方法」[02-gao2023-survey.pdf, §II-A, p.2]，但 RAG 這個名稱在 2020 年就由本篇提出了 [01-lewis2020-rag.pdf, §1, p.2] [02-gao2023-survey.pdf, Ref. 4, p.17]。兩者的完整對照見 [Naive RAG](naive-rag.md)。
 
 ## 運作步驟
 
@@ -64,3 +64,4 @@ updated: 2026-11-22
 - [Naive RAG](naive-rag.md)
 - [RAG 演進時間軸](../comparisons/rag-timeline.md)
 - [RAG 總覽](../overview.md)
+- [術語表](../glossary.md)

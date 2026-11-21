@@ -77,7 +77,7 @@ Anthropic 在 2024 年 9 月 19 日發表的技術文章 [03-anthropic-contextua
 
 > ⚠️ **爭議／更新**：GraphRAG 正是以摘要為基礎的 index，並在全局問題上勝過一般 RAG [06-edge2024-graphrag.pdf, §5.1, p.9]。兩篇衡量的東西不同：本篇衡量能不能找到特定 chunk [03-anthropic-contextual-retrieval.pdf, p.7]，06 衡量全局問題的答案夠不夠全面。詳見 [Chunking](../concepts/chunking.md)。
 
-> ⚠️ **爭議／更新**：本篇說知識庫小於 200,000 tokens（約 500 頁）時，可以直接把整個知識庫放進 prompt，不需要 RAG [03-anthropic-contextual-retrieval.pdf, p.2]；但 [02-gao2023-survey.pdf, §VII-A, p.14] 認為即使 LLM 能處理長 context，RAG 在效率和可驗證性上仍無可取代；[04-liu2023-lost-in-middle.pdf, §2.3, p.5] 也發現，支援長 context 的模型不一定比較會用 context，中間的資訊容易被忽略（測的是 2023 年的模型）。詳見 [Context window](../concepts/context-window.md)。
+> ⚠️ **爭議／更新**：本篇說知識庫小於 200,000 tokens（約 500 頁）時，可以直接把整個知識庫放進 prompt，不需要 RAG [03-anthropic-contextual-retrieval.pdf, p.2]；但 [02-gao2023-survey.pdf, §VII-A, p.14] 認為即使 LLM 能處理長 context，RAG 在效率和可驗證性上仍無可取代；[04-liu2023-lost-in-middle.pdf, §2.3, p.5] 也發現，支援長 context 的模型不一定比較會用 context，中間的資訊容易被忽略（04 發表於 2023 年 [04-liu2023-lost-in-middle.pdf, p.1]，測的是當時的模型）。詳見 [Context window](../concepts/context-window.md)。
 
 > ⚠️ **爭議／更新**：本篇的結論是「有 reranking 比沒有好」[03-anthropic-contextual-retrieval.pdf, p.11]，支持 [02-gao2023-survey.pdf, §II-B, p.4] 的看法；而 [01-lewis2020-rag.pdf, §4.1, p.5] 認為 re-ranker 不是必要的。詳見 [Reranking](../concepts/reranking.md)。
 
@@ -103,3 +103,4 @@ Anthropic 在 2024 年 9 月 19 日發表的技術文章 [03-anthropic-contextua
 - [Chunking](../concepts/chunking.md)
 - [Context window](../concepts/context-window.md)
 - [RAG 進階技巧比較](../comparisons/rag-techniques.md)
+- [術語表](../glossary.md)

@@ -52,7 +52,7 @@ updated: 2026-11-22
 - **[06-edge2024-graphrag.pdf](../sources/06-edge2024-graphrag.md)**：GraphRAG 在 reduce 步驟中，讓 LLM 為每個部分答案的幫助程度打 0–100 分，丟掉 0 分的，再依分數由高到低放進 context window [06-edge2024-graphrag.pdf, §3.1.6, p.6]。這也是一種「先排序、再決定放什麼」的做法。
 
 > ⚠️ **爭議／更新**：[01-lewis2020-rag.pdf, §4.1, p.5] 認為，要達到當時的最佳表現，re-ranker 不是必要的；但 [02-gao2023-survey.pdf, §II-B, p.4] 把 reranking 視為 Advanced RAG 的關鍵策略，[03-anthropic-contextual-retrieval.pdf, p.10–11] 的實驗顯示 reranking 能進一步降低檢索失敗率，[04-liu2023-lost-in-middle.pdf, §5, p.10] 也建議用 reranking 來應對位置效應。
-> 情境不同：01 是在 open-domain QA 上端到端訓練的 BART 模型，每份文件分別交給 generator 再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，所以沒有「文件排在 prompt 哪個位置」的問題；02、03、04 談的則是把多份文件串成一個 prompt 交給 LLM 的情境 [02-gao2023-survey.pdf, §II-A, p.3; 04-liu2023-lost-in-middle.pdf, §5, p.9]。在這種情境下，reranking 的價值已經有 03（檢索失敗率）和 04（位置效應）兩方面的證據 [03-anthropic-contextual-retrieval.pdf, p.10; 04-liu2023-lost-in-middle.pdf, §2.3, p.5]。
+> 情境不同：01 是在 open-domain QA 上端到端訓練的 BART 模型，每份文件分別交給 generator 再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，所以沒有「文件排在 prompt 哪個位置」的問題；02、03、04 談的則是把多份文件串成一個 prompt 交給 LLM 的情境 [02-gao2023-survey.pdf, §II-A, p.3] [04-liu2023-lost-in-middle.pdf, §5, p.9]。在這種情境下，reranking 的價值已經有 03（檢索失敗率）和 04（位置效應）兩方面的證據 [03-anthropic-contextual-retrieval.pdf, p.10] [04-liu2023-lost-in-middle.pdf, §2.3, p.5]。
 
 ## 相關頁面
 

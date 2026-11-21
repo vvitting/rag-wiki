@@ -37,3 +37,4 @@ updated: 2026-11-22
 - [Modular RAG](../methods/modular-rag.md)
 - [Contextual Retrieval](../methods/contextual-retrieval.md)
 - [三種 RAG 典範比較](rag-paradigms.md)
+- [術語表](../glossary.md)

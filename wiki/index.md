@@ -7,10 +7,10 @@
 - [RAG 總覽](overview.md) — RAG 全貌，結構對齊簡報；第 1–6 節都已有內容，7 篇全部整合（sources: 7, updated: 2026-11-22）
 
 ## 來源
-- [01 Lewis et al. 2020 — Retrieval-Augmented Generation](sources/01-lewis2020-rag.md) — 提出並命名 RAG 的原始論文：DPR + BART、RAG-Sequence 與 RAG-Token（sources: 2, updated: 2026-11-22）
-- [02 Gao et al. 2023 — RAG for LLMs: A Survey](sources/02-gao2023-survey.md) — 綜述：Naive／Advanced／Modular 三典範、檢索與生成技術、評估、未來挑戰（sources: 4, updated: 2026-11-22）
-- [03 Anthropic 2024 — Introducing Contextual Retrieval](sources/03-anthropic-contextual-retrieval.md) — 業界技術文章：為 chunk 補上說明、hybrid search、reranking；檢索失敗率降低 49%–67%（sources: 4, updated: 2026-11-22）
-- [04 Liu et al. 2023 — Lost in the Middle](sources/04-liu2023-lost-in-middle.md) — LLM 對 context 中間的資訊用得最差（U 形曲線）；文件超過 20 份幾乎不再進步（sources: 4, updated: 2026-11-22）
+- [01 Lewis et al. 2020 — Retrieval-Augmented Generation](sources/01-lewis2020-rag.md) — 提出並命名 RAG 的原始論文：DPR + BART、RAG-Sequence 與 RAG-Token（sources: 3, updated: 2026-11-22）
+- [02 Gao et al. 2023 — RAG for LLMs: A Survey](sources/02-gao2023-survey.md) — 綜述：Naive／Advanced／Modular 三典範、檢索與生成技術、評估、未來挑戰（sources: 7, updated: 2026-11-22）
+- [03 Anthropic 2024 — Introducing Contextual Retrieval](sources/03-anthropic-contextual-retrieval.md) — 業界技術文章：為 chunk 補上說明、hybrid search、reranking；檢索失敗率降低 49%–67%（sources: 5, updated: 2026-11-22）
+- [04 Liu et al. 2023 — Lost in the Middle](sources/04-liu2023-lost-in-middle.md) — LLM 對 context 中間的資訊用得最差（U 形曲線）；文件超過 20 份幾乎不再進步（sources: 5, updated: 2026-11-22）
 - [05 Asai et al. 2023 — Self-RAG](sources/05-asai2023-self-rag.md) — 讓模型自己決定何時檢索、用 reflection tokens 自我評分；檢索有時會讓 ChatGPT 變差（sources: 4, updated: 2026-11-22）
 - [06 Edge et al. 2024 — GraphRAG](sources/06-edge2024-graphrag.md) — 用 LLM 建 knowledge graph 和社群摘要，回答一般 RAG 答不了的全局問題（sources: 5, updated: 2026-11-22）
 - [07 Es et al. 2023 — RAGAS](sources/07-es2023-ragas.md) — 不需要標準答案的 RAG 自動評估：faithfulness、answer relevance、context relevance（sources: 4, updated: 2026-11-22）
@@ -31,7 +31,7 @@
 
 ## 方法
 - [原始 RAG（RAG-Sequence 與 RAG-Token）](methods/original-rag.md) — Lewis 2020 的架構、步驟、兩種版本與限制（sources: 2, updated: 2026-11-22）
-- [Naive RAG](methods/naive-rag.md) — indexing → retrieval → generation；缺點（包括答不了全局問題）；⚠️ 和原始 RAG 的關係（sources: 4, updated: 2026-11-22）
+- [Naive RAG](methods/naive-rag.md) — indexing → retrieval → generation；缺點（包括答不了全局問題）；⚠️ 和原始 RAG 的關係；⚠️ 不一定勝過不檢索（sources: 6, updated: 2026-11-22）
 - [Advanced RAG](methods/advanced-rag.md) — pre-retrieval 與 post-retrieval 優化；Contextual Retrieval 是實例（sources: 3, updated: 2026-11-22）
 - [Modular RAG](methods/modular-rag.md) — 可組合的模組與模式；iterative／recursive／adaptive 檢索（sources: 2, updated: 2026-11-22）
 - [Contextual Retrieval](methods/contextual-retrieval.md) — 為每個 chunk 補上 LLM 寫的說明，再建 embedding 和 BM25 index（sources: 2, updated: 2026-11-22）

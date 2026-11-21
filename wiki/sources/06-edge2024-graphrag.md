@@ -124,7 +124,7 @@ updated: 2026-11-22
 1. 一般 RAG 擅長「找特定事實」，不擅長「看完整批資料再總結」[06-edge2024-graphrag.pdf, §1, p.2]。
 2. GraphRAG 先把資料整理成「誰和誰有關係」的圖，再分群寫摘要 [06-edge2024-graphrag.pdf, §1, p.2]。
 3. 回答全局問題時，GraphRAG 的答案更全面、更多元；但一般 RAG 的答案更直接 [06-edge2024-graphrag.pdf, §5.1, p.9]。
-4. 代價是建 index 很花時間和 LLM 呼叫：約 100 萬 tokens 的資料，花了 281 分鐘 [06-edge2024-graphrag.pdf, §4.1.3, p.9]。
+4. 代價是建 index 很花時間和 LLM 呼叫：約 100 萬 tokens [06-edge2024-graphrag.pdf, §4.1.1, p.8] 的資料，花了 281 分鐘 [06-edge2024-graphrag.pdf, §4.1.3, p.9]。
 
 ## 相關頁面
 
@@ -134,3 +134,4 @@ updated: 2026-11-22
 - [Context window](../concepts/context-window.md)
 - [Chunking](../concepts/chunking.md)
 - [04 Lost in the Middle](04-liu2023-lost-in-middle.md)
+- [術語表](../glossary.md)

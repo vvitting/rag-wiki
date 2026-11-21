@@ -31,7 +31,7 @@ updated: 2026-11-22
 
 ## 運作方式：怎麼控制 context
 
-- **Reranking**：把最相關的內容排到前面，或排到 prompt 的頭尾 [02-gao2023-survey.pdf, §II-B, p.4; 04-liu2023-lost-in-middle.pdf, §5, p.10]。詳見 [Reranking](reranking.md)。
+- **Reranking**：把最相關的內容排到前面，或排到 prompt 的頭尾 [02-gao2023-survey.pdf, §II-B, p.4] [04-liu2023-lost-in-middle.pdf, §5, p.10]。詳見 [Reranking](reranking.md)。
 - **少放幾份文件**（ranked list truncation）：在適當時候少取幾份 [04-liu2023-lost-in-middle.pdf, §5, p.10]。
 - **Context 壓縮**：例如 LLMLingua 用 GPT-2 Small、LLaMA-7B 這類小模型刪掉不重要的 token [02-gao2023-survey.pdf, §IV-A, p.10]。
 - **先篩選文件**：讓 LLM 先評估檢索到的內容，濾掉相關性低的文件 [02-gao2023-survey.pdf, §IV-A, p.10]。
@@ -72,7 +72,7 @@ updated: 2026-11-22
 - 知識庫變大、放不進 context window 時，RAG 才是典型的解法 [03-anthropic-contextual-retrieval.pdf, p.2]。
 
 > ⚠️ **爭議／更新**：[03-anthropic-contextual-retrieval.pdf, p.2] 認為小型知識庫不需要 RAG，直接全部放進 prompt；[02-gao2023-survey.pdf, §VII-A, p.14] 則強調 RAG 在推論效率和可驗證性上仍無可取代；[04-liu2023-lost-in-middle.pdf, §2.3, p.5] 更發現，即使是支援長 context 的模型，也很難用好放在中間的資訊。
-> 但要注意：04 測的是 2023 年的模型（GPT-3.5-Turbo、Claude-1.3）[04-liu2023-lost-in-middle.pdf, §2.2, p.4–5]，03 是 2024 年的文章 [03-anthropic-contextual-retrieval.pdf, p.1]，模型世代不同；而 03 沒有附上「整份放進 prompt」的準確率數據 [03-anthropic-contextual-retrieval.pdf, p.2]。
+> 但要注意：04 發表於 2023 年 [04-liu2023-lost-in-middle.pdf, p.1]，測的是當時的模型（GPT-3.5-Turbo、Claude-1.3）[04-liu2023-lost-in-middle.pdf, §2.2, p.4–5]，03 是 2024 年的文章 [03-anthropic-contextual-retrieval.pdf, p.1]，模型世代不同；而 03 沒有附上「整份放進 prompt」的準確率數據 [03-anthropic-contextual-retrieval.pdf, p.2]。
 
 ## 各論文怎麼說
 

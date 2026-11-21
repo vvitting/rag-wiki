@@ -55,3 +55,4 @@ updated: 2026-11-22
 - [Contextual Retrieval](contextual-retrieval.md)
 - [三種 RAG 典範比較](../comparisons/rag-paradigms.md)
 - [RAG 進階技巧比較](../comparisons/rag-techniques.md)
+- [術語表](../glossary.md)

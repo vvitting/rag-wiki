@@ -21,10 +21,10 @@ updated: 2026-11-22
 
 - RAG 讓 LLM 先從外部知識庫找出相關資料，再根據資料回答，藉此減少錯誤內容 [02-gao2023-survey.pdf, §I, p.1]。
 - 最適合用 RAG 的情況：資料量太大，超過 LLM 一次能處理的 context window [06-edge2024-graphrag.pdf, §2.1, p.2]。
-- 它結合了兩種記憶：模型參數裡的知識，以及外部的資料 [01-lewis2020-rag.pdf, Abstract, p.1; 02-gao2023-survey.pdf, §VIII, p.16]。詳見 [兩種記憶](concepts/parametric-vs-non-parametric-memory.md)。
+- 它結合了兩種記憶：模型參數裡的知識，以及外部的資料 [01-lewis2020-rag.pdf, Abstract, p.1] [02-gao2023-survey.pdf, §VIII, p.16]。詳見 [兩種記憶](concepts/parametric-vs-non-parametric-memory.md)。
 - **比喻一**：閉書考 vs 開書考，RAG 屬於開書考 [01-lewis2020-rag.pdf, §4.1, p.5]。
 - **比喻二**：RAG 像給模型一本量身訂做的教科書；fine-tuning 則像把知識內化 [02-gao2023-survey.pdf, §II-D, p.5]。詳見 [比喻集](analogies.md)、[RAG vs fine-tuning](comparisons/rag-vs-fine-tuning.md)。
-- 這個名稱來自 Lewis et al. 2020 的論文 [01-lewis2020-rag.pdf, §1, p.2]，詳見 [來源頁](sources/01-lewis2020-rag.md) 和 [演進時間軸](comparisons/rag-timeline.md)。
+- 這個名稱來自 Lewis et al. 2020 的論文 [01-lewis2020-rag.pdf, §1, p.2] [02-gao2023-survey.pdf, Ref. 4, p.17]，詳見 [來源頁](sources/01-lewis2020-rag.md) 和 [演進時間軸](comparisons/rag-timeline.md)。
 
 ## 3. RAG 怎麼運作
 
@@ -34,7 +34,7 @@ updated: 2026-11-22
 2. **Retrieval**：[Retriever](concepts/retriever.md) 把問題轉成向量，找出最相似的 top-k 個 chunk [02-gao2023-survey.pdf, §II-A, p.3]。
 3. **Generation**：把問題和 chunk 組成 prompt，交給 LLM（[generator](concepts/generator.md)）寫出答案 [02-gao2023-survey.pdf, §II-A, p.3]。
 
-原始的 RAG（2020）流程相同，但 retriever 和 generator 是一起訓練的，詳見 [原始 RAG](methods/original-rag.md) [01-lewis2020-rag.pdf, §2.4, p.3]。
+原始的 RAG（2020）流程相同，但 retriever 和 generator 是一起訓練的，詳見 [原始 RAG](methods/original-rag.md) [01-lewis2020-rag.pdf, §2.4, p.3] [02-gao2023-survey.pdf, Ref. 4, p.17]。
 
 **放進 prompt 之後的陷阱**：LLM 最會利用開頭和結尾的資訊，放在中間的容易被忽略（[lost in the middle](concepts/lost-in-the-middle.md)）。GPT-3.5-Turbo 在 20 份文件中，答案在第 1 份時是 75.8%，在第 10 份時只有 53.8%，比完全不給文件的 56.1% 還低 [04-liu2023-lost-in-middle.pdf, Table 6, p.18; Table 1, p.5]。
 

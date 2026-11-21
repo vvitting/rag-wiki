@@ -73,3 +73,4 @@ Self-RAG 論文也觀察到，加上檢索後，部分任務的表現反而下�
 - [原始 RAG（方法）](../methods/original-rag.md)
 - [Lost in the middle](../concepts/lost-in-the-middle.md)
 - [比喻集：開書考 vs 閉書考](../analogies.md)
+- [術語表](../glossary.md)

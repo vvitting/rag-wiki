@@ -73,3 +73,4 @@ Modular RAG 沒有單一固定的步驟，而是從下面這些「模組」和�
 - [三種 RAG 典範比較](../comparisons/rag-paradigms.md)
 - [Self-RAG](self-rag.md)
 - [Query 優化](../concepts/query-optimization.md)
+- [術語表](../glossary.md)

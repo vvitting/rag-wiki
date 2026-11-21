@@ -60,7 +60,7 @@ updated: 2026-11-22
 
 ## 代價與限制
 
-- **建 index 很貴**：約 100 萬 tokens 的 Podcast 資料，用 gpt-4-turbo 花了 281 分鐘 [06-edge2024-graphrag.pdf, §4.1.3, p.9]。
+- **建 index 很貴**：約 100 萬 tokens [06-edge2024-graphrag.pdf, §4.1.1, p.8] 的 Podcast 資料，用 gpt-4-turbo 花了 281 分鐘 [06-edge2024-graphrag.pdf, §4.1.3, p.9]。
 - **答案不夠直接**：問題很具體時，一般 RAG 的答案更直接 [06-edge2024-graphrag.pdf, §5.1, p.9]。
 - **細節可能流失**：在 empowerment 這個標準上結果好壞參半；具體例子、引言和引用是關鍵，作者建議調整抽取的 prompt，保留更多細節 [06-edge2024-graphrag.pdf, §5.1, p.9–10]。
 - **評估範圍有限**：只測了兩個約 100 萬 tokens 的資料集，也沒有比較捏造率 [06-edge2024-graphrag.pdf, §6.1, p.11]。
@@ -76,3 +76,4 @@ updated: 2026-11-22
 - [Modular RAG](modular-rag.md)
 - [RAG 評估](../concepts/rag-evaluation.md)
 - [RAG 進階技巧比較](../comparisons/rag-techniques.md)
+- [術語表](../glossary.md)

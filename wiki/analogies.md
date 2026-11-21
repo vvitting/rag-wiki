@@ -86,7 +86,7 @@ updated: 2026-11-22
 - **比喻**：老師問「書裡哪一頁提到牛頓？」，翻目錄就找得到，這是一般 RAG 擅長的事。但老師問「這整套百科全書的主要主題是什麼？」，你不可能只翻幾頁就回答，得先把每一章整理成重點摘要，再從所有摘要中歸納。GraphRAG 就是先把整批資料整理成「人物關係圖＋分章摘要」，再回答這種大問題。
 - **對應到 RAG 的哪個部分**：[GraphRAG](methods/graphrag.md)、[Naive RAG](methods/naive-rag.md)
 - **比喻的極限**：真人做摘要時會判斷哪些重要；GraphRAG 的關係圖和摘要都是 LLM 自動產生的，可能漏掉細節，也可能出錯。而且事先整理很花時間。
-- **對應的技術事實**：一般 RAG 適合答案集中在少數文件裡的問題，無法回答「資料集的主要主題是什麼？」這類全局問題 [06-edge2024-graphrag.pdf, Abstract, p.1; §1, p.2]；GraphRAG 為約 100 萬 tokens 的資料建 index，花了 281 分鐘 [06-edge2024-graphrag.pdf, §4.1.3, p.9]。
+- **對應的技術事實**：一般 RAG 適合答案集中在少數文件裡的問題，無法回答「資料集的主要主題是什麼？」這類全局問題 [06-edge2024-graphrag.pdf, Abstract, p.1; §1, p.2]；GraphRAG 為約 100 萬 tokens [06-edge2024-graphrag.pdf, §4.1.1, p.8] 的資料建 index，花了 281 分鐘 [06-edge2024-graphrag.pdf, §4.1.3, p.9]。
 
 ### 改開書考的考卷
 
@@ -98,3 +98,4 @@ updated: 2026-11-22
 ## 相關頁面
 - [目錄](index.md)
 - [RAG 總覽](overview.md)
+- [術語表](glossary.md)

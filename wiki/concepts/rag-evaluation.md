@@ -29,7 +29,7 @@ updated: 2026-11-22
 | 引用品質（citation precision／recall、FactScore） | 需要證據或參考資料 [05-asai2023-self-rag.pdf, §4.1, p.7] | 說法有沒有被引用的證據支持 | 05 [05-asai2023-self-rag.pdf, §4.1, p.7] |
 | RAGAS（拆成小步驟讓 LLM 評分） | 不需要 [07-es2023-ragas.pdf, Abstract, p.1] | faithfulness、answer relevance、context relevance | 07 [07-es2023-ragas.pdf, §3, p.3] |
 | LLM 兩兩比較（LLM-as-a-judge） | 不需要 [06-edge2024-graphrag.pdf, §2.4, p.4] | 全面性、多樣性等相對好壞 | 06 [06-edge2024-graphrag.pdf, §3.3, p.7] |
-| 人工評估 | 不需要，但需要人力 [07-es2023-ragas.pdf, §4, p.4] | 依研究設計而定 | 01、05、07 [01-lewis2020-rag.pdf, §3.3, p.5; 05-asai2023-self-rag.pdf, §5.2, p.10; 07-es2023-ragas.pdf, §4, p.4] |
+| 人工評估 | 不需要，但需要人力 [07-es2023-ragas.pdf, §4, p.4] | 依研究設計而定 | 01、05、07 [01-lewis2020-rag.pdf, §3.3, p.5] [05-asai2023-self-rag.pdf, §5.2, p.10] [07-es2023-ragas.pdf, §4, p.4] |
 
 ## 運作方式
 
@@ -86,7 +86,7 @@ Self-RAG 論文用了幾個衡量「有沒有根據」的指標 [05-asai2023-sel
 - **短答案的判分方式**：只要標準答案出現在模型輸出中就算對，不要求完全一致（不是 Exact Match）[05-asai2023-self-rag.pdf, §4.1, p.7]。
 - **人工評估 S&P**：答案是否合理（plausible），以及證據是否足以驗證答案（supported）[05-asai2023-self-rag.pdf, §5.2, p.10]。
 
-**和綜述的三個品質分數對照**（wiki 的整理，依兩篇的定義比對 [02-gao2023-survey.pdf, §VI-C, p.12; 05-asai2023-self-rag.pdf, Table 1, p.4]）：
+**和綜述的三個品質分數對照**（wiki 的整理，依兩篇的定義比對 [02-gao2023-survey.pdf, §VI-C, p.12] [05-asai2023-self-rag.pdf, Table 1, p.4]）：
 
 | 02 的品質分數 | 定義 | 05 的對應 reflection token | 定義 |
 |---|---|---|---|
