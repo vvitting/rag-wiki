@@ -12,3 +12,4 @@
 {"time": "2026-11-22 15:59:09", "node": "2", "round": 4, "result": "pass", "detail": "check_coverage.py 通過：相關頁 17 頁", "reason": "", "change": "", "pages": ""}
 {"time": "2026-11-22 16:02:30", "node": "2b", "round": 2, "result": "pass", "detail": "第 2 次檢查（⑤ 退回後）：新加入 3 頁嚴重 0、輕微 12（V2-23–V2-34）；其餘 14 頁未修改；讀取檔案皆在清單內", "reason": "", "change": "", "pages": ""}
 {"time": "2026-11-22 16:03:07", "node": "3", "round": 2, "result": "done", "detail": "17 張卡（新增 sources/01、sources/05、lost-in-the-middle）；check_coverage --cards 通過", "reason": "", "change": "⑤ 退回後補卡；既有卡片「可以用在」的頁碼因新增 07 而順移", "pages": ""}
+{"time": "2026-11-22 16:03:41", "node": "4", "round": 2, "result": "done", "detail": "13 頁，六段都有；2 張流程圖（06、07）", "reason": "", "change": "依 ⑤ 退回意見：新增 07 走一遍；04 模型與分數移到講稿、保留 open-domain QA；05 只留 68% vs 4%；12 不放 0.95；13 寫明 53.8%<56.1% 的條件並帶出 Lost in the Middle", "pages": ""}
