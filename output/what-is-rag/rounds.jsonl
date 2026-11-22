@@ -2,3 +2,4 @@
 {"time": "2026-11-22 15:45:55", "node": "1", "round": 1, "result": "done", "detail": "相關頁 14 頁；缺口 2 項（完整走一遍的例子、應用案例）", "reason": "", "change": "", "pages": ""}
 {"time": "2026-11-22 15:46:15", "node": "2", "round": 1, "result": "fail", "detail": "check_coverage.py 結束碼 1：sources.md 第 29 行 wiki/sources/*.md 不存在；腳本把「看過但沒選的頁」也算成相關頁（14 → 23 頁）", "reason": "sources.md 格式與 parse_sources_md 不相容，不是覆蓋率不足", "change": "", "pages": ""}
 {"time": "2026-11-22 15:46:15", "node": "2", "round": 2, "result": "wait", "detail": "等使用者決定：怎麼處理 parse_sources_md 會把『看過但沒選的頁』算進相關頁的問題", "reason": "", "change": "", "pages": ""}
+{"time": "2026-11-22 15:47:48", "node": "2", "round": 3, "result": "pass", "detail": "check_coverage.py 通過：相關頁 14 頁", "reason": "", "change": "parse_sources_md 改成只讀到第一個 ## 標題（使用者選 A）；sources.md 第 29 行改寫", "pages": ""}

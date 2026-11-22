@@ -26,7 +26,7 @@
 - wiki/comparisons/rag-techniques.md — 技巧比較表，適合「進階技巧」主題，不適合入門
 - wiki/comparisons/rag-vs-fine-tuning.md — 和 fine-tuning 的比較是另一個主題；需要的「帶教科書 vs 內化」比喻已在 analogies
 - wiki/comparisons/rag-timeline.md — 演進史，入門只需要「2020 年提出」這一點，overview 已有
-- wiki/sources/*.md — 來源頁是逐篇摘要；同樣的內容已整合在上面的概念頁、方法頁
+- wiki/sources/ 下的 7 個來源頁 — 來源頁是逐篇摘要；同樣的內容已整合在上面的概念頁、方法頁
 
 ## 缺口
 
