@@ -112,3 +112,8 @@
 | V2-17 | 可讀性 | EM、F1、BLEU、ROUGE、Hit Rate、MRR、NDCG 沒有連結 | rag-evaluation.md | 輕微 | v2-②b-1 | 待修 |
 
 > 這 17 條都是輕微問題，依 workflow v2 不阻擋 ②b。之後依 AGENTS.md §9.3 的 Wiki 維護流程整批處理。製作這份簡報時，不使用 V2-05、V2-09 的數字；V2-01、V2-13 涉及的數字，只引用帶有限定條件的句子。
+| V2-18 | 引用 | Fig.1 例子的步驟 3、4：「Wikipedia」「加權」只引 Fig.1, p.2，應補 §1, p.2 與 §2.1, p.3 | sources/01-lewis2020-rag.md | 輕微 | wiki 維護（⑤ 退回後） | 已修 |
+| V2-19 | 限定條件 | Fig.1 例子的步驟 6：Table 3 的 middle ear 屬於 MS-MARCO 任務，沒有註明 | sources/01-lewis2020-rag.md | 輕微 | wiki 維護（⑤ 退回後） | 已修 |
+| V2-20 | 簡化 | Fig.1 例子：「先判斷這個問題需要檢索」，實際上每一段之前都會判斷 | sources/05-asai2023-self-rag.md | 輕微 | wiki 維護（⑤ 退回後） | 已修（引 §3.1, p.4） |
+| V2-21 | 需要更多資料 | Fig.1 左邊另有「Contradictory」「No information in passages」標籤，文字抽取看不出標在哪一句 | sources/05-asai2023-self-rag.md | 輕微 | wiki 維護（⑤ 退回後） | 不修：要看原圖才能確認標籤位置；目前寫的「和取回的文件不一致」已可由圖中兩段文字直接對照，沒有講錯 |
+| V2-22 | 可讀性 | Relevant／Supported 等標籤沒有對應到 ISREL／ISSUP，也沒說最後選中哪一段 | sources/05-asai2023-self-rag.md | 輕微 | wiki 維護（⑤ 退回後） | 已修（引 §3.1, p.4） |

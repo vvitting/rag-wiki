@@ -108,6 +108,13 @@ updated: 2026-11-22
 ## 關鍵圖表說明
 
 - **Fig.1**：整體架構圖。Query Encoder 把問題轉成向量，用 MIPS 從 Document Index 找出 top-K 文件，再交給 Generator 產生答案；整個流程可以端到端訓練 [01-lewis2020-rag.pdf, Fig.1, p.2]。**做簡報時最適合拿來畫流程圖。**
+- **Fig.1 的例子：走一遍「Define "middle ear"」**（圖中的問答任務；同一張圖也畫了事實查核和 Jeopardy 出題的例子）[01-lewis2020-rag.pdf, Fig.1, p.2]：
+  1. **輸入問題**：「Define "middle ear"」（定義「中耳」）[01-lewis2020-rag.pdf, Fig.1, p.2]。
+  2. **把問題轉成向量**：Query Encoder 把問題 x 轉成向量 q(x) [01-lewis2020-rag.pdf, Fig.1, p.2]。
+  3. **找資料**：用 MIPS 從 Document Index 中找出最相關的 top-K 份文件，圖中畫的是 z1 到 z4 [01-lewis2020-rag.pdf, Fig.1, p.2]；這個 index 是 Wikipedia 的 dense vector index [01-lewis2020-rag.pdf, §1, p.2]。
+  4. **寫答案**：Generator 根據每一份文件分別產生答案，再把結果合併（marginalize）[01-lewis2020-rag.pdf, Fig.1, p.2]；合併時依每份文件的檢索機率加權 [01-lewis2020-rag.pdf, §2.1, p.3]。
+  5. **輸出**：「The middle ear includes the tympanic cavity and the three ossicles.」（中耳包含鼓室和三塊聽小骨）[01-lewis2020-rag.pdf, Fig.1, p.2]。
+  6. **對照不查資料的模型**：同一個問題，BART 回答「中耳是介於中耳和鼻子之間的部分」，是錯的答案；RAG-Sequence 的答案則和上面步驟 5 相同。Table 3 中這一題屬於 MS-MARCO 生成式問答任務 [01-lewis2020-rag.pdf, Table 3, p.7]。
 - **Fig.2**：RAG-Token 產生「The Sun Also Rises」「A Farewell to Arms」這兩個書名時，分別依賴不同的文件，顯示它可以組合多份文件的資訊 [01-lewis2020-rag.pdf, Fig.2, p.7]。
 - **Fig.2 的延伸觀察**：書名的第一個字產生後，模型就不太依賴文件了，表示其餘部分來自 BART 自己記住的知識 [01-lewis2020-rag.pdf, §4.3, p.6]。
 - **Table 1**：closed-book 與 open-book 方法在 open-domain QA 上的比較 [01-lewis2020-rag.pdf, Table 1, p.6]。

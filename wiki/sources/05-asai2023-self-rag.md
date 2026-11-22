@@ -131,6 +131,16 @@ updated: 2026-11-22
 ## 關鍵圖表說明
 
 - **Fig.1**：左邊是一般 RAG（固定取 K 份文件），右邊是 Self-RAG（需要時才檢索、平行生成、評分後選最好的）；下方的「寫一篇暑假作文」例子不需要檢索 [05-asai2023-self-rag.pdf, Fig.1, p.2]。**最適合放進簡報的圖。**
+- **Fig.1 的例子：走一遍「How did US states get their names?」**（美國各州的名字怎麼來的？）[05-asai2023-self-rag.pdf, Fig.1, p.2]：
+  - **一般 RAG（圖的左邊）**：固定取 K 份文件 [05-asai2023-self-rag.pdf, Fig.1, p.2]
+    1. 不管需不需要，先取回 K 份文件，例如「California 的名字來自一本西班牙書中的虛構島嶼」「Texas 常見的嬰兒名字是 Emma」「50 個州中有 11 個以人名命名」[05-asai2023-self-rag.pdf, Fig.1, p.2]。
+    2. 把 K 份文件和問題一起放進 prompt，讓模型產生答案 [05-asai2023-self-rag.pdf, Fig.1, p.2]。
+    3. 產生的答案寫「California 是以 Christopher Columbus 命名」，和取回的文件（來自西班牙書中的虛構島嶼）不一致 [05-asai2023-self-rag.pdf, Fig.1, p.2]。
+  - **Self-RAG（圖的右邊）**：需要時才檢索、平行生成、評分後挑選 [05-asai2023-self-rag.pdf, Fig.1, p.2]
+    1. 模型寫完開頭一句後，判斷下一段需要檢索（Retrieve）[05-asai2023-self-rag.pdf, Fig.1, p.2]；Self-RAG 每寫一段之前，都會重新判斷要不要檢索 [05-asai2023-self-rag.pdf, §3.1, p.4]。
+    2. 針對每份文件，平行地各寫一段：「50 個州中有 11 個的名字來自人名」被標為 Relevant（ISREL：文件相關）、Supported（ISSUP：完全被文件支持）；「Texas 以一個美洲原住民部落命名」所用的文件被標為 Irrelevant；「California 的名字源自 16 世紀的小說 Las Sergas de Esplandián」被標為 Relevant、Partially（ISSUP：只有部分被支持）。這些標籤就是上面表格中的 reflection tokens [05-asai2023-self-rag.pdf, Fig.1, p.2]。
+    3. 評分後選出最好的段落：選中「11 個州以人名命名」那段，因為它的文件相關、內容也完全被支持；Texas 那段的文件不相關，California 那段只有部分被支持 [05-asai2023-self-rag.pdf, §3.1, p.4]。接著再重複「判斷要不要檢索 → 生成 → 評分」寫下一段 [05-asai2023-self-rag.pdf, Fig.1, p.2; §3.1, p.4]。
+  - **不需要查的例子**：「寫一篇最棒的暑假作文」，模型判斷不需要檢索，直接寫 [05-asai2023-self-rag.pdf, Fig.1, p.2]。
 - **Table 1**：四種 reflection tokens 的定義 [05-asai2023-self-rag.pdf, Table 1, p.4]。
 - **Algorithm 1**：推論流程 [05-asai2023-self-rag.pdf, Algorithm 1, p.4]。
 - **Table 2**：六個任務的主要結果 [05-asai2023-self-rag.pdf, Table 2, p.8]。

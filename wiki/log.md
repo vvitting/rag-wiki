@@ -189,3 +189,12 @@
 - README.md：`raw/text` 改成 `raw-text/`；v1 紀錄的路徑改成 `output/what-is-rag/v1/`
 - topic-slides（what-is-rag）：v1 的執行狀態封存到 `output/what-is-rag/v1/`（含 run-log-v1.md）；v2 重新開始，issues.md 以 v1 的總表為基準
 - lint：0 error, 0 warning
+
+## [2026-11-22] lint | 補 Fig.1 的完整例子（topic-slides what-is-rag ⑤ 退回，使用者批准）
+- 修改：sources/01-lewis2020-rag.md — 「關鍵圖表說明」新增「Fig.1 的例子：走一遍『Define "middle ear"』」6 個步驟（輸入 → 問題轉成向量 → MIPS 找 top-K → 分別生成再加權合併 → 輸出 → 對照 BART 的錯誤答案），引用 Fig.1 p.2、§1 p.2、§2.1 p.3、Table 3 p.7
+- 修改：sources/05-asai2023-self-rag.md — 新增「Fig.1 的例子：走一遍『How did US states get their names?』」：一般 RAG 3 步（答案和取回的文件不一致）、Self-RAG 3 步（每段前判斷要不要檢索 → 平行生成並標 ISREL／ISSUP → 選中完全被支持的段落）、不需要檢索的暑假作文例子，引用 Fig.1 p.2、§3.1 p.4
+- 依據：raw-text/01 page 2、page 7；raw-text/05 page 2、page 4
+- reviewer（Wiki 維護流程，只看這兩頁＋對應 raw-text）：嚴重 0、輕微 5；4 條當場修正，1 條不修（要看原圖才能確認標籤位置），登記為 output/what-is-rag/issues.md 的 V2-18–V2-22
+- ⚠️ 新標註：無
+- 待補來源：無
+- lint：0 error, 0 warning
