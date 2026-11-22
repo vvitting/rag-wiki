@@ -11,4 +11,4 @@ title: 比喻：從閉書考變成開書考
 - 比喻的極限：模型可能翻到不相關的頁面〔wiki/analogies.md〕
 
 ## 講稿
-原始 RAG 論文自己就把只靠參數的方法叫 closed-book，把會去檢索資料的方法叫 open-book〔wiki/comparisons/closed-book-vs-open-book.md〕。在 open-domain QA 的 NQ 資料集上，RAG-Sequence 只有 626M 個可訓練參數，拿到 44.5 分〔wiki/comparisons/closed-book-vs-open-book.md〕。參數多很多的 T5-11B 有 11B 個參數，卻只有 34.5 分〔wiki/comparisons/closed-book-vs-open-book.md〕。不過要注意，開書考的學生通常知道該翻哪一章，RAG 卻可能翻到不相關的頁面〔wiki/analogies.md〕。
+原始 RAG 論文自己就把只靠參數的方法叫 closed-book，把會去檢索資料的方法叫 open-book〔wiki/comparisons/closed-book-vs-open-book.md〕。在 open-domain QA 的 NQ 資料集上，成績是用 Exact Match 計算，也就是看答案和標準答案吻合的程度〔wiki/comparisons/closed-book-vs-open-book.md〕〔wiki/concepts/rag-evaluation.md〕。RAG-Sequence 只有 626M 個可訓練參數，Exact Match 是 44.5；參數多很多的 T5-11B 有 11B 個參數，卻只有 34.5〔wiki/comparisons/closed-book-vs-open-book.md〕。不過要注意，開書考的學生通常知道該翻哪一章，RAG 卻可能翻到不相關的頁面〔wiki/analogies.md〕。

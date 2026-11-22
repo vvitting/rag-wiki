@@ -4,6 +4,7 @@ page: wiki/concepts/hallucination.md
 # 證據卡：Hallucination
 
 ## 重點摘錄
+> - **模型「背錯」的知識**：純參數模型講出錯誤的事實，例如下面 BART 的中耳例子 [01-lewis2020-rag.pdf, Table 3, p.7]。
 > Hallucination 指模型講出聽起來很像真的、但其實是錯的內容。原始 RAG 論文把它列為純參數模型的缺點之一 [01-lewis2020-rag.pdf, §1, p.1]。
 > - 這正是 RAG 想解決的問題之一：作者認為，RAG 的生成更紮根在真實的知識上（這裡指 Wikipedia），所以比較少「hallucinate」[01-lewis2020-rag.pdf, Broader Impact, p.10]。
 > - [LLM](../glossary.md) 在處理超出訓練資料範圍、或需要最新資訊的問題時，特別容易產生 hallucination [02-gao2023-survey.pdf, §I, p.1]。
@@ -23,3 +24,4 @@ page: wiki/concepts/hallucination.md
 - 為什麼需要（01）：hallucination 的白話定義、BART 中耳例子
 - 怎麼評估（12）：faithfulness 在 WikiEval 上 0.95（帶資料集限定，對應 V2-01）
 - 總結（13）：用了 RAG 也不保證不會講錯
+- 為什麼需要（01）：BART 是「純參數模型」——只靠記憶、不查資料（修正輕微問題時補）

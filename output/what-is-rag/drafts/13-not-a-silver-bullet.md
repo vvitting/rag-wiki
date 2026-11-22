@@ -6,7 +6,7 @@ title: 重點回顧：RAG 有用，但不是萬靈丹
 ## 投影片
 - RAG = 先查再寫；換掉 index 就能更新知識，不用重新訓練〔wiki/overview.md〕
 - 位置有影響：放在中間的資訊最容易被忽略（**Lost in the Middle**）〔wiki/concepts/lost-in-the-middle.md〕
-- GPT-3.5-Turbo、20 份文件、答案在中間：53.8%，低於不給文件的 56.1%〔wiki/concepts/lost-in-the-middle.md〕
+- 最糟的情況（GPT-3.5-Turbo、20 份文件、答案在中間）：53.8%，低於不給文件的 56.1%〔wiki/concepts/lost-in-the-middle.md〕
 - ⚠️ 文件放越多越好嗎？各研究看法不一；有實驗發現 50 份比 20 份只多約 1%–1.5%〔wiki/concepts/retriever.md〕
 - 檢索不一定有幫助，外部資料本身也可能有錯〔wiki/overview.md〕
 

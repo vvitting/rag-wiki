@@ -22,3 +22,4 @@
 {"time": "2026-11-22 16:39:51", "node": "8", "round": 1, "result": "done", "detail": "render_deck.py：deck.html 13 頁，未手動編輯", "reason": "", "change": "", "pages": ""}
 {"time": "2026-11-22 16:40:03", "node": "9", "round": 1, "result": "pass", "detail": "check_render.py 通過：13 頁、無溢出、文字與稿件一致、notes／refs 齊全、無外部資源；截圖 13 張", "reason": "", "change": "", "pages": ""}
 {"time": "2026-11-22 16:40:23", "node": "10", "round": 1, "result": "done", "detail": "deck.html 13 頁；report.md 補充說明已寫；wiki/log.md 已追加", "reason": "", "change": "", "pages": ""}
+{"time": "2026-11-22 17:03:34", "node": "6", "round": 3, "result": "pass", "detail": "check_sources.py 通過（13 頁）", "reason": "", "change": "使用者要求修 3 個輕微問題：01 BART 加白話說明（只靠記憶、不查資料的模型，引 hallucination）；04 講稿說明 44.5／34.5 是 NQ 上的 Exact Match（引 closed-book、rag-evaluation）；13 投影片寫出「最糟的情況」條件（引 lost-in-the-middle）。卡片補 3 行原文", "pages": "01,04,13"}
