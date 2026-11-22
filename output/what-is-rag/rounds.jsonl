@@ -7,3 +7,4 @@
 {"time": "2026-11-22 15:53:56", "node": "3", "round": 1, "result": "done", "detail": "14 張卡；check_coverage --cards 通過", "reason": "", "change": "", "pages": ""}
 {"time": "2026-11-22 15:54:18", "node": "4", "round": 1, "result": "done", "detail": "12 頁，六段都有；1 張流程圖（06）", "reason": "", "change": "", "pages": ""}
 {"time": "2026-11-22 15:54:18", "node": "5", "round": 1, "result": "wait", "detail": "大綱摘要已交給使用者，等待「確認」或「退回：意見」", "reason": "", "change": "", "pages": ""}
+{"time": "2026-11-22 15:56:08", "node": "5", "round": 2, "result": "fail", "detail": "缺內容 → 回到 ① 補檢索，再經 ② ②b ③ ④ ⑤", "reason": "使用者退回：(1) 缺內容：需要從頭走到尾的完整例子（Lewis Fig.1 middle ear、Self-RAG Fig.1 US states），批准補進 sources/01、sources/05，06 之後新增「走一遍：一個問題的旅程」，共 13 頁；(2) 調整：04 模型名與分數移到講稿、保留 open-domain QA 限定；05 只留一組數字；11 不放 0.95、重點放分開評估；12 寫明 53.8%<56.1% 的條件並帶出 Lost in the Middle", "change": "", "pages": ""}
