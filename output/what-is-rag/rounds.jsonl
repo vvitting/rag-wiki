@@ -6,3 +6,4 @@
 {"time": "2026-11-22 15:53:00", "node": "2b", "round": 1, "result": "pass", "detail": "reviewer 模式 A：嚴重 0、輕微 17（V2-01–V2-17，見 issues.md）；舊問題全部仍為已解決；讀取檔案皆在清單內", "reason": "", "change": "", "pages": ""}
 {"time": "2026-11-22 15:53:56", "node": "3", "round": 1, "result": "done", "detail": "14 張卡；check_coverage --cards 通過", "reason": "", "change": "", "pages": ""}
 {"time": "2026-11-22 15:54:18", "node": "4", "round": 1, "result": "done", "detail": "12 頁，六段都有；1 張流程圖（06）", "reason": "", "change": "", "pages": ""}
+{"time": "2026-11-22 15:54:18", "node": "5", "round": 1, "result": "wait", "detail": "大綱摘要已交給使用者，等待「確認」或「退回：意見」", "reason": "", "change": "", "pages": ""}
