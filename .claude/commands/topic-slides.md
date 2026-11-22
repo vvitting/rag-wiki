@@ -89,7 +89,7 @@ argument-hint: <主題>
    ## 缺口
    - 主題需要、但 wiki 中找不到的內容（沒有就寫「無」）
    ```
-   - 相關頁一行一頁，路徑從 `wiki/` 開始。不能列 `wiki/index.md`、`wiki/log.md`。
+   - 相關頁一行一頁，路徑從 `wiki/` 開始，**全部放在第一個 `## ` 標題之前**（腳本只讀到第一個 `## ` 為止，之後的段落不算相關頁）。不能列 `wiki/index.md`、`wiki/log.md`。
    - 六段教學結構（為什麼需要→是什麼→怎麼運作→進階變體→怎麼評估→總結）都要想過，每段找不到材料就寫進「缺口」。
 3. `log --node 1 --result done`，commit。
 
@@ -115,7 +115,7 @@ argument-hint: <主題>
    - sources.md 列出的每一個 wiki 頁；
    - 這些頁面 frontmatter `sources` 中每個 raw 檔對應的 `raw-text/<同檔名>.md`（例如 `05-asai2023-self-rag.pdf` → `raw-text/05-asai2023-self-rag.md`）。可以用：
      ```bash
-     grep -h '^sources:' $(grep -oE 'wiki/[^ )]+\.md' output/<slug>/sources.md | sort -u) \
+     grep -h '^sources:' $(sed '/^## /q' output/<slug>/sources.md | grep -oE 'wiki/[^ )]+\.md' | sort -u) \
        | grep -oE '[0-9]{2}-[a-z0-9-]+\.pdf' | sort -u | sed 's#^#raw-text/#; s#\.pdf$#.md#'
      ```
    - `output/<slug>/issues.md`。

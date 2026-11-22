@@ -72,9 +72,15 @@ def split_frontmatter(text: str) -> tuple[dict[str, str] | None, list[str], int]
 # ---------- sources.md ----------
 
 def parse_sources_md(path: Path) -> list[tuple[int, str]]:
-    """回傳 [(行號, 'wiki/…md')]，依出現順序。"""
+    """回傳 [(行號, 'wiki/…md')]，依出現順序。
+
+    只讀「相關頁清單」：從檔案開頭讀到第一個 `## ` 標題為止。
+    之後的「## 看過但沒選的頁」「## 缺口」等段落即使有 `- wiki/…` 也不算相關頁。
+    """
     out = []
     for i, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        if line.startswith("## "):
+            break
         m = SOURCES_LINE_RE.match(line)
         if m:
             out.append((i, m.group(1)))
