@@ -204,3 +204,9 @@
 - 使用的 wiki 頁：17 頁（見 output/what-is-rag/sources.md）
 - 退回：⓪ 0、② 1、②b 0、⑤ 1、⑥ 0、⑦ 1、⑨ 0 輪（workflow v2；v1 的 ⓪ 退回 3 輪見 output/what-is-rag/v1/）
 - issues.md：新登記 34 條（嚴重 0、輕微 34），已修 4 條、不修 1 條、待修 29 條
+
+## [2026-11-22] slides | topic-slides：RAG 是什麼？（修正輕微問題）
+- 產出：output/what-is-rag/deck.html（13 頁，重新渲染）
+- 修改：01（BART 加白話說明）、04（44.5／34.5 是 NQ 上的 Exact Match）、13（投影片寫出「最糟的情況」條件）；重新經過 ⑥ → ⑦ → ⑧ → ⑨，⑦ 第 3 輪嚴重 0、輕微 3（未修，記在 report.md）
+- 退回：⓪ 0、② 1、②b 0、⑤ 1、⑥ 0、⑦ 1、⑨ 0 輪（本次修正沒有新增退回）
+- issues.md：新增 V2-35（overview.md 第 81 行缺「文件數量」的 ⚠️，待修）；其餘輕微問題在 report.md 標為「已知、刻意不修」
