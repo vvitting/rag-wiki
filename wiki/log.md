@@ -198,3 +198,9 @@
 - ⚠️ 新標註：無
 - 待補來源：無
 - lint：0 error, 0 warning
+
+## [2026-11-22] slides | topic-slides：RAG 是什麼？
+- 產出：output/what-is-rag/deck.html（13 頁）
+- 使用的 wiki 頁：17 頁（見 output/what-is-rag/sources.md）
+- 退回：⓪ 0、② 1、②b 0、⑤ 1、⑥ 0、⑦ 1、⑨ 0 輪（workflow v2；v1 的 ⓪ 退回 3 輪見 output/what-is-rag/v1/）
+- issues.md：新登記 34 條（嚴重 0、輕微 34），已修 4 條、不修 1 條、待修 29 條
