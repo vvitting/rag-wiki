@@ -14,5 +14,5 @@ page: wiki/concepts/retriever.md
 > - 例如在 NQ dev set 上，RAG-Token 用 BM25 是 29.7 EM，用 dense retriever 則是 43.5 [01-lewis2020-rag.pdf, Table 6, p.8]。
 
 ## 可以用在
-- 怎麼運作（08）：retriever 的角色、embedding vs BM25
-- 進階變體（10）：一般 RAG 只找得到局部
+- 怎麼運作（09）：retriever 的角色、embedding vs BM25
+- 進階變體（11）：一般 RAG 只找得到局部

@@ -13,4 +13,4 @@ page: wiki/methods/self-rag.md
 > > ⚠️ **爭議／更新（原文結論與 Table 2 不一致）**：[05-asai2023-self-rag.pdf, §6, p.10] 的結論說 Self-RAG 明顯勝過參數更多的 LLM 和傳統 RAG；但同一篇的 Table 2 中，ChatGPT（不檢索）在 TriviaQA（74.3）和 ARC-C（75.3）上都高於 Self-RAG 13B（69.3、73.1），加上檢索的 ChatGPT 在 ARC-C 也是 75.3 [05-asai2023-self-rag.pdf, Table 2, p.8]。正文 §1 也只說勝過加上檢索的 ChatGPT「四個任務」[05-asai2023-self-rag.pdf, §1, p.2]。引用這個結論時，請註明比較的對象。
 
 ## 可以用在
-- 進階變體（10）：自己決定要不要查、為自己打分數；不使用「勝過更大模型」的結論（見 ⚠️）
+- 進階變體（11）：自己決定要不要查、為自己打分數；不使用「勝過更大模型」的結論（見 ⚠️）

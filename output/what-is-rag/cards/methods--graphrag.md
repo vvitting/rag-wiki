@@ -13,4 +13,4 @@ page: wiki/methods/graphrag.md
 > - **建 index 很貴**：約 100 萬 tokens [06-edge2024-graphrag.pdf, §4.1.1, p.8] 的 Podcast 資料，用 gpt-4-turbo 花了 281 分鐘 [06-edge2024-graphrag.pdf, §4.1.3, p.9]。
 
 ## 可以用在
-- 進階變體（10）：回答全局問題；勝率限「GraphRAG 等全局方法」並分資料集；代價是建 index 很貴
+- 進階變體（11）：回答全局問題；勝率限「GraphRAG 等全局方法」並分資料集；代價是建 index 很貴

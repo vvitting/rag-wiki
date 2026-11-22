@@ -14,4 +14,4 @@ page: wiki/concepts/chunking.md
 > - **例子**：「公司營收比上一季成長 3%」這個 chunk，沒說是哪家公司、哪個時期，所以問「ACME Corp 2023 年 Q2 的營收成長」時很難被找到 [03-anthropic-contextual-retrieval.pdf, p.4]。
 
 ## 可以用在
-- 怎麼運作（07）：為什麼切塊、切多大、原始 RAG 的 100-word chunk 與 21M 個 chunk
+- 怎麼運作（08）：為什麼切塊、切多大、原始 RAG 的 100-word chunk 與 21M 個 chunk

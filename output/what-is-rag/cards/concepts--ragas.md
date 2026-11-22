@@ -12,4 +12,4 @@ page: wiki/concepts/ragas.md
 > | RAGAS | 0.95 | 0.78 | 0.70 | [07-es2023-ragas.pdf, Table 1, p.5] |
 
 ## 可以用在
-- 怎麼評估（11）：不需要標準答案的自動評估；拆成小步驟比較準；faithfulness 高不代表答案對
+- 怎麼評估（12）：不需要標準答案的自動評估；拆成小步驟比較準；faithfulness 高不代表答案對

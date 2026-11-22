@@ -10,5 +10,5 @@ page: wiki/concepts/embedding.md
 > 查詢時必須用**同一個** encoding model 把問題轉成向量 [02-gao2023-survey.pdf, §II-A, p.3]。
 
 ## 可以用在
-- 怎麼運作（07）：embedding 把意思轉成向量
-- 怎麼運作（08）：embedding 會漏掉精確字串
+- 怎麼運作（08）：embedding 把意思轉成向量
+- 怎麼運作（09）：embedding 會漏掉精確字串

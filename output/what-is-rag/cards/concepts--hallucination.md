@@ -21,5 +21,5 @@ page: wiki/concepts/hallucination.md
 
 ## 可以用在
 - 為什麼需要（01）：hallucination 的白話定義、BART 中耳例子
-- 怎麼評估（11）：faithfulness 在 WikiEval 上 0.95（帶資料集限定，對應 V2-01）
-- 總結（12）：用了 RAG 也不保證不會講錯
+- 怎麼評估（12）：faithfulness 在 WikiEval 上 0.95（帶資料集限定，對應 V2-01）
+- 總結（13）：用了 RAG 也不保證不會講錯

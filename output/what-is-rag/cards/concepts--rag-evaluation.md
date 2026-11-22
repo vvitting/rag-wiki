@@ -13,4 +13,4 @@ page: wiki/concepts/rag-evaluation.md
 > > ⚠️ **爭議／更新**：[02-gao2023-survey.pdf, §VI-C, p.12] 把 context relevance、answer faithfulness、answer relevance 列為 RAG 的三個主要品質分數；[06-edge2024-graphrag.pdf, §2.4, p.4] 則認為這三個（以 RAGAS 為例）只適用於一般的 vector RAG，和全局理解類的問題無關。RAGAS 原始論文的設定也確實是「一個問題 → 檢索 context → 生成答案」的標準 RAG [07-es2023-ragas.pdf, §3, p.2]。兩者適用的問題類型不同：找特定事實時用前者，理解整批資料時則需要全面性、多樣性這類標準。
 
 ## 可以用在
-- 怎麼評估（11）：兩個目標、三個品質分數，以及「只適用於一般 RAG」的 ⚠️（對應 V2-02）
+- 怎麼評估（12）：兩個目標、三個品質分數，以及「只適用於一般 RAG」的 ⚠️（對應 V2-02）
