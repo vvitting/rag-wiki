@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLM 很強，但會一本正經地講錯</title>
+<style>
+:root {
+  --bg: #1d2129; --paper: #ffffff; --ink: #1f2933; --muted: #6b7785;
+  --accent: #2f6fde; --accent-soft: #e8f0fd; --line: #d9dee5;
+  --font: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", "Heiti TC", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); overflow: hidden; font-family: var(--font); }
+#stage { position: absolute; left: 50%; top: 50%; width: 1280px; height: 720px; transform-origin: center center; }
+.slide { display: none; position: absolute; inset: 0; width: 1280px; height: 720px; overflow: hidden;
+  background: var(--paper); color: var(--ink); padding: 48px 72px 0; flex-direction: column; }
+.slide.active { display: flex; }
+header { flex: none; }
+.section-label { margin: 0 0 8px; font-size: 18px; font-weight: 600; letter-spacing: .08em; color: var(--accent); }
+h2 { margin: 0; font-size: 40px; line-height: 52px; }
+.content { flex: 1; min-height: 0; overflow: hidden; padding-top: 28px; }
+.points { margin: 0; padding-left: 1.2em; font-size: 27px; line-height: 1.55; }
+.points li { margin-bottom: 14px; }
+.points li::marker { color: var(--accent); }
+strong { color: var(--accent); }
+.diagram { display: block; margin: 0 0 24px; overflow: visible; }
+.diagram rect { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+.diagram text { font-family: var(--font); font-size: 24px; font-weight: 600; fill: var(--ink); }
+.diagram line { stroke: var(--accent); stroke-width: 3; }
+.refs { flex: none; height: 64px; display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--line);
+  font-size: 13px; color: var(--muted); overflow: hidden; }
+.refs-label { flex: none; font-weight: 600; }
+.refs ul { flex: 1; display: flex; flex-wrap: wrap; gap: 2px 14px; margin: 0; padding: 0; list-style: none;
+  font-family: ui-monospace, Menlo, monospace; }
+.pageno { flex: none; font-size: 14px; }
+aside.notes { display: none; }
+#notes-panel { display: none; position: fixed; left: 0; right: 0; bottom: 0; max-height: 40vh; overflow: auto;
+  background: rgba(20, 24, 31, .94); color: #f1f3f5; font: 20px/1.6 var(--font); padding: 18px 28px; }
+body.show-notes #notes-panel { display: block; }
+</style>
+</head>
+<body>
+<div id="stage">
+<section class="slide" data-slide="1">
+  <header>
+    <p class="section-label">為什麼需要</p>
+    <h2>LLM 很強，但會一本正經地講錯</h2>
+  </header>
+  <div class="content">
+    
+    <ul class="points"><li><strong>LLM</strong> 有三個主要問題：會講錯、知識過時、無法追溯出處</li><li><strong>Hallucination</strong>：講出聽起來很像真的、但其實是錯的內容</li><li>例子：問 BART 中耳是什麼，它說中耳介於中耳和鼻子之間</li><li>遇到需要最新資訊、或超出訓練資料的問題，特別容易出錯</li></ul>
+  </div>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/overview.md</li><li>wiki/concepts/hallucination.md</li></ul><span class="pageno">1 / 13</span></footer>
+  <aside class="notes">今天的大型語言模型，也就是 LLM，很會寫也很會聊，但它有三個主要問題：會講錯、知識會過時，而且說不出答案是從哪裡來的。其中最麻煩的是 hallucination，就是模型講出聽起來很像真的、其實是錯的內容。例如問 BART 中耳是什麼，它竟然回答中耳是介於中耳和鼻子之間的部分。</aside>
+</section>
+<section class="slide" data-slide="2">
+  <header>
+    <p class="section-label">為什麼需要</p>
+    <h2>只靠「背」的知識，有兩個天生限制</h2>
+  </header>
+  <div class="content">
+    
+    <ul class="points"><li>模型的知識存在<strong>參數</strong>裡，就像「背起來」的</li><li>限制一：不知道訓練之後才發生的事</li><li>限制二：很難記住訓練資料中很少出現的知識</li><li>背進去的知識很難更新，也說不出答案的出處</li></ul>
+  </div>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/concepts/parametric-vs-non-parametric-memory.md</li><li>wiki/overview.md</li></ul><span class="pageno">2 / 13</span></footer>
+  <aside class="notes">模型的知識，大部分是在訓練時「背」進參數裡的。這帶來兩個根本限制：它不知道訓練之後才發生的事，也很難記住訓練資料裡很少出現的冷門知識。而且背進去的知識很難更新或擴充，模型也說不出答案的出處。</aside>
+</section>
+<section class="slide" data-slide="3">
+  <header>
+    <p class="section-label">是什麼</p>
+    <h2>RAG：先查資料，再回答</h2>
+  </header>
+  <div class="content">
+    
+    <ul class="points"><li><strong>RAG</strong>：讓 LLM 先從外部知識庫找出相關資料，再根據資料回答</li><li>結合兩種記憶：參數裡「背的」知識＋外部「翻的」資料</li><li>外部資料可以直接修改和擴充，用了哪些資料也能被檢查</li><li>這個名稱來自 2020 年 Lewis et al. 的論文</li></ul>
+  </div>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/overview.md</li><li>wiki/concepts/parametric-vs-non-parametric-memory.md</li></ul><span class="pageno">3 / 13</span></footer>
+  <aside class="notes">RAG 的想法很簡單：先從外部的知識庫找出相關資料，再根據這些資料回答。它把兩種記憶結合起來，一種是模型自己背在參數裡的知識，另一種是需要時才去翻的外部資料。外部資料可以直接修改和擴充，而且模型用了哪些資料，也能被檢查。</aside>
+</section>
+<section class="slide" data-slide="4">
+  <header>
+    <p class="section-label">是什麼</p>
+    <h2>比喻：從閉書考變成開書考</h2>
+  </header>
+  <div class="content">
+    
+    <ul class="points"><li><strong>閉書考</strong>：只能靠腦袋裡背的東西作答</li><li><strong>開書考</strong>：先翻課本找到相關段落，再用自己的話寫答案</li><li>RAG 就是讓模型參加開書考</li><li>在 open-domain QA 上，參數少很多的開書考模型，能勝過參數多很多的閉書考模型</li><li>比喻的極限：模型可能翻到不相關的頁面</li></ul>
+  </div>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/analogies.md</li><li>wiki/comparisons/closed-book-vs-open-book.md</li></ul><span class="pageno">4 / 13</span></footer>
+  <aside class="notes">原始 RAG 論文自己就把只靠參數的方法叫 closed-book，把會去檢索資料的方法叫 open-book。在 open-domain QA 的 NQ 資料集上，RAG-Sequence 只有 626M 個可訓練參數，拿到 44.5 分。參數多很多的 T5-11B 有 11B 個參數，卻只有 34.5 分。不過要注意，開書考的學生通常知道該翻哪一章，RAG 卻可能翻到不相關的頁面。</aside>
+</section>
+<section class="slide" data-slide="5">
+  <header>
+    <p class="section-label">是什麼</p>
+    <h2>知識過時了？換一本新版課本就好</h2>
+  </header>
+  <div class="content">
+    
+    <ul class="points"><li>課本過時了，不必重上一整年的課，換一本新版課本就好</li><li>RAG 也一樣：換掉外部資料，就能更新知識</li><li>換成 2018 年版的 index：答對 2018 年的世界領袖 <strong>68%</strong></li><li>用 2016 年版的 index 問 2018 年的領袖：只剩 <strong>4%</strong></li></ul>
+  </div>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/analogies.md</li><li>wiki/concepts/parametric-vs-non-parametric-memory.md</li><li>wiki/overview.md</li></ul><span class="pageno">5 / 13</span></footer>
+  <aside class="notes">原始 RAG 論文做了一個實驗：準備 82 位在 2016 到 2018 年間換人的世界領袖，問模型某個職位現在是誰。換成 2018 年版的 index，模型答對 68%；但如果還用 2016 年的舊 index 去問 2018 年的領袖，就只剩 4%。所以只要換掉外部資料，就能更新 RAG 的知識，不用重新訓練模型。</aside>
+</section>
+<section class="slide" data-slide="6">
+  <header>
+    <p class="section-label">怎麼運作</p>
+    <h2>三個步驟：建索引、找資料、寫答案</h2>
+  </header>
+  <div class="content">
+    <svg class="diagram" viewBox="0 0 1136 132" width="1136" height="132" role="img" aria-label="文件 → 切塊與向量 → 找出相關段落 → LLM 寫答案"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs><g class="node"><rect x="2.0" y="16" width="241.0" height="100" rx="14"/><text x="122.5" y="66" dominant-baseline="middle" text-anchor="middle">文件</text></g><line x1="249.0" y1="66" x2="293.0" y2="66" marker-end="url(#arrow)"/><g class="node"><rect x="299.0" y="16" width="241.0" height="100" rx="14"/><text x="419.5" y="66" dominant-baseline="middle" text-anchor="middle">切塊與向量</text></g><line x1="546.0" y1="66" x2="590.0" y2="66" marker-end="url(#arrow)"/><g class="node"><rect x="596.0" y="16" width="241.0" height="100" rx="14"/><text x="716.5" y="66" dominant-baseline="middle" text-anchor="middle">找出相關段落</text></g><line x1="843.0" y1="66" x2="887.0" y2="66" marker-end="url(#arrow)"/><g class="node"><rect x="893.0" y="16" width="241.0" height="100" rx="14"/><text x="1013.5" y="66" dominant-baseline="middle" text-anchor="middle">LLM 寫答案</text></g></svg>
+    <ul class="points"><li><strong>Indexing</strong>：把文件切成 chunk，轉成向量，存進資料庫</li><li><strong>Retrieval</strong>：把問題也轉成向量，找出最相似的幾個 chunk</li><li><strong>Generation</strong>：把問題和 chunk 組成 prompt，交給 LLM 寫答案</li><li>比喻：圖書館員（retriever）找書，作家（generator）讀完寫答案</li></ul>
+  </div>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/overview.md</li><li>wiki/analogies.md</li></ul><span class="pageno">6 / 13</span></footer>
+  <aside class="notes">最基本的 RAG 流程只有三步。先把文件切成小段、轉成向量存起來；收到問題時，把問題也轉成向量，找出最相似的幾段。最後把問題和找到的段落一起交給 LLM 寫出答案，就像圖書館員先找書、作家再讀完書寫出回答。</aside>
+</section>
+<section class="slide" data-slide="7">
+  <header>
+    <p class="section-label">怎麼運作</p>
+    <h2>走一遍：一個問題的旅程</h2>
+  </header>
+  <div class="content">
+    <svg class="diagram" viewBox="0 0 1136 132" width="1136" height="132" role="img" aria-label="問題 → 轉成向量 → 找出相關文件 → 寫出答案"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs><g class="node"><rect x="2.0" y="16" width="241.0" height="100" rx="14"/><text x="122.5" y="66" dominant-baseline="middle" text-anchor="middle">問題</text></g><line x1="249.0" y1="66" x2="293.0" y2="66" marker-end="url(#arrow)"/><g class="node"><rect x="299.0" y="16" width="241.0" height="100" rx="14"/><text x="419.5" y="66" dominant-baseline="middle" text-anchor="middle">轉成向量</text></g><line x1="546.0" y1="66" x2="590.0" y2="66" marker-end="url(#arrow)"/><g class="node"><rect x="596.0" y="16" width="241.0" height="100" rx="14"/><text x="716.5" y="66" dominant-baseline="middle" text-anchor="middle">找出相關文件</text></g><line x1="843.0" y1="66" x2="887.0" y2="66" marker-end="url(#arrow)"/><g class="node"><rect x="893.0" y="16" width="241.0" height="100" rx="14"/><text x="1013.5" y="66" dominant-baseline="middle" text-anchor="middle">寫出答案</text></g></svg>
+    <ul class="points"><li>問題：「Define &quot;middle ear&quot;」（中耳是什麼）</li><li>把問題轉成向量，從 Wikipedia 的 index 找出最相關的幾份文件</li><li>依每份文件分別寫答案，再合併成最後的答案</li><li>輸出：「中耳包含鼓室和三塊聽小骨」</li><li>對照：不查資料的 BART 把中耳講錯了</li></ul>
+  </div>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/sources/01-lewis2020-rag.md</li><li>wiki/concepts/hallucination.md</li></ul><span class="pageno">7 / 13</span></footer>
+  <aside class="notes">我們跟著原始 RAG 論文的圖，看一個問題怎麼走完全程。問題「中耳是什麼」先被轉成向量，系統再從 Wikipedia 的 index 裡找出最相關的幾份文件。模型依照每一份文件分別寫答案、再合併，最後輸出「中耳包含鼓室和三塊聽小骨」。同一個問題，不查資料的 BART 卻回答錯了。</aside>
+</section>
+<section class="slide" data-slide="8">
+  <header>
+    <p class="section-label">怎麼運作</p>
+    <h2>先切塊，再把意思轉成向量</h2>
+  </header>
+  <div class="content">
+    
+    <ul class="points"><li><strong>Chunking</strong>：把長文件切成一小段一小段（chunk）</li><li>為什麼要切：配合模型一次能處理的長度限制</li><li>原始 RAG：每篇 Wikipedia 文章切成 100 個英文字一段，共 21M 段</li><li><strong>Embedding</strong>：把一段文字的意思轉成一串數字（向量）</li><li>副作用：切開之後，chunk 可能失去上下文</li></ul>
+  </div>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/concepts/chunking.md</li><li>wiki/concepts/embedding.md</li></ul><span class="pageno">8 / 13</span></footer>
+  <aside class="notes">因為 language model 一次能處理的長度有限，所以要先把文件切成小段。每一段再用 embedding 轉成一串數字，意思相近的文字，就會被找成相似的結果。但切開也有副作用：像「公司營收比上一季成長 3%」這一段，沒說是哪家公司、哪個時期，就很難被找到。</aside>
+</section>
+<section class="slide" data-slide="9">
+  <header>
+    <p class="section-label">怎麼運作</p>
+    <h2>找資料：用意思找，也用字找</h2>
+  </header>
+  <div class="content">
+    
+    <ul class="points"><li><strong>Retriever</strong> 負責查資料：從一大堆文件中找出最相關的幾份</li><li>Embedding 擅長找「意思相近」的內容</li><li>但可能漏掉精確字串，例如錯誤碼「TS-999」</li><li><strong>BM25</strong> 靠字面比對，專門找精確的詞</li><li>兩種一起用，比只用 embedding 好</li></ul>
+  </div>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/concepts/retriever.md</li><li>wiki/concepts/embedding.md</li><li>wiki/analogies.md</li></ul><span class="pageno">9 / 13</span></footer>
+  <aside class="notes">負責找資料的元件叫 retriever，它找到的文件好不好，直接影響答案好不好。就像問圖書館員有沒有講心臟病的書，館員會依意思推薦，這就像 embedding；但要找書號「TS-999」，就該直接比對字串，這就像 BM25。實驗也發現，embedding 加上 BM25，比只用 embedding 好。</aside>
+</section>
+<section class="slide" data-slide="10">
+  <header>
+    <p class="section-label">進階變體</p>
+    <h2>基本版不夠用：Naive → Advanced → Modular</h2>
+  </header>
+  <div class="content">
+    
+    <ul class="points"><li>基本版（<strong>Naive RAG</strong>）會找不準：選到不相關的、漏掉關鍵的</li><li>也會寫錯：產生檢索內容沒有支持的說法</li><li>還回答不了「這批資料的主要主題是什麼」這種問題</li><li>綜述把 RAG 分成 <strong>Naive</strong>、<strong>Advanced</strong>、<strong>Modular</strong> 三種典範</li><li>⚠️ 這是分類方式，不完全等於時間先後</li></ul>
+  </div>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/methods/naive-rag.md</li><li>wiki/comparisons/rag-paradigms.md</li></ul><span class="pageno">10 / 13</span></footer>
+  <aside class="notes">剛剛講的是最基本的版本，叫 Naive RAG。它常常找不準，也會寫出檢索內容沒有支持的說法，而且答不了需要看完整批資料的大問題。為了改善這些缺點，綜述又整理出 Advanced RAG 和 Modular RAG，它們都是在 Naive RAG 的基礎上逐步改進。</aside>
+</section>
+<section class="slide" data-slide="11">
+  <header>
+    <p class="section-label">進階變體</p>
+    <h2>兩個例子：Self-RAG 與 GraphRAG</h2>
+  </header>
+  <div class="content">
+    
+    <ul class="points"><li>問「美國各州的名字怎麼來的」：一般 RAG 寫出和文件不一致的答案</li><li><strong>Self-RAG</strong>：先判斷要不要查，再為每段打分數，選出最好的那段</li><li>寫暑假作文這種題目，就不用查</li><li><strong>GraphRAG</strong>：先把整批資料整理成關係圖和摘要，回答「整體主題」這類大問題</li><li>代價：事先建 index 很花時間</li></ul>
+  </div>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/sources/05-asai2023-self-rag.md</li><li>wiki/methods/self-rag.md</li><li>wiki/methods/graphrag.md</li></ul><span class="pageno">11 / 13</span></footer>
+  <aside class="notes">同樣問美國各州的名字怎麼來的，一般 RAG 寫說 California 是以 Christopher Columbus 命名，和它自己找到的文件對不上。Self-RAG 則是每寫一段前先判斷要不要查，再為每段打分數，最後選中「11 個州以人名命名」那段，因為它完全被文件支持。GraphRAG 適合「這批資料的主要主題是什麼」這種大問題，在 Podcast 資料上，GraphRAG 等全局方法的全面性勝率是 72%–83%。</aside>
+</section>
+<section class="slide" data-slide="12">
+  <header>
+    <p class="section-label">怎麼評估</p>
+    <h2>評估要分開看：找得好不好、寫得好不好</h2>
+  </header>
+  <div class="content">
+    
+    <ul class="points"><li>「找資料」和「寫答案」要分開評估</li><li><strong>Context relevance</strong>：找來的資料切不切題</li><li><strong>Faithfulness</strong>：答案是不是忠於找來的資料</li><li><strong>Answer relevance</strong>：答案有沒有直接回答問題</li><li>⚠️ 這三個分數適用於一般 RAG，不適合「整批資料的主題」這類問題</li></ul>
+  </div>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/concepts/rag-evaluation.md</li><li>wiki/analogies.md</li><li>wiki/concepts/ragas.md</li></ul><span class="pageno">12 / 13</span></footer>
+  <aside class="notes">評估 RAG 時，要分開看「找得好不好」和「寫得好不好」。就像老師改開書考，會分開看翻對頁了沒、有沒有亂掰、有沒有離題，才知道學生是哪裡出問題。RAGAS 這類工具不需要標準答案，而是把判斷拆成小步驟讓 LLM 評分。不過 faithfulness 高，不代表答案就是對的，因為找來的資料本身也可能有錯。</aside>
+</section>
+<section class="slide" data-slide="13">
+  <header>
+    <p class="section-label">總結</p>
+    <h2>重點回顧：RAG 有用，但不是萬靈丹</h2>
+  </header>
+  <div class="content">
+    
+    <ul class="points"><li>RAG = 先查再寫；換掉 index 就能更新知識，不用重新訓練</li><li>位置有影響：放在中間的資訊最容易被忽略（<strong>Lost in the Middle</strong>）</li><li>GPT-3.5-Turbo、20 份文件、答案在中間：53.8%，低於不給文件的 56.1%</li><li>⚠️ 文件放越多越好嗎？各研究看法不一；有實驗發現 50 份比 20 份只多約 1%–1.5%</li><li>檢索不一定有幫助，外部資料本身也可能有錯</li></ul>
+  </div>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/overview.md</li><li>wiki/concepts/lost-in-the-middle.md</li><li>wiki/concepts/retriever.md</li><li>wiki/comparisons/closed-book-vs-open-book.md</li><li>wiki/methods/naive-rag.md</li></ul><span class="pageno">13 / 13</span></footer>
+  <aside class="notes">最後幫大家整理：RAG 就是先查再寫，只要換掉 index，就能更新 RAG 的知識，不用重新訓練模型。但它不是萬靈丹：在 GPT-3.5-Turbo 的實驗裡，20 份文件中答案放在第 1 份時答對 75.8%，放在中間只有 53.8%，比完全不給文件的 56.1% 還低，這是在 20 和 30 份文件設定的最差位置觀察到的。另一份研究也發現，ChatGPT 加上檢索後，PubHealth 反而從 70.1 降到 54.7。至於要放幾份文件，各研究的看法並不一致，例如有一項實驗發現，取 50 份比 20 份只多進步約 1%–1.5%，而外部資料本身也可能有錯。</aside>
+</section>
+</div>
+<div id="notes-panel" aria-live="polite"></div>
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll("section.slide"));
+  var stage = document.getElementById("stage");
+  var panel = document.getElementById("notes-panel");
+  var cur = 0;
+  function fit() {
+    var s = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+    stage.style.transform = "translate(-50%, -50%) scale(" + s + ")";
+  }
+  function go(i) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function (el, k) { el.classList.toggle("active", k === cur); });
+    panel.textContent = slides[cur].querySelector("aside.notes").textContent;
+    if (location.hash !== "#" + (cur + 1)) history.replaceState(null, "", "#" + (cur + 1));
+  }
+  document.addEventListener("keydown", function (e) {
+    var k = e.key;
+    if (k === "ArrowRight" || k === "PageDown" || k === " ") { e.preventDefault(); go(cur + 1); }
+    else if (k === "ArrowLeft" || k === "PageUp") { e.preventDefault(); go(cur - 1); }
+    else if (k === "Home") { go(0); }
+    else if (k === "End") { go(slides.length - 1); }
+    else if (k === "f" || k === "F") {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    else if (k === "n" || k === "N") { document.body.classList.toggle("show-notes"); }
+  });
+  window.addEventListener("resize", fit);
+  window.deck = { go: go, count: slides.length };
+  fit();
+  go((parseInt(location.hash.slice(1), 10) || 1) - 1);
+})();
+</script>
+</body>
+</html>
