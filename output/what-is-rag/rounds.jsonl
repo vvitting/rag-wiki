@@ -10,3 +10,4 @@
 {"time": "2026-11-22 15:56:08", "node": "5", "round": 2, "result": "fail", "detail": "缺內容 → 回到 ① 補檢索，再經 ② ②b ③ ④ ⑤", "reason": "使用者退回：(1) 缺內容：需要從頭走到尾的完整例子（Lewis Fig.1 middle ear、Self-RAG Fig.1 US states），批准補進 sources/01、sources/05，06 之後新增「走一遍：一個問題的旅程」，共 13 頁；(2) 調整：04 模型名與分數移到講稿、保留 open-domain QA 限定；05 只留一組數字；11 不放 0.95、重點放分開評估；12 寫明 53.8%<56.1% 的條件並帶出 Lost in the Middle", "change": "", "pages": ""}
 {"time": "2026-11-22 15:59:05", "node": "1", "round": 2, "result": "done", "detail": "相關頁 17 頁（+sources/01、sources/05、lost-in-the-middle）；缺口：完整例子已補，切塊步驟仍無具體例子", "reason": "", "change": "⑤ 退回：補檢索", "pages": ""}
 {"time": "2026-11-22 15:59:09", "node": "2", "round": 4, "result": "pass", "detail": "check_coverage.py 通過：相關頁 17 頁", "reason": "", "change": "", "pages": ""}
+{"time": "2026-11-22 16:02:30", "node": "2b", "round": 2, "result": "pass", "detail": "第 2 次檢查（⑤ 退回後）：新加入 3 頁嚴重 0、輕微 12（V2-23–V2-34）；其餘 14 頁未修改；讀取檔案皆在清單內", "reason": "", "change": "", "pages": ""}

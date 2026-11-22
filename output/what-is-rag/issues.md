@@ -117,3 +117,15 @@
 | V2-20 | 簡化 | Fig.1 例子：「先判斷這個問題需要檢索」，實際上每一段之前都會判斷 | sources/05-asai2023-self-rag.md | 輕微 | wiki 維護（⑤ 退回後） | 已修（引 §3.1, p.4） |
 | V2-21 | 需要更多資料 | Fig.1 左邊另有「Contradictory」「No information in passages」標籤，文字抽取看不出標在哪一句 | sources/05-asai2023-self-rag.md | 輕微 | wiki 維護（⑤ 退回後） | 不修：要看原圖才能確認標籤位置；目前寫的「和取回的文件不一致」已可由圖中兩段文字直接對照，沒有講錯 |
 | V2-22 | 可讀性 | Relevant／Supported 等標籤沒有對應到 ISREL／ISSUP，也沒說最後選中哪一段 | sources/05-asai2023-self-rag.md | 輕微 | wiki 維護（⑤ 退回後） | 已修（引 §3.1, p.4） |
+| V2-23 | 限定條件 | 42.7% 的人工評估比的是 BART vs RAG-Token，頁面只寫 RAG | sources/01-lewis2020-rag.md 第 69–70 行 | 輕微 | v2-②b-2 | 待修 |
+| V2-24 | 可讀性 | 多個術語沒有連結；Fig.1 例子第 3 步的 MIPS、top-K 沒有白話說明 | sources/01-lewis2020-rag.md | 輕微 | v2-②b-2 | 待修（簡報的「走一遍」頁不使用 MIPS 這個詞，改用「找出意思最接近的幾份文件」——該說法出自 overview／embedding 的卡片） |
+| V2-25 | 引用 | 「只檢索一次」應引 §2, p.3 | sources/05-asai2023-self-rag.md 第 25 行 | 輕微 | v2-②b-2 | 待修 |
+| V2-26 | 限定條件 | 2% 是 Self-RAG 7B、TriviaQA 和 PopQA 上的結果 | sources/05-asai2023-self-rag.md 第 103 行 | 輕微 | v2-②b-2 | 待修（簡報不使用 2%） |
+| V2-27 | 限定條件 | 「04 發現比不給還差」缺 GPT-3.5-Turbo、20／30 份文件、最差位置的限定 | sources/05-asai2023-self-rag.md 第 128 行 | 輕微 | v2-②b-2 | 待修（簡報的這個數字只引用 closed-book-vs-open-book.md 帶限定的句子） |
+| V2-28 | 原文不一致 | 「每類 4k–20k 筆」與附錄 utility 3,831 筆不一致，未註明 | sources/05-asai2023-self-rag.md 第 50 行 | 輕微 | v2-②b-2 | 待修 |
+| V2-29 | 需要更多資料 | 「PopQA 和傳記各只抽 50 筆」可能是合計 50 筆 | sources/05-asai2023-self-rag.md 第 113 行 | 輕微 | v2-②b-2 | 待修 |
+| V2-30 | ⚠️ 格式 | 「注意：結論 §6…」沒有用標準 ⚠️ 區塊 | sources/05-asai2023-self-rag.md 第 77 行 | 輕微 | v2-②b-2 | 待修 |
+| V2-31 | 可讀性 | LLM、reflection tokens、critic、RLHF／PPO、beam search、MAUVE、引用 precision 沒有連結 | sources/05-asai2023-self-rag.md | 輕微 | v2-②b-2 | 待修 |
+| V2-32 | 限定條件 | 「測試過的模型都有這個現象」和同頁的兩個例外對不上 | concepts/lost-in-the-middle.md 第 42 行 | 輕微 | v2-②b-2 | 待修（簡報不使用這句） |
+| V2-33 | 引用 | 「正確的文件很可能剛好落在中間」是推論，原文沒這樣說 | concepts/lost-in-the-middle.md 第 17 行 | 輕微 | v2-②b-2 | 待修（簡報不使用這句） |
+| V2-34 | 可讀性 | primacy／recency bias 等術語沒有連結或白話說明 | concepts/lost-in-the-middle.md | 輕微 | v2-②b-2 | 待修 |
