@@ -16,3 +16,4 @@
 {"time": "2026-11-22 16:03:41", "node": "5", "round": 3, "result": "wait", "detail": "第 2 版大綱（13 頁）已交給使用者確認", "reason": "", "change": "", "pages": ""}
 {"time": "2026-11-22 16:33:45", "node": "5", "round": 4, "result": "pass", "detail": "使用者確認第 2 版大綱（13 頁）", "reason": "", "change": "", "pages": ""}
 {"time": "2026-11-22 16:34:34", "node": "6", "round": 1, "result": "pass", "detail": "13 頁；check_sources.py 通過", "reason": "", "change": "", "pages": ""}
+{"time": "2026-11-22 16:38:23", "node": "7", "round": 1, "result": "fail", "detail": "嚴重 2（13）、輕微 11（01、02、04、07、08、10、11、12、13；不在退回範圍，⑩ 報告列出）", "reason": "13：講稿「只出現在 20／30 份文件的最差位置」無出處且漏 05 反例；「資料不是越多越好」把 04 的特定結果當定論、漏 retriever 的文件數量 ⚠️、講稿引錯頁", "change": "", "pages": "13"}
