@@ -129,3 +129,4 @@
 | V2-32 | 限定條件 | 「測試過的模型都有這個現象」和同頁的兩個例外對不上 | concepts/lost-in-the-middle.md 第 42 行 | 輕微 | v2-②b-2 | 待修（簡報不使用這句） |
 | V2-33 | 引用 | 「正確的文件很可能剛好落在中間」是推論，原文沒這樣說 | concepts/lost-in-the-middle.md 第 17 行 | 輕微 | v2-②b-2 | 待修（簡報不使用這句） |
 | V2-34 | 可讀性 | primacy／recency bias 等術語沒有連結或白話說明 | concepts/lost-in-the-middle.md | 輕微 | v2-②b-2 | 待修 |
+| V2-35 | ⚠️ 同步 | 「放得進去，不代表用得好……取 50 份和取 20 份相比，只多進步約 1%–1.5%」沒有附「要放多少份文件」的 ⚠️（retriever.md、sources/01、context-window.md 都有），讀起來像定論 | overview.md 第 81 行 | 輕微 | v2-⑦-1（⑦ 第 1 輪 reviewer 在 13 的問題 2 中指出） | 待修（簡報第 13 頁已改為引用 retriever.md 的 ⚠️，不受影響） |
