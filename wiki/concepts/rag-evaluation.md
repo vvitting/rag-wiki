@@ -111,7 +111,7 @@ GraphRAG 論文要評估「這批資料的主要主題是什麼？」這類全�
 ### LLM 當評審，可靠嗎？
 
 > ⚠️ **爭議／更新**：[07-es2023-ragas.pdf, Table 1, p.5] 發現，直接讓 ChatGPT 從兩個答案中挑出比較好的那個（GPT Ranking），和人類判斷一致的比例只有 0.40–0.54；07 也提醒，答案的**順序**會影響 LLM 的判斷 [07-es2023-ragas.pdf, §2, p.2]。而 [06-edge2024-graphrag.pdf, §3.3, p.7–8] 的主要結果，正是用 LLM 兩兩比較答案得出的，06 的 raw 檔中沒有找到處理答案順序的說明。
-> 但兩者條件不同：06 使用 GPT-4 [06-edge2024-graphrag.pdf, §1, p.2]，07 的基準用的是 ChatGPT [07-es2023-ragas.pdf, §5, p.5]；06 也另外用 claim 指標驗證過，兩種方法判斷一致的比例是 69%–78% [06-edge2024-graphrag.pdf, §5.2, p.11]。
+> 但兩者條件不同：06 使用 GPT-4 [06-edge2024-graphrag.pdf, §1, p.2]（實驗用的是 gpt-4-turbo [06-edge2024-graphrag.pdf, §4.1.3, p.9]），07 的基準用的是 ChatGPT [07-es2023-ragas.pdf, §5, p.5]；06 也另外用 claim 指標驗證過，兩種方法判斷一致的比例是 69%–78% [06-edge2024-graphrag.pdf, §5.2, p.11]。
 
 > 可以得到的實用原則（每一點都有出處）：
 

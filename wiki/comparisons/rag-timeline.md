@@ -21,8 +21,8 @@ updated: 2026-11-22
 | 2023 | Es et al. 發表 RAGAS：不需要標準答案、由 LLM 計算的 RAG 評估指標（02 引用時標為 2023 年的 arXiv 預印本；raw 檔為 2025 年 4 月的 v2） | [02-gao2023-survey.pdf, Ref. 164, p.20] [07-es2023-ragas.pdf, p.1] |
 | 2023 年 10 月 | Asai et al. 發表 Self-RAG：讓模型自己決定何時檢索，並用 reflection tokens 自我評分（raw 檔為 v1 預印本） | [05-asai2023-self-rag.pdf, p.1] |
 | 2023–2024 | Gao et al. 整理 100 多篇研究，發表 RAG 綜述（raw 檔為 2024 年 3 月的 v5） | [02-gao2023-survey.pdf, §I, p.1; p.1]；年份見 [06-edge2024-graphrag.pdf, References, p.13] |
-| 2024–2025 | Edge et al.（Microsoft）發表 GraphRAG：用 LLM 建 knowledge graph 和社群摘要，回答全局問題（raw 檔為 2025 年 2 月的 v2 預印本） | [06-edge2024-graphrag.pdf, p.1] |
 | 2024 年 9 月 19 日 | Anthropic 發表 Contextual Retrieval，並說小型知識庫可以直接放進 prompt | [03-anthropic-contextual-retrieval.pdf, p.1–2] |
+| 2025 年 2 月 19 日（raw 版本） | Edge et al.（Microsoft）發表 GraphRAG：用 LLM 建 knowledge graph 和社群摘要，回答全局問題。raw 檔是 arXiv:2404.16130 的 v2 預印本；raw 中沒有寫第一版的日期，所以這裡依 raw 版本的日期排序 | [06-edge2024-graphrag.pdf, p.1] |
 
 > ⚠️ **爭議／更新**：綜述說 Naive RAG 是「最早的方法」[02-gao2023-survey.pdf, §II-A, p.2]，但把它放在 ChatGPT 普及之後；而 RAG 這個名稱在 2020 年就出現了 [01-lewis2020-rag.pdf, §1, p.2] [02-gao2023-survey.pdf, Ref. 4, p.17]。詳見 [Naive RAG](../methods/naive-rag.md)。
 

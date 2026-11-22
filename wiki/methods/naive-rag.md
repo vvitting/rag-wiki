@@ -62,7 +62,7 @@ LLM 回答時，可以使用自己的 parametric knowledge，也可以被要求�
 |---|---|---|
 | 生成模型 | BART-large（400M 參數）[01-lewis2020-rag.pdf, §2.3, p.3] | LLM [02-gao2023-survey.pdf, §II-A, p.3] |
 | 要不要訓練 | retriever 和 generator 一起微調 [01-lewis2020-rag.pdf, §2.4, p.3] | 對模型的修改需求很低 [02-gao2023-survey.pdf, Fig.4, p.7] |
-| 怎麼結合文件 | 直接串接，並對多份文件做 marginalize [01-lewis2020-rag.pdf, §2.1, §2.3, p.3] | 把問題和文件組成 prompt [02-gao2023-survey.pdf, §II-A, p.3] |
+| 怎麼結合文件 | 把問題和每一份文件分別串接，再對多份文件的結果做 marginalize（不是串成一個長 prompt）[01-lewis2020-rag.pdf, §2.1, §2.3, p.3] | 把問題和文件組成 prompt [02-gao2023-survey.pdf, §II-A, p.3] |
 
 **給初學者的理解方式**：兩者都是「先查再寫」。今天大家常說的「RAG」比較接近 Naive RAG，也就是把檢索結果塞進 LLM 的 prompt [02-gao2023-survey.pdf, §II-A, p.3]；原始 RAG 則是把整個系統一起訓練 [01-lewis2020-rag.pdf, §2.4, p.3]。
 

@@ -7,7 +7,7 @@
 - [RAG 總覽](overview.md) — RAG 全貌，結構對齊簡報；第 1–6 節都已有內容，7 篇全部整合（sources: 7, updated: 2026-11-22）
 
 ## 來源
-- [01 Lewis et al. 2020 — Retrieval-Augmented Generation](sources/01-lewis2020-rag.md) — 提出並命名 RAG 的原始論文：DPR + BART、RAG-Sequence 與 RAG-Token（sources: 3, updated: 2026-11-22）
+- [01 Lewis et al. 2020 — Retrieval-Augmented Generation](sources/01-lewis2020-rag.md) — 提出並命名 RAG 的原始論文：DPR + BART、RAG-Sequence 與 RAG-Token（sources: 6, updated: 2026-11-22）
 - [02 Gao et al. 2023 — RAG for LLMs: A Survey](sources/02-gao2023-survey.md) — 綜述：Naive／Advanced／Modular 三典範、檢索與生成技術、評估、未來挑戰（sources: 7, updated: 2026-11-22）
 - [03 Anthropic 2024 — Introducing Contextual Retrieval](sources/03-anthropic-contextual-retrieval.md) — 業界技術文章：為 chunk 補上說明、hybrid search、reranking；檢索失敗率降低 49%–67%（sources: 5, updated: 2026-11-22）
 - [04 Liu et al. 2023 — Lost in the Middle](sources/04-liu2023-lost-in-middle.md) — LLM 對 context 中間的資訊用得最差（U 形曲線）；文件超過 20 份幾乎不再進步（sources: 5, updated: 2026-11-22）
@@ -32,15 +32,15 @@
 ## 方法
 - [原始 RAG（RAG-Sequence 與 RAG-Token）](methods/original-rag.md) — Lewis 2020 的架構、步驟、兩種版本與限制（sources: 2, updated: 2026-11-22）
 - [Naive RAG](methods/naive-rag.md) — indexing → retrieval → generation；缺點（包括答不了全局問題）；⚠️ 和原始 RAG 的關係；⚠️ 不一定勝過不檢索（sources: 6, updated: 2026-11-22）
-- [Advanced RAG](methods/advanced-rag.md) — pre-retrieval 與 post-retrieval 優化；Contextual Retrieval 是實例（sources: 3, updated: 2026-11-22）
+- [Advanced RAG](methods/advanced-rag.md) — pre-retrieval 與 post-retrieval 優化；Contextual Retrieval 是實例（sources: 4, updated: 2026-11-22）
 - [Modular RAG](methods/modular-rag.md) — 可組合的模組與模式；iterative／recursive／adaptive 檢索（sources: 2, updated: 2026-11-22）
-- [Contextual Retrieval](methods/contextual-retrieval.md) — 為每個 chunk 補上 LLM 寫的說明，再建 embedding 和 BM25 index（sources: 2, updated: 2026-11-22）
+- [Contextual Retrieval](methods/contextual-retrieval.md) — 為每個 chunk 補上 LLM 寫的說明，再建 embedding 和 BM25 index（sources: 3, updated: 2026-11-22）
 - [Self-RAG](methods/self-rag.md) — 模型自己決定何時檢索、平行生成、用 reflection tokens 評分後挑選（sources: 3, updated: 2026-11-22）
 - [GraphRAG](methods/graphrag.md) — LLM 建 knowledge graph → 社群分群 → 社群摘要 → map-reduce 回答全局問題（sources: 2, updated: 2026-11-22）
 
 ## 比較與綜合
 - [Closed-book vs open-book](comparisons/closed-book-vs-open-book.md) — 只靠記憶 vs 可以查資料；文件放錯位置或任務不適合時，open-book 反而比較差（04、05 兩份證據）（sources: 3, updated: 2026-11-22）
-- [三種 RAG 典範比較](comparisons/rag-paradigms.md) — Naive vs Advanced vs Modular 對照表（sources: 1, updated: 2026-11-22）
+- [三種 RAG 典範比較](comparisons/rag-paradigms.md) — Naive vs Advanced vs Modular 對照表（sources: 2, updated: 2026-11-22）
 - [RAG 進階技巧比較](comparisons/rag-techniques.md) — 各技巧的階段、解決的問題、有沒有實測數字（sources: 5, updated: 2026-11-22）
 - [RAG vs fine-tuning vs prompt engineering](comparisons/rag-vs-fine-tuning.md) — 什麼時候用哪一個；兩者可以互補（Self-RAG 是實例）（sources: 2, updated: 2026-11-22）
 - [RAG 演進時間軸](comparisons/rag-timeline.md) — 從 2020 年的原始 RAG 到 2024 年的 Contextual Retrieval、GraphRAG（sources: 7, updated: 2026-11-22）
@@ -48,7 +48,7 @@
 ## 問答
 
 ## 工具頁
-- [術語表](glossary.md) — 98 個專有名詞的一句話白話解釋（sources: 7, updated: 2026-11-22）
+- [術語表](glossary.md) — 121 個專有名詞的一句話白話解釋（sources: 7, updated: 2026-11-22）
 - [比喻集](analogies.md) — 11 個比喻：開書考、圖書館員＋作家、換新版課本、帶教科書、讀長文只記頭尾、書包塞太滿、撕下來的書頁、用意思找 vs 用字找、會自我檢查的學生、找一句話 vs 寫讀書報告、改開書考的考卷（sources: 7, updated: 2026-11-22）
 
 ## 待建頁面

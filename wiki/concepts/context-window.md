@@ -10,8 +10,8 @@ updated: 2026-11-22
 
 ## 白話說明
 
-- LLM 主要是透過 prompting 來完成任務：把任務說明和要處理的資料全部整理成一段文字輸入（input context），模型再接著產生文字 [04-liu2023-lost-in-middle.pdf, §1, p.1]。
-- Context window 就是模型一次能接受的最大輸入長度，以 token 計算。例如 GPT-3.5-Turbo 是 4K tokens，GPT-3.5-Turbo（16K）是 16K tokens [04-liu2023-lost-in-middle.pdf, §2.2, p.5]。
+- [LLM](../glossary.md) 主要是透過 [prompting](../glossary.md) 來完成任務：把任務說明和要處理的資料全部整理成一段文字輸入（input context），模型再接著產生文字 [04-liu2023-lost-in-middle.pdf, §1, p.1]。
+- Context window 就是模型一次能接受的最大輸入長度，以 [token](../glossary.md) 計算。例如 GPT-3.5-Turbo 是 4K tokens，GPT-3.5-Turbo（16K）是 16K tokens [04-liu2023-lost-in-middle.pdf, §2.2, p.5]。
 - GraphRAG 論文的定義更直白：context window 是 LLM 一次能處理的最大 token（文字單位）數量 [06-edge2024-graphrag.pdf, §1, p.1]。
 - RAG 最適合的情況，就是資料總量超過 LLM 的 context window、無法一次放進 prompt 的時候 [06-edge2024-graphrag.pdf, §2.1, p.2]。
 - 為了配合這個限制，RAG 會把文件切成較小的 [chunk](chunking.md) [02-gao2023-survey.pdf, §II-A, p.3]。
@@ -54,7 +54,7 @@ updated: 2026-11-22
 1. **到某個數量之前，多放會有幫助**：03 的 5 → 10 → 20 都在進步 [03-anthropic-contextual-retrieval.pdf, p.8]；04 的 retriever recall 也隨文件數量上升 [04-liu2023-lost-in-middle.pdf, Fig.11, p.10]。
 2. **超過某個數量後，效益很小，成本卻持續增加**：04 發現 20 份以上幾乎不再進步 [04-liu2023-lost-in-middle.pdf, §5, p.10]；06 也發現，一般 RAG 的 context 用 8k 在全面性上比用 64k 好，其他標準則差不多 [06-edge2024-graphrag.pdf, App. C, p.19]。
 3. **位置比數量更重要**：同樣 20 份文件，答案在第 1 份時是 75.8%，在第 10 份時是 53.8% [04-liu2023-lost-in-middle.pdf, Table 6, p.18]。
-4. **01 是不同的情境**：原始 RAG 把每份文件分別交給 generator，再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，不是串成一個長 prompt，所以不受位置影響的方式也不同。04 也發現 encoder-decoder 模型（01 的 BART 就屬於這類 [01-lewis2020-rag.pdf, §2.3, p.3]）在訓練長度內，對位置比較不敏感 [04-liu2023-lost-in-middle.pdf, §4.1, p.7]。
+4. **01 是不同的情境**：原始 RAG 把每份文件分別交給 generator，再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，不是串成一個長 prompt，所以沒有「文件排在 prompt 哪個位置」的問題，04 的位置效應不能直接套用到 01。04 也發現 encoder-decoder 模型（01 的 BART 就屬於這類 [01-lewis2020-rag.pdf, §2.3, p.3]）在訓練長度內，對位置比較不敏感 [04-liu2023-lost-in-middle.pdf, §4.1, p.7]。
 5. **「不相關的文件也可能有幫助」要看是哪種不相關**：04 發現用隨機文件當干擾時，準確率比用「相關但沒有答案」的文件當干擾還高 [04-liu2023-lost-in-middle.pdf, App. B, p.14]。這和 02 引用的 Cuconasu et al. 結果方向一致 [02-gao2023-survey.pdf, §VII-B, p.14]，但兩者的實驗設計不同，不能直接比較。
 
 ## RAG 和 long context 的關係

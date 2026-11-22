@@ -10,7 +10,7 @@ updated: 2026-11-22
 
 ## 白話說明
 
-把一堆文件塞進 prompt 時，LLM 最會利用放在**開頭**和**結尾**的資訊，放在**中間**的資訊最容易被忽略。把「答案的位置」和「準確率」畫成圖，會是一條 U 形曲線 [04-liu2023-lost-in-middle.pdf, Fig.1, p.1]。
+把一堆文件塞進 [prompt](../glossary.md) 時，[LLM](../glossary.md) 最會利用放在**開頭**和**結尾**的資訊，放在**中間**的資訊最容易被忽略。把「答案的位置」和「準確率」畫成圖，會是一條 U 形曲線 [04-liu2023-lost-in-middle.pdf, Fig.1, p.1]。
 
 ## 為什麼重要
 
@@ -58,7 +58,7 @@ updated: 2026-11-22
 - **[04-liu2023-lost-in-middle.pdf](../sources/04-liu2023-lost-in-middle.md)**：提出這個現象的原始研究 [04-liu2023-lost-in-middle.pdf, Abstract, p.1]。
 - **[02-gao2023-survey.pdf](../sources/02-gao2023-survey.md)**：引用這個現象，說明為什麼檢索後要先整理內容，不能把所有文件直接丟給 LLM [02-gao2023-survey.pdf, §IV-A, p.10]。
 - **[01-lewis2020-rag.pdf](../sources/01-lewis2020-rag.md)**：原始 RAG 是把每份文件「分別」和問題串接後交給 generator，再把結果加權合併 [01-lewis2020-rag.pdf, §2.1, §2.3, p.3]，並不是把所有文件串成一個長 prompt；所以 lost in the middle 描述的情境，和它不完全相同。
-- **[05-asai2023-self-rag.pdf](../sources/05-asai2023-self-rag.md)**：Self-RAG 也是對每份文件分別、平行產生回答，再依評分挑選 [05-asai2023-self-rag.pdf, §3.1, p.4]。不過 05 沒有討論位置效應，所以無法判斷這種做法能否避免 lost in the middle [05-asai2023-self-rag.pdf, §3.3, p.6]。
+- **[05-asai2023-self-rag.pdf](../sources/05-asai2023-self-rag.md)**：Self-RAG 也是對每份文件分別、平行產生回答，再依評分挑選 [05-asai2023-self-rag.pdf, §3.1, p.4]。不過 05 的 raw 檔中沒有找到討論位置效應的段落，所以無法判斷這種做法能否避免 lost in the middle。
 
 - **[07-es2023-ragas.pdf](../sources/07-es2023-ragas.md)**：設計 context relevance 指標的理由之一，就是 context 太長時，LLM 比較難利用其中的資訊，尤其是中間的資訊；這裡引用 04 的描述是正確的 [07-es2023-ragas.pdf, §3, p.3]。
 - **[06-edge2024-graphrag.pdf](../sources/06-edge2024-graphrag.md)**：因為擔心 lost in the middle，才為一般 RAG 測試不同大小的 context window [06-edge2024-graphrag.pdf, App. C, p.19]。

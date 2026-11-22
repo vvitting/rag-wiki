@@ -5,7 +5,7 @@ raw: 01-lewis2020-rag.pdf
 authors: [Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Küttler, Mike Lewis, Wen-tau Yih, Tim Rocktäschel, Sebastian Riedel, Douwe Kiela]
 year: 2020
 tags: [rag, foundational, retriever, generator, dpr, bart, open-domain-qa]
-sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 05-asai2023-self-rag.pdf]
+sources: [01-lewis2020-rag.pdf, 02-gao2023-survey.pdf, 05-asai2023-self-rag.pdf, 03-anthropic-contextual-retrieval.pdf, 04-liu2023-lost-in-middle.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -59,6 +59,7 @@ updated: 2026-11-22
 - 檢索到的文件裡都沒有正確答案時，RAG 在 NQ 上仍有 11.8% 答對，extractive 模型則是 0% [01-lewis2020-rag.pdf, §4.1, p.6]。
 
 > ⚠️ **爭議／更新**：本篇把這 11.8% 視為優點 [01-lewis2020-rag.pdf, §4.1, p.6]；[05-asai2023-self-rag.pdf, App. C.1, p.20] 則把「答案幾乎都來自文件」（Self-RAG 只有 2% 不在文件中）視為優點。詳見 [Parametric 與 non-parametric memory](../concepts/parametric-vs-non-parametric-memory.md)。
+
 - 模型大小：RAG 共有 626M 個可訓練參數；最好的 closed-book 模型 T5-11B 有 11B 個 [01-lewis2020-rag.pdf, App. G, p.18–19]。
 - 參數量最接近的 T5-large（770M）在 NQ 只有 28.9 EM，遠低於 RAG-Sequence 的 44.5 [01-lewis2020-rag.pdf, App. G, p.19]。
 
@@ -84,7 +85,7 @@ updated: 2026-11-22
 - 例如在 NQ dev set 上，RAG-Token 用 BM25 只有 29.7 EM，用原本的 retriever 則是 43.5 [01-lewis2020-rag.pdf, Table 6, p.8]。
 - **換 index 就能更新知識**：作者用 82 位在 2016 到 2018 年間換人的世界領袖做測試 [01-lewis2020-rag.pdf, §4.5, p.7–8]。
 - 用 2016 年的 index 回答 2016 年的領袖，答對 70%；用 2018 年的 index 回答 2018 年的領袖，答對 68% [01-lewis2020-rag.pdf, §4.5, p.8]。
-- index 和年份不對應時只剩 12% 與 4% 答對 [01-lewis2020-rag.pdf, §4.5, p.8]。
+- index 和年份不對應時只剩 12%（2018 年的 index、2016 年的領袖）與 4%（2016 年的 index、2018 年的領袖）答對 [01-lewis2020-rag.pdf, §4.5, p.8]。
 - **取更多文件**：RAG-Sequence 在 NQ 上取越多份文件，表現就越好；RAG-Token 則在 10 份時最好 [01-lewis2020-rag.pdf, §4.5, p.8; Fig.3, p.8]。
 - **成本**：把整個 Wikipedia 的 index 放在 CPU 記憶體需要約 100 GB，壓縮後降到 36 GB [01-lewis2020-rag.pdf, App. C, p.17]。
 
@@ -96,9 +97,11 @@ updated: 2026-11-22
 - **Retriever 不是從零開始學**：RAG 的 retriever 用 DPR 初始化，而 DPR 本身在 NQ 和 TriviaQA 上有用到檢索監督 [01-lewis2020-rag.pdf, §4.1, p.5]。
 - **「不需要 re-ranker」的主張**：作者認為要達到當時的最佳表現，re-ranker 和 extractive reader 都不是必要的 [01-lewis2020-rag.pdf, §4.1, p.5]。
 
-> ⚠️ **爭議／更新**：[02-gao2023-survey.pdf, §II-B, p.4] 把 reranking 列為 Advanced RAG 的關鍵策略。詳見 [Reranking](../concepts/reranking.md)。
+> ⚠️ **爭議／更新**：[01-lewis2020-rag.pdf, §4.1, p.5] 認為，要達到當時的最佳表現，re-ranker 不是必要的；但 [02-gao2023-survey.pdf, §II-B, p.4] 把 reranking 視為 Advanced RAG 的關鍵策略，[03-anthropic-contextual-retrieval.pdf, p.10–11] 的實驗顯示 reranking 能進一步降低檢索失敗率，[04-liu2023-lost-in-middle.pdf, §5, p.10] 也建議用 reranking 來應對位置效應。
+> 情境不同：01 是每份文件分別交給 generator 再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，所以沒有「文件排在 prompt 哪個位置」的問題；02、03、04 談的則是把多份文件串成一個 prompt 交給 LLM 的情境 [02-gao2023-survey.pdf, §II-A, p.3] [04-liu2023-lost-in-middle.pdf, §5, p.9]。詳見 [Reranking](../concepts/reranking.md)。
 
-> ⚠️ **爭議／更新**：本篇發現 RAG-Sequence 取越多份文件表現越好 [01-lewis2020-rag.pdf, §4.5, p.8]；但 [02-gao2023-survey.pdf, §IV-A, p.10] 認為「盡量多檢索」是常見的誤解。詳見 [Context window](../concepts/context-window.md)。
+> ⚠️ **爭議／更新**：「要放多少份文件」各來源的說法不一致：[01-lewis2020-rag.pdf, §4.5, p.8] 發現 RAG-Sequence 取越多份文件，NQ 表現越好；[02-gao2023-survey.pdf, §IV-A, p.10] 認為「盡量多檢索」是常見的誤解，過多的 context 會帶來雜訊；[03-anthropic-contextual-retrieval.pdf, p.8] 實測 5、10、20 個 chunk，20 個最好；[04-liu2023-lost-in-middle.pdf, §5, p.10] 發現取 50 份和取 20 份相比只多約 1%–1.5%；[06-edge2024-graphrag.pdf, App. C, p.19] 為一般 RAG 選 context 大小時，8k 在全面性上勝過更大的 context。
+> 情境不同：01 是每份文件分別交給 generator 再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，不是串成一個長 prompt。完整的六種說法與整合見 [Context window](../concepts/context-window.md)。
 - **Null document 沒有幫助**：作者試過加入「空文件」選項，讓模型在找不到有用資料時可以不用文件，但沒有提升表現 [01-lewis2020-rag.pdf, App. F, p.18]。
 - **安全疑慮**：RAG 也可能被用來產生假新聞、冒充他人、自動化產生垃圾或釣魚內容 [01-lewis2020-rag.pdf, Broader Impact, p.10]。
 

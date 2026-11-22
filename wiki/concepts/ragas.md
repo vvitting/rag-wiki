@@ -10,7 +10,7 @@ updated: 2026-11-22
 
 ## 白話說明
 
-RAGAS 是一套讓 LLM 幫忙評分 RAG 系統的方法。它不需要人工準備的標準答案，只看三件事：答案有沒有根據、答案有沒有回答問題、找來的資料是否切題 [07-es2023-ragas.pdf, Abstract, p.1; §3, p.3]。
+RAGAS 是一套讓 [LLM](../glossary.md) 幫忙評分 RAG 系統的方法。它不需要人工準備的標準答案，只看三件事：答案有沒有根據、答案有沒有回答問題、找來的資料是否切題 [07-es2023-ragas.pdf, Abstract, p.1; §3, p.3]。
 
 ## 為什麼重要
 
@@ -31,7 +31,7 @@ RAGAS 是一套讓 LLM 幫忙評分 RAG 系統的方法。它不需要人工準�
 ### 2. Answer relevance：有沒有回答問題？
 
 1. 讓 LLM 根據答案，反推 n 個「這個答案可能在回答什麼問題」[07-es2023-ragas.pdf, §3, p.3]。
-2. 用 embedding 計算這些反推問題和原始問題的 cosine 相似度，取平均 [07-es2023-ragas.pdf, §3, p.3]。
+2. 用 [embedding](embedding.md) 計算這些反推問題和原始問題的 [cosine](../glossary.md) 相似度，取平均 [07-es2023-ragas.pdf, §3, p.3]。
 3. 這個指標**不考慮事實是否正確**；答案不完整或有多餘資訊會被扣分 [07-es2023-ragas.pdf, §3, p.3]。
 
 **例子**：問發射日期和地點，回答「日期和時間尚未公布……這是一個研究天氣的重要任務」，就是低 answer relevance [07-es2023-ragas.pdf, Table 3, p.8]。
@@ -57,7 +57,7 @@ RAGAS 是一套讓 LLM 幫忙評分 RAG 系統的方法。它不需要人工準�
 
 - **[07-es2023-ragas.pdf](../sources/07-es2023-ragas.md)**：原始論文，見上方說明 [07-es2023-ragas.pdf, §3, p.2–4]。
 - **[02-gao2023-survey.pdf](../sources/02-gao2023-survey.md)**：把 RAGAS 列為評估 retrieval quality 和 generation quality 的工具，answer relevance 用 cosine similarity 計算 [02-gao2023-survey.pdf, Table IV, p.15]。
-- **[05-asai2023-self-rag.pdf](../sources/05-asai2023-self-rag.md)**：Self-RAG 的 ISSUP token（答案是否被文件支持）[05-asai2023-self-rag.pdf, Table 1, p.4]，和 RAGAS 的 faithfulness 衡量的是相近的東西；差別在於 Self-RAG 是模型在生成時**自己**評估，RAGAS 則是事後由另一個 LLM 評估 [07-es2023-ragas.pdf, §3, p.3]。
+- **[05-asai2023-self-rag.pdf](../sources/05-asai2023-self-rag.md)**：Self-RAG 的 ISSUP token（答案是否被文件支持）[05-asai2023-self-rag.pdf, Table 1, p.4]，和 RAGAS 的 faithfulness 衡量的是相近的東西；差別在於 Self-RAG 是模型在生成時**自己**評估 [05-asai2023-self-rag.pdf, §3.1, p.4]，RAGAS 則是事後由另一個 LLM 評估 [07-es2023-ragas.pdf, §3, p.3]。
 
 > ⚠️ **爭議／更新**：[06-edge2024-graphrag.pdf, §2.4, p.4] 認為這三個指標只適用於一般 vector RAG，不適合「理解整批資料」的全局問題。詳見 [RAG 評估](rag-evaluation.md)。
 

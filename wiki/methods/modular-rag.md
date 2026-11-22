@@ -65,6 +65,7 @@ Modular RAG 沒有單一固定的步驟，而是從下面這些「模組」和�
 ## 出處
 
 - [02-gao2023-survey.pdf](../sources/02-gao2023-survey.md)
+- [05-asai2023-self-rag.pdf](../sources/05-asai2023-self-rag.md)
 
 ## 相關頁面
 

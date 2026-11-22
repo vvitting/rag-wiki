@@ -101,7 +101,7 @@ updated: 2026-11-22
 
 > ⚠️ **爭議／更新**：本篇說 RAGAS 的 context relevance、faithfulness、answer relevance 是「一般 vector RAG 適用、但和全局理解無關」的評估標準 [06-edge2024-graphrag.pdf, §2.4, p.4]；02 則把這三個列為 RAG 的主要品質分數 [02-gao2023-survey.pdf, §VI-C, p.12]。RAGAS 原始論文的設定確實是標準 RAG [07-es2023-ragas.pdf, §3, p.2]。兩者適用的問題類型不同。詳見 [RAG 評估](../concepts/rag-evaluation.md)。
 
-> ⚠️ **爭議／更新**：本篇的主要結果靠 LLM 兩兩比較答案得出；但 [07-es2023-ragas.pdf, Table 1, p.5] 發現，直接讓 ChatGPT 從兩個答案中挑選，和人類判斷一致的比例只有 0.40–0.54，而且答案的順序會影響判斷 [07-es2023-ragas.pdf, §2, p.2]。本篇的 raw 檔中沒有找到處理答案順序的說明。不過本篇用的是 GPT-4 [06-edge2024-graphrag.pdf, §1, p.2]，也用 claim 指標交叉驗證過（69%–78% 一致）[06-edge2024-graphrag.pdf, §5.2, p.11]。詳見 [RAG 評估](../concepts/rag-evaluation.md)。
+> ⚠️ **爭議／更新**：本篇的主要結果靠 LLM 兩兩比較答案得出；但 [07-es2023-ragas.pdf, Table 1, p.5] 發現，直接讓 ChatGPT 從兩個答案中挑選，和人類判斷一致的比例只有 0.40–0.54，而且答案的順序會影響判斷 [07-es2023-ragas.pdf, §2, p.2]。本篇的 raw 檔中沒有找到處理答案順序的說明。不過本篇用的是 GPT-4 [06-edge2024-graphrag.pdf, §1, p.2]（實驗用的是 gpt-4-turbo [06-edge2024-graphrag.pdf, §4.1.3, p.9]），也用 claim 指標交叉驗證過（69%–78% 一致）[06-edge2024-graphrag.pdf, §5.2, p.11]。詳見 [RAG 評估](../concepts/rag-evaluation.md)。
 
 > ⚠️ **爭議／更新**：本篇的核心就是「以摘要為基礎的 index」，而且在全局問題上勝過一般 RAG [06-edge2024-graphrag.pdf, §5.1, p.9]；但 [03-anthropic-contextual-retrieval.pdf, p.5] 發現以摘要為基礎的 indexing 表現很差。兩者的任務不同：03 衡量的是「能不能找到特定的 chunk」，本篇衡量的是「全局問題的答案夠不夠全面」。詳見 [Chunking](../concepts/chunking.md)。
 

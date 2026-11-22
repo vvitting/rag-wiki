@@ -21,7 +21,7 @@ Retriever 是 RAG 裡負責「查資料」的部分：拿到問題後，它會�
 
 1. **事先準備**：把每份文件用 document encoder 轉成一個 [embedding](embedding.md)，存成 index [01-lewis2020-rag.pdf, §3, p.4]。
 2. **收到問題時**：用 query encoder 把問題也轉成一個 embedding [01-lewis2020-rag.pdf, §2.2, p.3]。
-3. **比對**：找出跟問題 embedding 內積（inner product）最大的 k 份文件，也就是 top-k；這是一個 MIPS（Maximum Inner Product Search）問題，可以近似地快速求解 [01-lewis2020-rag.pdf, §2.2, p.3]。
+3. **比對**：找出跟問題 embedding 內積（inner product）最大的 k 份文件，也就是 top-k；這是一個 [MIPS](../glossary.md)（Maximum Inner Product Search）問題，可以近似地快速求解 [01-lewis2020-rag.pdf, §2.2, p.3]。
 4. **交出結果**：把這 k 份文件交給 generator [01-lewis2020-rag.pdf, Fig.1, p.2]。
 
 ### DPR 與 bi-encoder
@@ -38,7 +38,8 @@ Retriever 是 RAG 裡負責「查資料」的部分：拿到問題後，它會�
 
 - **Retriever 找到了，不代表 LLM 用得到**：04 發現 retriever 的 recall 隨文件數量持續上升，LLM 的表現卻在大約 20 份時就停止進步了 [04-liu2023-lost-in-middle.pdf, §5, p.10; Fig.11, p.10]。
 
-> ⚠️ **爭議／更新**：[02-gao2023-survey.pdf, §IV-A, p.10] 認為「盡量多檢索文件」是常見的誤解，過多的 context 會帶來雜訊；[04-liu2023-lost-in-middle.pdf, §5, p.10] 也發現取 50 份和取 20 份相比，進步只有約 1%–1.5%。詳見 [Context window](context-window.md)。
+> ⚠️ **爭議／更新**：「要放多少份文件」各來源的說法不一致：[01-lewis2020-rag.pdf, §4.5, p.8] 發現 RAG-Sequence 取越多份文件，NQ 表現越好；[02-gao2023-survey.pdf, §IV-A, p.10] 認為「盡量多檢索」是常見的誤解，過多的 context 會帶來雜訊；[03-anthropic-contextual-retrieval.pdf, p.8] 實測 5、10、20 個 chunk，20 個最好；[04-liu2023-lost-in-middle.pdf, §5, p.10] 發現取 50 份和取 20 份相比只多約 1%–1.5%；[06-edge2024-graphrag.pdf, App. C, p.19] 為一般 RAG 選 context 大小時，8k 在全面性上勝過更大的 context。
+> 情境不同：01 是每份文件分別交給 generator 再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，不是串成一個長 prompt。完整的六種說法與整合見 [Context window](context-window.md)。
 
 ### Dense retriever vs BM25
 
@@ -73,12 +74,12 @@ Retriever 是 RAG 裡負責「查資料」的部分：拿到問題後，它會�
 - **半結構化資料**：例如含有表格的 PDF。切分可能把表格切斷，表格也會讓語意相似度搜尋變得更複雜 [02-gao2023-survey.pdf, §III-A, p.7]。
 - **結構化資料**：例如 knowledge graph，通常經過驗證、資訊較精確，但建立和維護都要額外的功夫 [02-gao2023-survey.pdf, §III-A, p.7]。
 - **用 LLM 從文字建出來的 knowledge graph**：GraphRAG 讓 LLM 從文件中抽出實體和關係，自己建 knowledge graph 當 index [06-edge2024-graphrag.pdf, §3.1.2–3.1.3, p.4–5]。這種圖是 LLM 產生的摘要，不是經過驗證的資料 [06-edge2024-graphrag.pdf, §3.1.3, p.5]。詳見 [GraphRAG](../methods/graphrag.md)。
+- **LLM 自己產生的內容**：例如 GenRead 用 LLM 產生的內容取代 retriever [02-gao2023-survey.pdf, §III-A, p.7]。
 
 ### Retriever 的天生限制：只找得到「局部」
 
 - 一般 RAG 取回的是「各自和問題相關」的少數幾筆資料，所以適合答案集中在少數文件裡的問題 [06-edge2024-graphrag.pdf, §1, p.1–2]。
 - 遇到「這批資料的主要主題是什麼？」這種全局問題就無能為力，因為答案分散在整批資料裡 [06-edge2024-graphrag.pdf, Abstract, p.1]。
-- **LLM 自己產生的內容**：例如 GenRead 用 LLM 產生的內容取代 retriever [02-gao2023-survey.pdf, §III-A, p.7]。
 
 ### 讓 retriever 更貼合任務
 
@@ -92,7 +93,8 @@ Retriever 是 RAG 裡負責「查資料」的部分：拿到問題後，它會�
 
 - **[03-anthropic-contextual-retrieval.pdf](../sources/03-anthropic-contextual-retrieval.md)**：傳統 RAG 切塊時會把 context 去掉，導致系統常常找不到相關資訊；解法是 [Contextual Retrieval](../methods/contextual-retrieval.md) [03-anthropic-contextual-retrieval.pdf, p.1, p.5]。
 
-> ⚠️ **爭議／更新**：[01-lewis2020-rag.pdf, §4.1, p.5] 認為 re-ranker 不是必要的；[02-gao2023-survey.pdf, §II-B, p.4] 則把 reranking 視為 Advanced RAG 的關鍵策略，[03-anthropic-contextual-retrieval.pdf, p.11] 的實驗也發現有 reranking 比沒有好。詳見 [Reranking](reranking.md)。
+> ⚠️ **爭議／更新**：[01-lewis2020-rag.pdf, §4.1, p.5] 認為，要達到當時的最佳表現，re-ranker 不是必要的；但 [02-gao2023-survey.pdf, §II-B, p.4] 把 reranking 視為 Advanced RAG 的關鍵策略，[03-anthropic-contextual-retrieval.pdf, p.10–11] 的實驗顯示 reranking 能進一步降低檢索失敗率，[04-liu2023-lost-in-middle.pdf, §5, p.10] 也建議用 reranking 來應對位置效應。
+> 情境不同：01 是每份文件分別交給 generator 再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，所以沒有「文件排在 prompt 哪個位置」的問題；02、03、04 談的則是把多份文件串成一個 prompt 交給 LLM 的情境 [02-gao2023-survey.pdf, §II-A, p.3] [04-liu2023-lost-in-middle.pdf, §5, p.9]。詳見 [Reranking](reranking.md)。
 
 ## 常見問題
 

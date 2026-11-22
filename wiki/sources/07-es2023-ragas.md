@@ -76,7 +76,7 @@ updated: 2026-11-22
 > ⚠️ **爭議／更新**：[06-edge2024-graphrag.pdf, §2.4, p.4] 認為 RAGAS 的三個指標只適用於一般的 vector RAG，和全局理解類的問題無關。這和本篇的設定一致：本篇考慮的是「給定一個問題，檢索 context，再生成答案」的標準 RAG [07-es2023-ragas.pdf, §3, p.2]，沒有討論全局問題。詳見 [RAG 評估](../concepts/rag-evaluation.md)。
 
 > ⚠️ **爭議／更新**：本篇的基準方法「GPT Ranking」（讓 ChatGPT 直接從兩個答案中挑比較好的），和人類的一致度只有 0.40–0.54 [07-es2023-ragas.pdf, Table 1, p.5]，本篇也提醒答案的順序會影響 LLM 的判斷 [07-es2023-ragas.pdf, §2, p.2]。而 [06-edge2024-graphrag.pdf, §3.3, p.7–8] 的主要結果正是用 LLM 兩兩比較答案得出的，06 的 raw 檔中也沒有找到處理答案順序的說明。
-> 但兩者條件不同：06 使用 GPT-4 [06-edge2024-graphrag.pdf, §1, p.2]，評估的標準也不同；而且 06 另外用 claim 指標驗證過，兩種方法判斷一致的比例是 69%–78% [06-edge2024-graphrag.pdf, §5.2, p.11]。
+> 但兩者條件不同：06 使用 GPT-4 [06-edge2024-graphrag.pdf, §1, p.2]（實驗用的是 gpt-4-turbo [06-edge2024-graphrag.pdf, §4.1.3, p.9]），評估的標準也不同；而且 06 另外用 claim 指標驗證過，兩種方法判斷一致的比例是 69%–78% [06-edge2024-graphrag.pdf, §5.2, p.11]。
 
 ## 和既有頁面的關係
 

@@ -31,14 +31,14 @@ updated: 2026-11-22
 2. **不用查**：像一般 LLM 一樣寫下一段，再用 ISUSE 評估有不有用 [05-asai2023-self-rag.pdf, Algorithm 1, p.4]。
 3. **要查**：retriever 取回多份文件，模型針對每份文件分別判斷 ISREL（相不相關），並寫出一段回答 [05-asai2023-self-rag.pdf, Algorithm 1, p.4]。
 4. **自我評分**：對每段回答產生 ISSUP（有沒有被文件支持）和 ISUSE（有不有用）[05-asai2023-self-rag.pdf, Algorithm 1, p.4]。
-5. **選最好的**：用三種分數的加權總和，做 segment-level beam search，選出最好的那段 [05-asai2023-self-rag.pdf, §3.3, p.6]。
+5. **選最好的**：用三種分數的加權總和，做 [segment-level beam search](../glossary.md)，選出最好的那段 [05-asai2023-self-rag.pdf, §3.3, p.6]。
 6. 重複以上步驟，直到寫完 [05-asai2023-self-rag.pdf, §3.3, p.6]。
 
 ### 訓練（事前準備）
 
 1. 用 GPT-4 為部分資料標出 reflection tokens [05-asai2023-self-rag.pdf, §3.2.1, p.5]。
 2. 訓練一個小的 critic 模型，學會模仿 GPT-4 的標註 [05-asai2023-self-rag.pdf, §3.2.1, p.5]。
-3. 用 critic 把 reflection tokens 插入 150k 筆訓練資料 [05-asai2023-self-rag.pdf, §3.2.2, p.5; §4.3, p.7]。
+3. 用 critic 把 reflection tokens 插入約 150k 筆訓練資料（附錄寫的是 145,619 筆） [05-asai2023-self-rag.pdf, §3.2.2, p.5; §4.3, p.7; App. A.2, p.17]。
 4. 訓練 generator 自己產生 reflection tokens，推論時就不需要 critic 了 [05-asai2023-self-rag.pdf, §3, p.4]。
 
 ### 範例（Fig.1）
@@ -48,7 +48,10 @@ updated: 2026-11-22
 
 ## 優點
 
-- 在六個任務上，勝過參數更多的 LLM，以及傳統的 RAG 方法 [05-asai2023-self-rag.pdf, §6, p.10]。
+- 原文結論說：在六個任務上，Self-RAG 明顯勝過參數更多的 LLM，以及使用傳統 RAG 的方法 [05-asai2023-self-rag.pdf, §6, p.10]。比較精確的說法是：在所有任務上，它都是非商用模型中最好的 [05-asai2023-self-rag.pdf, §5.1, p.8]；和 ChatGPT 相比，則在 PubHealth、PopQA、傳記生成、ASQA 上勝出 [05-asai2023-self-rag.pdf, §5.1, p.8]；和加上檢索的 ChatGPT 相比，勝出的是四個任務 [05-asai2023-self-rag.pdf, §1, p.2]。
+
+> ⚠️ **爭議／更新（原文結論與 Table 2 不一致）**：[05-asai2023-self-rag.pdf, §6, p.10] 的結論說 Self-RAG 明顯勝過參數更多的 LLM 和傳統 RAG；但同一篇的 Table 2 中，ChatGPT（不檢索）在 TriviaQA（74.3）和 ARC-C（75.3）上都高於 Self-RAG 13B（69.3、73.1），加上檢索的 ChatGPT 在 ARC-C 也是 75.3 [05-asai2023-self-rag.pdf, Table 2, p.8]。正文 §1 也只說勝過加上檢索的 ChatGPT「四個任務」[05-asai2023-self-rag.pdf, §1, p.2]。引用這個結論時，請註明比較的對象。
+
 - 每段回答都附上引用和「有沒有根據」的自我評估，事實查核更容易 [05-asai2023-self-rag.pdf, §1, p.2]。
 - 推論時可以調整檢索頻率和評分權重，不需要重新訓練 [05-asai2023-self-rag.pdf, §3.3, p.6]。
 - 答對的題目中，只有 2% 的答案不在提供的文件裡 [05-asai2023-self-rag.pdf, App. C.1, p.20]。
@@ -71,6 +74,8 @@ GraphRAG 也用了名為 self-reflection 的技巧，但兩者不同 [06-edge202
 ## 出處
 
 - [05-asai2023-self-rag.pdf](../sources/05-asai2023-self-rag.md)
+- [02-gao2023-survey.pdf](../sources/02-gao2023-survey.md)
+- [06-edge2024-graphrag.pdf](../sources/06-edge2024-graphrag.md)
 
 ## 相關頁面
 

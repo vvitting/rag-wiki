@@ -2,7 +2,7 @@
 type: method
 title: "Contextual Retrieval"
 tags: [method, contextual-retrieval, contextual-embeddings, contextual-bm25, preprocessing]
-sources: [03-anthropic-contextual-retrieval.pdf, 02-gao2023-survey.pdf]
+sources: [03-anthropic-contextual-retrieval.pdf, 02-gao2023-survey.pdf, 06-edge2024-graphrag.pdf]
 updated: 2026-11-22
 ---
 
@@ -54,11 +54,16 @@ updated: 2026-11-22
 
 - **加上通用的文件摘要**：作者實驗後發現提升非常有限 [03-anthropic-contextual-retrieval.pdf, p.5]。
 - **以摘要為基礎的 indexing**：作者評估後發現表現很差 [03-anthropic-contextual-retrieval.pdf, p.5]。
+
+> ⚠️ **爭議／更新**：[03-anthropic-contextual-retrieval.pdf, p.5] 發現以摘要為基礎的 indexing 表現很差；但 [02-gao2023-survey.pdf, §III-B, p.8] 把階層式的摘要 index 列為優化方法，[06-edge2024-graphrag.pdf, §5.1, p.9] 的 GraphRAG 也正是用階層式的社群摘要當 index，在全局問題上勝過一般 RAG。兩者回答的問題類型不同（03 測的是找出特定 chunk，06 測的是全局問題）[03-anthropic-contextual-retrieval.pdf, p.7] [06-edge2024-graphrag.pdf, §1, p.1–2]。詳見 [Chunking](../concepts/chunking.md)。
+
 - **Hypothetical document embedding（HyDE）**：作者也列為過去的方法之一，並說它和 Contextual Retrieval 不同 [03-anthropic-contextual-retrieval.pdf, p.5]。HyDE 的做法見 [Query 優化](../concepts/query-optimization.md)。
 
 ## 出處
 
 - [03-anthropic-contextual-retrieval.pdf](../sources/03-anthropic-contextual-retrieval.md)
+- [02-gao2023-survey.pdf](../sources/02-gao2023-survey.md)
+- [06-edge2024-graphrag.pdf](../sources/06-edge2024-graphrag.md)
 
 ## 相關頁面
 

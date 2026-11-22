@@ -2,13 +2,15 @@
 type: comparison
 title: "三種 RAG 典範比較：Naive、Advanced、Modular"
 tags: [comparison, paradigm, naive-rag, advanced-rag, modular-rag]
-sources: [02-gao2023-survey.pdf]
+sources: [02-gao2023-survey.pdf, 01-lewis2020-rag.pdf]
 updated: 2026-11-22
 ---
 
 # 三種 RAG 典範比較
 
 綜述把 RAG 研究分成三個階段：Naive RAG、Advanced RAG、Modular RAG [02-gao2023-survey.pdf, §II, p.2; Fig.3, p.4]。後兩者都是為了改善 Naive RAG 的特定缺點而發展出來的 [02-gao2023-survey.pdf, §II, p.2]。
+
+> ⚠️ **爭議／更新**：綜述說 Naive RAG 是「最早的方法」[02-gao2023-survey.pdf, §II-A, p.2]，但 retrieval-augmented generation 這個名稱和「先檢索、再生成」的架構，2020 年就由 [01-lewis2020-rag.pdf, §1, p.2] 提出 [02-gao2023-survey.pdf, Ref. 4, p.17]。所以這三個「階段」是綜述的分類方式，不完全等於時間先後。詳見 [Naive RAG](../methods/naive-rag.md)、[原始 RAG](../methods/original-rag.md)。
 
 | | [Naive RAG](../methods/naive-rag.md) | [Advanced RAG](../methods/advanced-rag.md) | [Modular RAG](../methods/modular-rag.md) |
 |---|---|---|---|

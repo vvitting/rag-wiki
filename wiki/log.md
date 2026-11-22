@@ -149,3 +149,27 @@
 - 待補來源：無
 - 未處理：第 2 輪其餘輕微問題，見 output/what-is-rag/lint.md
 - lint：0 error, 0 warning
+
+## [2026-11-22] lint | 整批修正 topic-slides ⓪ 第 1–3 輪的問題
+- 依據：output/what-is-rag/issues.md（三輪共 59 筆，去重後 40 條，另加 1 條修正時自己發現的格式問題，共 41 條；每條都有編號、類別、狀態）
+- raw 核對方式：raw/text/ 不存在；為了不動 raw/，用 pypdf 4.3.1 把 PDF 抽成文字放在 session 暫存區核對。頁碼仍以 PDF 頁為準
+- 事實／限定條件：
+  - methods/self-rag.md：核對 05 §6 p.10，原文確實寫「significantly outperforms LLMs with more parameters or with conventional RAG」→ 保留原句並加 ⚠️「原文結論與 Table 2 不一致」，補上 §5.1 p.8、§1 p.2 的限定說法；sources/05 補一行說明，Table 2 摘錄補上 Llama2-13B（不檢索）、Llama2-7B（檢索）兩列
+  - overview、methods/graphrag、comparisons/rag-techniques：72%–83% 改成「GraphRAG 等全局方法」，分開寫 Podcast 和新聞的範圍（06 §5.1 p.9）
+  - methods/naive-rag：原始 RAG 改成「每份文件分別串接，再 marginalize」，和 generator、sources/01 同步
+  - analogies「書包塞太滿」：比喻的極限補上「50 本不會比較差，只是不划算」
+  - analogies、parametric-vs-non-parametric-memory、sources/01：12%／4% 寫明 index 和年份的組合（01 §4.5 p.8）
+  - methods/self-rag：150k 註明附錄是 145,619 筆
+- ⚠️ 同步：
+  - Reranking ⚠️ 以 concepts/reranking.md 為準，同步到 retriever、advanced-rag、sources/01、sources/02、sources/03（01 vs 02＋03＋04，加上「情境不同」）
+  - 文件數量 ⚠️ 以 concepts/context-window.md 為準，同步到 retriever、sources/01、sources/02
+- ⚠️ 新標註：methods/self-rag.md（原文結論與 Table 2）、methods/contextual-retrieval.md（摘要 indexing vs GraphRAG）、comparisons/rag-paradigms.md（Naive RAG 是否「最早」）
+- ⚠️ 格式：sources/04「06 說前段」、overview「小型知識庫」改成標準的 ⚠️ 區塊；self-rag、sources/01 的 ⚠️ 區塊後補上空行
+- 引用：overview 的「拆成小步驟」補上 07 §5；ragas.md 的 Self-RAG 改引 05 §3.1；lost-in-the-middle 拿掉用 05 §3.3 證明「沒有提到」的引用；rag-evaluation、sources/06、sources/07 補上「實驗用 gpt-4-turbo」（06 §4.1.3 p.9）
+- 已核對、不需修改：「chunk 不超過幾百 tokens」（03 p.2、p.3 都有）、49%／67% 的頁碼（03 p.2、p.4–7、p.10 都對）、advanced-rag 的 02 §II-B p.3／p.4、reranking 的 04 §5 p.9
+- 術語：glossary 新增 23 條（98 → 121），包括 BLEU、Cross-encoder、F1、FEVER、Forward pass、Hit Rate、HNSW、Leiden、Marginalize、MAUVE、MRR、MS-MARCO、NQ、NDCG、PPO、Reinforcement learning、RLHF、ROUGE、Self-attention、Thorough／Fast Decoding、Transformer、TriviaQA、Unsupervised fine-tuning。raw 只列名、沒有定義的指標，詞條就只寫 raw 說了什麼。另外在 overview、hallucination、context-window、lost-in-the-middle、ragas、graphrag、self-rag、retriever 中，術語第一次出現時補上連結
+- 結構：retriever 的 GenRead 移到「從哪裡檢索？」；context-window 第 57 行改寫；rag-timeline 的 GraphRAG 改成依 raw 版本的日期（2025-02-19）排序並註明原因；5 個方法頁的「出處」和 frontmatter `sources` 一致
+- 不修（理由見 issues.md N01–N04）：新增 BM25／LLM-as-a-judge／Robustness 頁（維持之前「暫不拆頁」的決定）；context-window 和 lost-in-the-middle 不合併（維持之前的決定）；ragas 和 rag-evaluation 的 RAGAS 段落刻意保留重複（總覽頁需要能獨立閱讀的摘要，數字已核對一致）；reviewer 讀不到 output/ 屬於 workflow 的設計
+- index.md：術語表 121 條；sources/01、advanced-rag、contextual-retrieval、rag-paradigms 的 sources 計數更新
+- 待補來源：無
+- lint：0 error, 0 warning

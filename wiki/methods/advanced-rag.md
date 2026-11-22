@@ -2,7 +2,7 @@
 type: method
 title: "Advanced RAG"
 tags: [method, rag, advanced-rag, paradigm, pre-retrieval, post-retrieval]
-sources: [02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 01-lewis2020-rag.pdf]
+sources: [02-gao2023-survey.pdf, 03-anthropic-contextual-retrieval.pdf, 01-lewis2020-rag.pdf, 04-liu2023-lost-in-middle.pdf]
 updated: 2026-11-22
 ---
 
@@ -42,11 +42,15 @@ updated: 2026-11-22
 
 - 流程仍是鏈狀的，不像 [Modular RAG](modular-rag.md) 那樣可以彈性重組 [02-gao2023-survey.pdf, Fig.3, p.4]。
 
-> ⚠️ **爭議／更新**：本頁把 reranking 列為 post-retrieval 的關鍵策略 [02-gao2023-survey.pdf, §II-B, p.4]，[03-anthropic-contextual-retrieval.pdf, p.11] 的實驗也支持；但 [01-lewis2020-rag.pdf, §4.1, p.5] 的原始 RAG 沒有用 re-ranker，也達到了當時的最佳成績。詳見 [Reranking](../concepts/reranking.md)。
+> ⚠️ **爭議／更新**：[01-lewis2020-rag.pdf, §4.1, p.5] 認為，要達到當時的最佳表現，re-ranker 不是必要的；但 [02-gao2023-survey.pdf, §II-B, p.4] 把 reranking 視為 Advanced RAG 的關鍵策略，[03-anthropic-contextual-retrieval.pdf, p.10–11] 的實驗顯示 reranking 能進一步降低檢索失敗率，[04-liu2023-lost-in-middle.pdf, §5, p.10] 也建議用 reranking 來應對位置效應。
+> 情境不同：01 是每份文件分別交給 generator 再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，所以沒有「文件排在 prompt 哪個位置」的問題；02、03、04 談的則是把多份文件串成一個 prompt 交給 LLM 的情境 [02-gao2023-survey.pdf, §II-A, p.3] [04-liu2023-lost-in-middle.pdf, §5, p.9]。詳見 [Reranking](../concepts/reranking.md)。
 
 ## 出處
 
 - [02-gao2023-survey.pdf](../sources/02-gao2023-survey.md)
+- [03-anthropic-contextual-retrieval.pdf](../sources/03-anthropic-contextual-retrieval.md)
+- [01-lewis2020-rag.pdf](../sources/01-lewis2020-rag.md)
+- [04-liu2023-lost-in-middle.pdf](../sources/04-liu2023-lost-in-middle.md)
 
 ## 相關頁面
 

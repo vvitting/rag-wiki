@@ -67,11 +67,14 @@ updated: 2026-11-22
 |---|---|---|---|---|---|---|
 | ChatGPT（不檢索） | 29.3 | 74.3 | 70.1 | 75.3 | – | [05-asai2023-self-rag.pdf, Table 2, p.8] |
 | ChatGPT（加上檢索） | 50.8 | 65.7 | 54.7 | 75.3 | 65.1 | [05-asai2023-self-rag.pdf, Table 2, p.8] |
+| Llama2-13B（不檢索） | 14.7 | 38.5 | 29.4 | 29.4 | – | [05-asai2023-self-rag.pdf, Table 2, p.8] |
+| Llama2-7B（加上檢索） | 38.2 | 42.5 | 30.0 | 48.0 | 2.9 | [05-asai2023-self-rag.pdf, Table 2, p.8] |
 | Llama2-13B（加上檢索） | 45.7 | 47.0 | 30.2 | 26.0 | 2.3 | [05-asai2023-self-rag.pdf, Table 2, p.8] |
 | Self-RAG 7B | 54.9 | 66.4 | 72.4 | 67.3 | 66.9 | [05-asai2023-self-rag.pdf, Table 2, p.8] |
 | Self-RAG 13B | 55.8 | 69.3 | 74.5 | 73.1 | 70.3 | [05-asai2023-self-rag.pdf, Table 2, p.8] |
 
 - 在所有任務上，Self-RAG 都是非商用模型中表現最好的 [05-asai2023-self-rag.pdf, §5.1, p.8]。
+- 注意：結論 §6 寫的是「明顯勝過參數更多的 LLM 和傳統 RAG」[05-asai2023-self-rag.pdf, §6, p.10]，但上表中 ChatGPT 在 TriviaQA、ARC-C 仍然較高 [05-asai2023-self-rag.pdf, Table 2, p.8]，詳見 [Self-RAG](../methods/self-rag.md) 的 ⚠️。
 - 在 PubHealth、PopQA、傳記生成、ASQA（Rouge 和 MAUVE）上，甚至勝過 ChatGPT [05-asai2023-self-rag.pdf, §5.1, p.8]。
 - 在 ASQA 的引用 precision 上也勝過 ChatGPT，這個指標衡量的是「模型的說法是否完全被引用的證據支持」[05-asai2023-self-rag.pdf, §5.1, p.8]。
 - Llama2-FT 7B 用和 Self-RAG 相同的資料訓練，但沒有 reflection tokens，只在測試時加上檢索，表現仍然落後 Self-RAG；作者據此認為，進步不只是來自訓練資料 [05-asai2023-self-rag.pdf, §5.1, p.9]。

@@ -75,13 +75,15 @@ updated: 2026-11-22
 
 > ⚠️ **爭議／更新**：本篇說 Naive RAG 是「最早的方法」，在 ChatGPT 普及後不久受到重視 [02-gao2023-survey.pdf, §II-A, p.2–3]；但 RAG 這個名稱和「先檢索、再生成」的架構早在 2020 年就出現了 [01-lewis2020-rag.pdf, §1, p.2] [02-gao2023-survey.pdf, Ref. 4, p.17]，而本篇把這類早期研究歸在「透過預訓練模型加強」的階段 [02-gao2023-survey.pdf, §I, p.1]。詳見 [Naive RAG](../methods/naive-rag.md)。
 
-> ⚠️ **爭議／更新**：本篇把 reranking 列為 Advanced RAG 的關鍵策略 [02-gao2023-survey.pdf, §II-B, p.4]，[03-anthropic-contextual-retrieval.pdf, p.11] 的實驗也支持；但 [01-lewis2020-rag.pdf, §4.1, p.5] 認為，要達到當時的最佳表現並不需要 re-ranker。詳見 [Reranking](../concepts/reranking.md)。
+> ⚠️ **爭議／更新**：[01-lewis2020-rag.pdf, §4.1, p.5] 認為，要達到當時的最佳表現，re-ranker 不是必要的；但 [02-gao2023-survey.pdf, §II-B, p.4] 把 reranking 視為 Advanced RAG 的關鍵策略，[03-anthropic-contextual-retrieval.pdf, p.10–11] 的實驗顯示 reranking 能進一步降低檢索失敗率，[04-liu2023-lost-in-middle.pdf, §5, p.10] 也建議用 reranking 來應對位置效應。
+> 情境不同：01 是每份文件分別交給 generator 再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，所以沒有「文件排在 prompt 哪個位置」的問題；02、03、04 談的則是把多份文件串成一個 prompt 交給 LLM 的情境 [02-gao2023-survey.pdf, §II-A, p.3] [04-liu2023-lost-in-middle.pdf, §5, p.9]。詳見 [Reranking](../concepts/reranking.md)。
 
 > ⚠️ **爭議／更新**：本篇認為即使 LLM 能處理長 context，RAG 仍無可取代 [02-gao2023-survey.pdf, §VII-A, p.14]；[03-anthropic-contextual-retrieval.pdf, p.2] 則說，知識庫小於 200,000 tokens 時可以直接全放進 prompt，不需要 RAG。詳見 [Context window](../concepts/context-window.md)。
 
 > ⚠️ **爭議／更新**：本篇把段落摘要、階層式摘要 index 列為優化方法 [02-gao2023-survey.pdf, §III-B, p.8]；[03-anthropic-contextual-retrieval.pdf, p.5] 實測通用文件摘要提升非常有限，以摘要為基礎的 indexing 表現很差。詳見 [Chunking](../concepts/chunking.md)。
 
-> ⚠️ **爭議／更新**：本篇說「盡量多檢索文件」是常見的誤解，太多 context 會帶來雜訊 [02-gao2023-survey.pdf, §IV-A, p.10]；但 [01-lewis2020-rag.pdf, §4.5, p.8] 發現 RAG-Sequence 取越多份文件，NQ 表現就越好。[04-liu2023-lost-in-middle.pdf, §5, p.10] 的結果支持本篇：在 LLM 上，取 20 份以上幾乎不再進步。詳見 [Context window](../concepts/context-window.md)。
+> ⚠️ **爭議／更新**：「要放多少份文件」各來源的說法不一致：[01-lewis2020-rag.pdf, §4.5, p.8] 發現 RAG-Sequence 取越多份文件，NQ 表現越好；[02-gao2023-survey.pdf, §IV-A, p.10] 認為「盡量多檢索」是常見的誤解，過多的 context 會帶來雜訊；[03-anthropic-contextual-retrieval.pdf, p.8] 實測 5、10、20 個 chunk，20 個最好；[04-liu2023-lost-in-middle.pdf, §5, p.10] 發現取 50 份和取 20 份相比只多約 1%–1.5%；[06-edge2024-graphrag.pdf, App. C, p.19] 為一般 RAG 選 context 大小時，8k 在全面性上勝過更大的 context。
+> 情境不同：01 是每份文件分別交給 generator 再加權合併 [01-lewis2020-rag.pdf, §2.1, p.3]，不是串成一個長 prompt。完整的六種說法與整合見 [Context window](../concepts/context-window.md)。
 
 - **RAGAS 的原始論文已經 ingest**：本篇對 RAGAS 的描述（用 LLM 評判三個品質分數、answer relevance 用 cosine similarity）[02-gao2023-survey.pdf, §VI-D, p.14; Table IV, p.15] 和原始論文一致 [07-es2023-ragas.pdf, §3, p.3]，詳見 [07 來源頁](07-es2023-ragas.md)。
 - **本篇的三個品質分數不適用於全局問題**：GraphRAG 論文認為 context relevance、faithfulness、answer relevance 只適用於一般 vector RAG，和全局理解類的問題無關 [06-edge2024-graphrag.pdf, §2.4, p.4]。詳見 [RAG 評估](../concepts/rag-evaluation.md)。
