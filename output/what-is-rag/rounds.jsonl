@@ -4,3 +4,4 @@
 {"time": "2026-11-22 15:46:15", "node": "2", "round": 2, "result": "wait", "detail": "等使用者決定：怎麼處理 parse_sources_md 會把『看過但沒選的頁』算進相關頁的問題", "reason": "", "change": "", "pages": ""}
 {"time": "2026-11-22 15:47:48", "node": "2", "round": 3, "result": "pass", "detail": "check_coverage.py 通過：相關頁 14 頁", "reason": "", "change": "parse_sources_md 改成只讀到第一個 ## 標題（使用者選 A）；sources.md 第 29 行改寫", "pages": ""}
 {"time": "2026-11-22 15:53:00", "node": "2b", "round": 1, "result": "pass", "detail": "reviewer 模式 A：嚴重 0、輕微 17（V2-01–V2-17，見 issues.md）；舊問題全部仍為已解決；讀取檔案皆在清單內", "reason": "", "change": "", "pages": ""}
+{"time": "2026-11-22 15:53:56", "node": "3", "round": 1, "result": "done", "detail": "14 張卡；check_coverage --cards 通過", "reason": "", "change": "", "pages": ""}
