@@ -1,33 +1,57 @@
 ---
-description: 主題 → 教學 HTML 簡報（只用 wiki/ 內容的 graph workflow，含關卡、審查、渲染檢查）
+description: 主題 → 教學 HTML 簡報（只用 wiki/ 內容的 graph workflow v2，含關卡、相關頁語意檢查、審查、渲染檢查）
 argument-hint: <主題>
 ---
 
 # /topic-slides $ARGUMENTS
 
-把主題「$ARGUMENTS」做成一份給不熟 AI 的大學生看的教學 HTML 簡報。依序執行節點 ⓪–⑩，**不得跳過節點，不得改變順序**。
+把主題「$ARGUMENTS」做成一份給不熟 AI 的大學生看的教學 HTML 簡報。依序執行節點 ⓪ ① ② ②b ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩，**不得跳過節點，不得改變順序**。
+
+本檔是 **workflow v2**，流程圖見 `README.md`「Workflow v2」。和 v1 的差別：⓪ 只做機械檢查；wiki 的語意檢查移到 ②b，只看和主題相關的頁面；嚴重度規則寫死；問題登記在 `issues.md`。
 
 ## 總則
 
-- **唯一的內容來源是 `wiki/`。** 不讀 `raw/`、不上網、不用自己的背景知識補內容。wiki 沒有的，就是缺口。
-- **所有產出放在 `output/<slug>/`。** slug 是主題的英文 kebab-case（例如「Chunking 策略」→ `chunking-strategy`）。⑩ 之外不修改 `output/<slug>/` 以外的任何檔案；`wiki/`、`raw/`、`slides/` 一律不動。
+- **簡報內容唯一的來源是 `wiki/`。** 不上網、不用自己的背景知識補內容。wiki 沒有的，就是缺口。
+  - 例外 1：②b 的 reviewer 可以讀相關頁對應的 `raw-text/`，用來核對 wiki 頁是否忠於原文。`raw/` 的 PDF 一律不讀。
+  - 例外 2：②b 發現嚴重問題時，可以修改**和主題相關的 wiki 頁**，但必須依 AGENTS.md 的規則（引用、⚠️ 格式等），並記到 `wiki/log.md`、`issues.md`。
+- **所有產出放在 `output/<slug>/`。** slug 是主題的英文 kebab-case（例如「Chunking 策略」→ `chunking-strategy`）。除了 ②b 的修正和 ⑩ 的 `wiki/log.md`，不修改 `output/<slug>/` 以外的任何檔案；`raw/`、`raw-text/`、`slides/` 一律不動。
+- **嚴重度規則（v2，寫死，所有 reviewer 呼叫都要貼進任務中）**：
+  - **嚴重**只有兩種：
+    1. 數字或結論和引用的 raw 原文不符，或講反了；
+    2. 和 wiki 另一頁直接矛盾，而且沒有 ⚠️ 標註。
+  - 無法確定的一律列為**輕微**。
+  - 已登記在 `issues.md` 的問題，嚴重度不得改變；reviewer 只回報新問題，以及舊問題是否仍然存在。
+- **問題追蹤**：`output/<slug>/issues.md` 給每個 wiki 問題固定編號、類別、嚴重度和狀態（待修／已修／不修並寫理由）。新問題接續編號，不重新編號；狀態改變時直接改該列。
 - **狀態一律用 `scripts/wf_state.py` 記錄**，不要靠記憶計算輪數：
   - 每個節點每一輪結束都執行 `python3 scripts/wf_state.py log <slug> --node N --result R --detail "檢查結果" [--reason "退回原因"] [--change "修改內容"] [--pages "03,05"]`。
+  - 節點編號 N：`0` `1` `2` `2b` `3` `4` `5` `6` `7` `8` `9` `10`。
   - R：關卡用 `pass`／`fail`，其他節點用 `done`，停下來等使用者用 `wait`，中止用 `stop`。
-  - `log` 的結束碼是 3 時，代表**全域停止條件**觸發（某個關卡退回累計超過 3 輪），立刻跳到「停止程序」。
+  - `log` 的結束碼是 3 時，代表**停止條件**觸發（某個關卡退回超過上限），立刻跳到「停止程序」。
 - **每完成一個節點（含每一輪退回重做）就 commit 一次**：
   ```bash
   git add output/<slug>/ && git commit -m "topic-slides(<slug>): ③ 證據卡 — 6 張"
   ```
-  - 只 add `output/<slug>/`（⑩ 另外加 `wiki/log.md`），不要 add 其他檔案。
+  - 只 add `output/<slug>/`；②b 的修正另外加上改到的 `wiki/` 檔案，⑩ 另外加 `wiki/log.md`。不要 add 其他檔案。
   - 重做的輪次在訊息後加 `（第 N 輪）`；退回的輪次寫 `↩️ 退回：原因摘要`。
   - commit 失敗（例如沒有變更）就記在該輪的 `--detail`，繼續流程。
-- **關卡（⓪②⑤⑥⑦⑨）退回累計超過 3 輪 → 停止。** 由 `wf_state.py log` 計算，第 4 次 `fail` 時回傳結束碼 3。
+- **關卡與退回上限**（由 `wf_state.py log` 計算，超過上限回傳結束碼 3）：
+
+  | 關卡 | 上限 | 退回到 |
+  |---|---|---|
+  | ⓪ lint | 3 | 停下來，依 Wiki 維護流程修正後重跑 ⓪ |
+  | ② 覆蓋率 | 3 | 停下來等使用者補來源，補完後重跑 ⓪ |
+  | ②b 相關頁語意檢查 | 2 | 只修相關 wiki 頁，再跑 ②b |
+  | ⑤ 大綱確認 | 3 | 結構問題 → ④；缺主題 → ① |
+  | ⑥ 逐頁稿（check_sources 小 loop） | 2 | 只修出錯的頁，重跑 check_sources |
+  | ⑦ 忠實度審查 | 3 | 只把出錯的頁退回 ⑥ |
+  | ⑨ 渲染檢查 | 3 | 溢出的頁退回 ⑥ 縮短 |
+
 - **停止程序**：
   1. `python3 scripts/wf_state.py report <slug>`
   2. 在 report.md 的 `<!-- manual -->` 之後補上「補充說明」：卡在哪裡、每一輪的問題、可能的解法、需要使用者決定什麼。
   3. commit，然後把問題摘要回報給使用者，**結束本次執行**。
-- **等待程序（② 缺口、⑤ 確認大綱）**：記一筆 `--result wait`、commit、回報使用者，**結束本次執行**。使用者回覆後，會再執行 `/topic-slides <主題>`（或直接回覆），從 state.json 記錄的節點接續。
+- **等待程序（⓪ lint 失敗、② 缺口、⑤ 確認大綱）**：記一筆 `--result wait`、commit、回報使用者，**結束本次執行**。使用者回覆後，會再執行 `/topic-slides <主題>`（或直接回覆），從 state.json 記錄的節點接續。
+- **report.md 的開頭區塊**：`<!-- preamble -->` 和 `<!-- /preamble -->` 之間的內容（例如前一次執行的摘要），`wf_state.py report` 重新產生時會保留，不要刪除。
 
 ## 開始：建立或接續
 
@@ -35,23 +59,19 @@ argument-hint: <主題>
 2. 輸出 `NEW` → 從 ⓪ 開始。
 3. 輸出 `RESUME` → 讀 state.json 與 rounds.jsonl：
    - `status` 是 `stopped` → 不自動重跑。告訴使用者停止原因，問要怎麼處理。
-   - `status` 是 `waiting` → 依使用者的回覆從該節點接續（見 ② 和 ⑤）。
+   - `status` 是 `waiting` → 依使用者的回覆從該節點接續（見 ⓪、② 和 ⑤）。
    - `status` 是 `done` → 告訴使用者已完成，問是否要重新產生；要重做就先用 `set --status running --node 0`。
 
 ---
 
-## ⓪ Wiki lint 關卡
+## ⓪ lint 關卡（只做機械檢查）
 
-1. 執行 `python3 tools/lint.py`，把完整輸出寫到 `output/<slug>/lint.md` 的「機械性檢查」段。
-2. 呼叫 `reviewer` subagent（模式 A）：
-   - 「允許讀取的檔案」= `wiki/` 下所有 `.md`（用 `ls`／`find` 列出完整路徑後逐一列給它）。
-   - 把 AGENTS.md §9.3 的語意檢查清單原文貼進任務中。
-   - 核對它回報的「實際讀取的檔案」；讀了清單外的檔案，這一輪無效，重新呼叫。
-3. reviewer 的輸出寫到 lint.md 的「語意檢查」段。
-4. 判定：
-   - **通過** = lint.py 0 error，且 reviewer 沒有「嚴重」問題。warning 和「輕微」問題寫進 `--detail`，不阻擋。
-   - **未通過** → `log --node 0 --result fail`，commit，然後**停止，不得進入 ①**。回報使用者要先修哪些 wiki 頁（修 wiki 是另一個任務，依 AGENTS.md 進行，不在這個 workflow 裡做）。使用者修好後重新執行會再跑一次 ⓪；超過 3 輪就觸發停止程序。
-5. 通過 → `log --node 0 --result pass`，commit。
+1. 執行 `python3 tools/lint.py`，把完整輸出寫到 `output/<slug>/lint.md`。**不呼叫 reviewer**；wiki 的語意檢查在 ②b 進行，而且只看相關頁。
+2. 判定：
+   - **通過** = 0 error。warning 寫進 `--detail`，不阻擋。→ `log --node 0 --result pass`，commit，進入 ①。
+   - **未通過** → `log --node 0 --result fail`（結束碼 3 → 停止程序），commit，然後**停下來，不得進入 ①**：
+     - 回報 lint.py 的錯誤，以及要修哪些 wiki 頁。修正依 AGENTS.md §9.3 的 Wiki 維護流程進行，不在這個 workflow 裡做。
+     - `log --node 0 --result wait`，commit，結束本次執行。使用者修好後重新執行，會再跑一次 ⓪。
 
 ## ① 檢索
 
@@ -76,15 +96,45 @@ argument-hint: <主題>
 ## ② 覆蓋率關卡
 
 1. 執行 `python3 scripts/check_coverage.py output/<slug>`。
-2. **結束碼 0** → `log --node 2 --result pass`，commit，進入 ③。
+2. **結束碼 0** → `log --node 2 --result pass`，commit，進入 ②b。
 3. **結束碼 1** → `log --node 2 --result fail`（若結束碼為 3 → 停止程序），commit，然後**停下來等使用者**：
    - 列出腳本的錯誤，以及 sources.md 的「缺口」。
    - 建議可以補的來源：先查 `raw/` 的檔名清單（只看檔名，**不讀內容**），說明哪一篇 raw 的 ingest 可能補得到；不然就描述需要哪一類的新來源（例如「一篇比較 chunk 大小的實驗論文」）。**不得上網搜尋、不得自行 ingest。**
    - `log --node 2 --result wait`，commit，結束本次執行。
 4. 使用者回覆後：
-   - 「已補資料」→ 回到 ① 重新檢索。
+   - 「已補資料」（新來源已放進 `raw/`、已產生 `raw-text/`、已依 AGENTS.md ingest）→ 回到 **⓪** 重跑。
    - 「縮小主題／改主題」→ 依指示改 sources.md 或回到 ①。
    - 「停止」→ 停止程序。
+
+## ②b 相關頁語意檢查（最多 2 輪）
+
+只檢查 sources.md 列出的頁面，不檢查整個 wiki。
+
+1. **準備 issues.md**：`output/<slug>/issues.md` 不存在時，建立一份空的總表（欄位：編號、類別、問題、頁面、嚴重度、出現輪次、狀態）。已經存在就沿用，不要重新編號。
+2. **列出允許讀取的檔案**，每個都寫完整路徑：
+   - sources.md 列出的每一個 wiki 頁；
+   - 這些頁面 frontmatter `sources` 中每個 raw 檔對應的 `raw-text/<同檔名>.md`（例如 `05-asai2023-self-rag.pdf` → `raw-text/05-asai2023-self-rag.md`）。可以用：
+     ```bash
+     grep -h '^sources:' $(grep -oE 'wiki/[^ )]+\.md' output/<slug>/sources.md | sort -u) \
+       | grep -oE '[0-9]{2}-[a-z0-9-]+\.pdf' | sort -u | sed 's#^#raw-text/#; s#\.pdf$#.md#'
+     ```
+   - `output/<slug>/issues.md`。
+3. 呼叫 `reviewer` subagent（**模式 A**），任務中要包含：
+   - 允許讀取的檔案清單；
+   - 「總則」中的**嚴重度規則**原文；
+   - 檢查重點：數字和結論是否忠於 `raw-text/` 的原文、有沒有拿掉限定條件、這些頁之間有沒有未標註的矛盾、⚠️ 是否同步、初學者讀不讀得懂；
+   - 要求它對 issues.md 中「待修」的每一條回報「仍然存在／已解決」，新問題另外列出，而且不得改變已登記問題的嚴重度。
+4. 核對 reviewer 的「實際讀取的檔案」；讀了清單外的檔案，這一輪無效，重新呼叫。
+5. 把 reviewer 的完整輸出存到 `output/<slug>/review/semantic-round-N.md`。
+6. **登記到 issues.md**：新問題接續編號、照 reviewer 給的嚴重度登記為「待修」；舊問題依回報更新狀態。嚴重度以 issues.md 為準；reviewer 改了已登記問題的嚴重度時，以 issues.md 為準，並記在 `--detail`。
+7. 判定：
+   - **沒有「待修」的嚴重問題** → `log --node 2b --result pass --detail "新問題：嚴重 0、輕微 M；輕微問題見 issues.md"`，commit，進入 ③。輕微問題不阻擋；決定不修的，在 issues.md 寫理由。
+   - **有「待修」的嚴重問題** → `log --node 2b --result fail --reason "問題編號與摘要" --pages "wiki 頁"`（結束碼 3 → 停止程序：「②b 超過 2 輪，交給使用者決定」），commit，然後修正：
+     - **只修 sources.md 中的相關 wiki 頁**，依 AGENTS.md 的規則；同一類的問題一次修完（例如同主題的 ⚠️ 全部同步），不要只修單一條目。
+     - 需要核對原文時，讀對應的 `raw-text/`；引用仍然寫原始 PDF 的檔名和頁碼。
+     - 跑 `python3 tools/lint.py`，必須 0 error。
+     - 更新 issues.md 的狀態（已修／不修並寫理由）；在 `wiki/log.md` 追加一筆 `lint` 紀錄；有需要就更新 `wiki/index.md`。
+     - `git add output/<slug>/ <改到的 wiki 檔案>`，commit（訊息寫 `topic-slides(<slug>): ②b 修正 wiki — 問題編號`），然後回到 ②b 步驟 2 重新檢查。
 
 ## ③ 證據卡
 
@@ -145,7 +195,7 @@ page: wiki/concepts/chunking.md
    - **「確認」** → `log --node 5 --result pass`，commit，進入 ⑥。
    - **「退回」** → `log --node 5 --result fail --reason "使用者意見"`（結束碼 3 → 停止程序）：
      - 意見是結構、順序、刪減、強調 → 修改 outline.md（④），`log --node 4 --result done --change "改了什麼"`，commit，回到 ⑤。
-     - 意見是缺內容 → 回到 ① 補檢索，再依序經過 ②③④⑤。
+     - 意見是缺內容 → 回到 ① 補檢索，再依序經過 ② ②b ③ ④ ⑤。
 
 ## ⑥ 逐頁稿
 
@@ -180,7 +230,7 @@ title: 先切塊，再轉成向量
 
 完成後執行 `python3 scripts/check_sources.py output/<slug>`：
 - **結束碼 0** → `log --node 6 --result pass --detail "N 頁"`，commit，進入 ⑦。
-- **結束碼 1** → `log --node 6 --result fail --detail "腳本錯誤摘要" --pages "出錯的頁"`（結束碼 3 → 停止程序），只修改出錯的頁，`--change` 記錄改了什麼，commit，重跑腳本。
+- **結束碼 1** → `log --node 6 --result fail --detail "腳本錯誤摘要" --pages "出錯的頁"`（結束碼 3 → 停止程序：小 loop 最多 2 輪），只修改出錯的頁，`--change` 記錄改了什麼，commit，重跑腳本。
 
 **從 ⑦ 或 ⑨ 退回時**：只重寫被退回的頁（其他頁的檔案不得變動），重跑 check_sources.py，`log --node 6 ... --pages "03,07" --change "改了什麼"`，commit，再回到 ⑦（只審被重寫的頁）。
 
@@ -217,14 +267,15 @@ title: 先切塊，再轉成向量
 1. `python3 scripts/wf_state.py set <slug> --status done --node 10`。
 2. `python3 scripts/wf_state.py report <slug>` 產生 report.md，然後在 `<!-- manual -->` 之後補上「補充說明」：
    - 每次退回的根本原因與教訓
-   - reviewer 提出、但判為輕微而沒有修的問題
+   - reviewer 提出、但判為輕微而沒有修的問題（列出 issues.md 的編號）
    - sources.md 的「缺口」（簡報沒涵蓋到的部分）
 3. 在 `wiki/log.md` 末尾追加一筆（AGENTS.md §9.4）：
    ```markdown
    ## [YYYY-MM-DD] slides | topic-slides：<主題>
    - 產出：output/<slug>/deck.html（N 頁）
    - 使用的 wiki 頁：N 頁（見 output/<slug>/sources.md）
-   - 退回：⓪ x、② x、⑤ x、⑥ x、⑦ x、⑨ x 輪
+   - 退回：⓪ x、② x、②b x、⑤ x、⑥ x、⑦ x、⑨ x 輪
+   - issues.md：新登記 x 條（嚴重 x、輕微 x），已修 x 條
    ```
 4. `log --node 10 --result done`，再跑一次 `report`（讓這筆紀錄也進報告），然後 `git add output/<slug>/ wiki/log.md` 並 commit。
 5. 回報使用者：deck.html 的路徑、頁數、各關卡退回輪數、還沒解決的問題。

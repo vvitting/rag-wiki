@@ -25,6 +25,7 @@ rag-wiki/
 ├── AGENTS.md          # 本檔（schema）
 ├── CLAUDE.md          # 只有一行 @AGENTS.md，讓 Claude Code 自動讀到本檔
 ├── raw/               # 第 1 層：原始來源（PDF）。唯讀，不可修改、改名或刪除
+├── raw-text/          # raw/ 的純文字版（衍生檔，由 tools/pdf2text.py 產生，不可手動編輯）
 ├── wiki/              # 第 2 層：由 agent 撰寫與維護的 Markdown wiki
 │   ├── index.md       # 內容目錄（每次 query 先讀這裡）
 │   ├── log.md         # 時間序工作紀錄（只能追加）
@@ -38,13 +39,16 @@ rag-wiki/
 │   └── questions/     # 存回 wiki 的問答
 ├── slides/
 │   └── rag-intro.html # 最終簡報
-└── tools/
-    └── lint.py        # 機械性健康檢查
+├── tools/
+│   ├── lint.py        # 機械性健康檢查
+│   └── pdf2text.py    # raw/*.pdf → raw-text/*.md
+└── requirements.txt   # pdf2text.py 需要的套件（安裝在 .venv/，不進 git）
 ```
 
 - `raw/` 是唯一的事實來源（source of truth）。
+- `raw-text/` 是 `raw/` 的純文字版，**由 `tools/pdf2text.py` 產生的衍生檔，不可手動編輯**；要更新就重跑工具。每頁開頭有 `<!-- page N -->`，N 等於 PDF 的第 N 頁。它只是方便核對原文，不是新的來源。
 - `wiki/` 完全由 agent 擁有；使用者主要負責閱讀。
-- 新增來源時，由使用者把檔案放進 `raw/`，命名格式為 `NN-作者年份-關鍵字.pdf`。
+- 新增來源時，由使用者把檔案放進 `raw/`，命名格式為 `NN-作者年份-關鍵字.pdf`；接著執行 `.venv/bin/python tools/pdf2text.py NN` 產生對應的 `raw-text/`（第一次使用先 `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`）。
 
 ---
 
@@ -153,6 +157,7 @@ updated: YYYY-MM-DD
 - 引用的位置要指到**實際說出這件事的地方**；不確定時，回去重讀 PDF 確認，不要憑記憶寫。
 - **嚴格只用 `raw/`**：不靠常識補寫，不上網找資料。初學者需要、但 raw/ 裡找不到的內容，寫上 `[待補來源]` 標記，並在 `index.md` 的「待補來源」區塊列出。
 - 可以直接引用原文的一小段英文（加引號），但以改寫成中文說明為主。
+- **可以讀 `raw-text/` 核對原文，但引用一律寫原始 PDF 的檔名和頁碼**，例如 `[05-asai2023-self-rag.pdf, §6, p.10]`，不要寫 `raw-text/…md`。`raw-text/` 的 `<!-- page N -->` 就是 `p.N`。
 
 ---
 
@@ -177,7 +182,7 @@ updated: YYYY-MM-DD
 
 使用者說「ingest 03」或「ingest 下一篇」時：
 
-1. 讀整篇 raw PDF（篇幅長就分段讀），記下章節與頁碼。
+1. 讀整篇 raw PDF（可以讀對應的 `raw-text/`；篇幅長就分段讀），記下章節與頁碼。還沒有 `raw-text/` 就先跑 `tools/pdf2text.py`。
 2. 建立或更新 `sources/<raw 檔名>.md`。
 3. 更新或建立相關的 `concepts/`、`methods/`、`comparisons/` 頁面；先擴充既有頁面，再考慮新增。
 4. 更新 `glossary.md`（新術語）、`analogies.md`（適合的比喻）、`overview.md`。
@@ -185,7 +190,7 @@ updated: YYYY-MM-DD
 6. **更新 `index.md`**。
 7. **在 `log.md` 追加一筆**。
 8. 執行 `python3 tools/lint.py`，修正所有錯誤（error）。
-9. 執行第 9.3 節的語意檢查清單。
+9. 依第 9.3 節的 Wiki 維護流程，讓 reviewer 檢查這次有變動的頁面。
 10. 回報給使用者一份**變更清單**：新增了哪些頁、修改了哪些頁、新增了哪些 ⚠️ 標註、有哪些 `[待補來源]`。
 
 預設順序照檔名 01 → 07。每篇處理完直接寫入，不用每篇都先停下來等使用者確認；使用者再看變更清單抽查。
@@ -197,9 +202,19 @@ updated: YYYY-MM-DD
 3. 回答時附上 wiki 頁面連結與 raw 引用。
 4. 如果答案值得保留（使用者要求，或明顯有重複查詢的價值），存成 `questions/` 頁面，並更新 `index.md`、`log.md`。
 
-### 9.3 Lint（兩層，在每次 ingest 完和產生簡報前各跑一次）
+### 9.3 Wiki 維護流程（v2：每次 ingest 或修改 wiki 後）
 
-**機械性檢查**：執行 `python3 tools/lint.py`，它會檢查：
+```
+ingest／修改 wiki → tools/lint.py ─失敗→ 修正後重跑
+                          │通過
+                          ▼
+     reviewer：只檢查有變動的頁面＋對應的 raw-text/ ─嚴重問題→ 修正後從 lint 重跑
+                          │通過
+                          ▼
+              更新 index.md、log.md → git commit
+```
+
+**1. 機械性檢查**：執行 `python3 tools/lint.py`，它會檢查：
 
 - 壞掉的連結（連到不存在的檔案）
 - 孤立頁面（沒有其他頁面連進來）
@@ -209,21 +224,43 @@ updated: YYYY-MM-DD
 - 沒附引用的內文段落（warning）
 - 簡報規格（第 10 節）
 
-**語意檢查清單**（由 agent 人工檢查）：
+**2. 語意檢查**：呼叫 `reviewer` subagent（模式 A），**只檢查這次有變動的頁面**，不再每次檢查全部頁面。
 
-- [ ] 不同頁面之間有沒有互相矛盾、但還沒加 ⚠️ 標註的說法？
-- [ ] 有沒有被較新來源取代、但沒有標註的舊說法？
-- [ ] 有沒有被提到好幾次、卻還沒有獨立頁面的概念？
-- [ ] 有沒有內容重疊、應該合併的頁面？
-- [ ] 引用的章節／頁碼是不是真的有這個說法？（每次抽查至少 3 處）
+- 「允許讀取的檔案」逐一列出：
+  - 這次有變動的 wiki 頁（`git diff --name-only` 加上新增的頁面）；
+  - 這些頁面 frontmatter `sources` 對應的 `raw-text/*.md`；
+  - 如果這次修改是為了處理某份 `output/<slug>/issues.md` 中的問題，也列出那份 issues.md。
+- 把下面的檢查清單和嚴重度規則貼進任務中。
+- 核對 reviewer 回報的「實際讀取的檔案」；讀了清單外的檔案，這一輪無效，重新呼叫。
+- 有「嚴重」問題 → 修正後從 lint 重跑；只有「輕微」問題 → 記進 `log.md`，不阻擋。
+
+檢查清單（只針對被指定的頁面）：
+
+- [ ] 數字和結論跟引用的 raw 原文（`raw-text/` 對應頁）一致嗎？有沒有拿掉限定條件或講反？
+- [ ] 和 wiki 其他頁面有沒有直接矛盾、但還沒加 ⚠️ 標註的說法？（reviewer 只能讀到被指定的頁面；需要比對其他頁時，列為「需要更多資料」）
+- [ ] 同一個主題的 ⚠️ 有沒有和主要的概念頁同步？
 - [ ] 不熟 AI 的大學生讀得懂嗎？專有名詞第一次出現時有連結嗎？
 - [ ] `[待補來源]` 清單是否最新？
 
-Lint 結果追加到 `log.md`。
+**嚴重度規則（v2，寫死，不讓 reviewer 每輪自行判斷）**：
+
+- **嚴重**只有兩種：
+  1. 數字或結論和引用的 raw 原文不符，或講反了；
+  2. 和 wiki 另一頁直接矛盾，而且沒有 ⚠️ 標註。
+- 無法確定的一律列為**輕微**。
+- 已登記在 `issues.md` 的問題，嚴重度不得改變；reviewer 只回報新問題，以及舊問題是否仍然存在。
+
+**3. 記錄**：lint 和 reviewer 的結果追加到 `log.md`，然後更新 `index.md`、commit。
+
+和主題有關的頁面，在做簡報時會再由 `/topic-slides` 的 ②b 檢查一次（見第 9.4 節）。
 
 ### 9.4 產生簡報
 
-1. 先跑一次完整 lint（9.3）。
+主題式教學簡報用 `/topic-slides <主題>`（graph workflow v2，定義在 `.claude/commands/topic-slides.md`，流程圖見 `README.md`）：⓪ 只跑 `lint.py`，相關頁的語意檢查在 ②b 進行。
+
+整份 `slides/rag-intro.html` 的產生步驟：
+
+1. 先跑 `python3 tools/lint.py`，並依 9.3 讓 reviewer 檢查簡報會用到的頁面。
 2. 以 `overview.md` 為骨架，從各頁取材。
 3. 依第 10 節規格產生 `slides/rag-intro.html`。
 4. 跑 `python3 tools/lint.py` 確認簡報規格。
@@ -277,6 +314,7 @@ Lint 結果追加到 `log.md`。
 ## 12. 禁止事項
 
 - ❌ 修改、改名、刪除 `raw/` 裡的任何檔案。
+- ❌ 手動編輯 `raw-text/`（只能用 `tools/pdf2text.py` 重新產生）；在引用中寫 `raw-text/` 的路徑。
 - ❌ 寫沒有出處的事實主張或數字；找不到出處就寫 `[待補來源]`。
 - ❌ 使用 raw/ 以外的知識來源（包括網路搜尋）。
 - ❌ 用新說法直接覆蓋舊說法、卻沒有加 ⚠️ 標註。

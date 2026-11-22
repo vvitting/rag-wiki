@@ -173,3 +173,19 @@
 - index.md：術語表 121 條；sources/01、advanced-rag、contextual-retrieval、rag-paradigms 的 sources 計數更新
 - 待補來源：無
 - lint：0 error, 0 warning
+
+## [2026-11-22] schema | graph workflow v2、raw-text/
+- 新增：`tools/pdf2text.py`（pymupdf 1.24.10，安裝在 `.venv/`，版本記在 `requirements.txt`）→ 產生 `raw-text/*.md`，每頁開頭有 `<!-- page N -->`，和 PDF 頁數一致（7 個檔案都已核對頁數）；把 PDF 中的控制字元換成空白（01 p.3 的公式括號）
+- AGENTS.md：
+  - §2 目錄樹加入 `raw-text/`、`tools/pdf2text.py`、`requirements.txt`；註明 `raw-text/` 是衍生檔、不可手動編輯；新增 PDF 後要跑 pdf2text.py
+  - §7 可以讀 `raw-text/` 核對，但引用仍然寫原始 PDF 的檔名和頁碼
+  - §9.1 ingest 可以讀 `raw-text/`；第 9 步改成 Wiki 維護流程
+  - §9.3 改成「Wiki 維護流程（v2）」：lint.py → reviewer 只檢查有變動的頁面＋對應的 raw-text/ → index、log、commit；寫入 v2 的嚴重度規則；不再每次檢查全部頁面
+  - §9.4 主題簡報改用 `/topic-slides`（v2）
+  - §12 禁止手動編輯 `raw-text/`，也禁止在引用中寫 raw-text 路徑
+- `.claude/commands/topic-slides.md`：⓪ 只跑 lint.py；新增 ②b 相關頁語意檢查（reviewer 只讀 sources.md 的頁面＋對應 raw-text/＋issues.md，最多 2 輪，可修正相關 wiki 頁）；嚴重度規則寫死；② 補完來源後回到 ⓪；⑥ 小 loop 上限改為 2 輪
+- `.claude/agents/reviewer.md`：模式 A 可以讀 raw-text/、issues.md，並回報舊問題的狀態；寫入嚴重度規則；已登記的問題不得改變嚴重度
+- `scripts/wf_state.py`：新增節點 `2b`；每個關卡有各自的退回上限（②b、⑥ 是 2，其他是 3）；report.md 保留 `<!-- preamble -->` 開頭區塊
+- README.md：`raw/text` 改成 `raw-text/`；v1 紀錄的路徑改成 `output/what-is-rag/v1/`
+- topic-slides（what-is-rag）：v1 的執行狀態封存到 `output/what-is-rag/v1/`（含 run-log-v1.md）；v2 重新開始，issues.md 以 v1 的總表為基準
+- lint：0 error, 0 warning
