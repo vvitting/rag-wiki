@@ -88,3 +88,27 @@
 | N02 | context-window.md 和 lost-in-the-middle.md 有部分內容重疊 | R1-16 | log.md 之前已經決定不合併（前者講數量、後者講位置，兩頁互相連結）。這次修 Q02、S02 時，已經讓兩頁和 06 8k 有關的說法一致 |
 | N03 | ragas.md 和 rag-evaluation.md 的 RAGAS 段落重複 | R3-6 | rag-evaluation 是「評估方法總覽」，需要一段能獨立閱讀的 RAGAS 摘要；ragas.md 是細節頁。兩邊的數字已經核對一致（0.95／0.78／0.70），也互相連結。在 log 記錄為刻意保留 |
 | N04 | reviewer 無法讀取 output/what-is-rag/lint.md，無法比對前幾輪的清單 | R2-20 | 這是 workflow 的設計：⓪ 的 reviewer 只能讀 wiki/。本表就是為了這個問題建立的 |
+
+## V2｜v2 ②b 第 1 輪新發現（全部輕微，不阻擋）
+
+| 編號 | 類別 | 問題 | 頁面 | 嚴重度 | 出現輪次 | 狀態 |
+|---|---|---|---|---|---|---|
+| V2-01 | 限定條件 | RAGAS 0.95、GPT Ranking 0.40–0.54 沒有寫「在 WikiEval 資料集上」 | overview.md 第 67–68 行 | 輕微 | v2-②b-1 | 待修（簡報使用時改用 hallucination.md 或 ragas.md 中帶限定的句子） |
+| V2-02 | ⚠️ 同步 | 三個品質分數沒有提醒「06 認為只適用於 vector RAG」 | overview.md 第 63 行 | 輕微 | v2-②b-1 | 待修 |
+| V2-03 | ⚠️ 同步 | 「RAG 減少錯誤內容」的 ⚠️，三頁列的反證不同（05 App. C.1 vs 05 Table 2） | hallucination.md 第 21 行、overview.md 第 24 行、naive-rag.md 第 36–38 行 | 輕微 | v2-②b-1 | 待修 |
+| V2-04 | 可讀性 | BART、ISSUP token、instruction-tuned 第一次出現時沒有連結 | hallucination.md | 輕微 | v2-②b-1 | 待修 |
+| V2-05 | 限定條件 | PopQA 45.5 → 24.7 是「7B、50k 訓練資料的消融實驗」，沒有寫明 | parametric-vs-non-parametric-memory.md 第 65 行 | 輕微 | v2-②b-1 | 待修（簡報不使用這組數字） |
+| V2-06 | 引用 | 「加上檢索後部分任務下降」引 05 §5.1，但 §5.1 寫的是「沒有明顯進步」，下降要看 Table 2 | closed-book-vs-open-book.md 第 56 行 | 輕微 | v2-②b-1 | 待修 |
+| V2-07 | 限定條件 | 04 的實驗有 10／20／30 份文件，頁面只寫 20 份 | closed-book-vs-open-book.md 第 42 行 | 輕微 | v2-②b-1 | 待修 |
+| V2-08 | 可讀性 | NQ、Exact Match、T5、REALM、DPR、oracle 沒有連結 | closed-book-vs-open-book.md | 輕微 | v2-②b-1 | 待修 |
+| V2-09 | 限定條件 | 「35%–49%」把兩種設定合併，49% 需要再加 Contextual BM25 | analogies.md 第 68 行 | 輕微 | v2-②b-1 | 待修（簡報不使用這個範圍） |
+| V2-10 | 可讀性 | LLM、top-k、embedding model、vector database 沒有連結 | naive-rag.md | 輕微 | v2-②b-1 | 待修 |
+| V2-11 | 可讀性 | token 沒有連結 | chunking.md | 輕微 | v2-②b-1 | 待修 |
+| V2-12 | 可讀性 | vector database、cosine similarity、FAISS、MIPS、HNSW 沒有連結 | embedding.md | 輕微 | v2-②b-1 | 待修 |
+| V2-13 | 措辭 | 「大約 20 份時就停止進步」比原文說得滿，原文是「只多約 1%–1.5%」 | retriever.md 第 39 行 | 輕微 | v2-②b-1 | 待修（簡報使用時改用 overview 的「只多進步約 1%–1.5%」） |
+| V2-14 | 可讀性 | DPR、bi-encoder、FEVER、NQ、EM 沒有連結 | retriever.md | 輕微 | v2-②b-1 | 待修 |
+| V2-15 | 引用 | 「Self-RAG 屬於 Modular RAG 的 adaptive retrieval」只引 02 §V-C，應補 §II-C p.5 | self-rag.md 第 24 行 | 輕微 | v2-②b-1 | 待修 |
+| V2-16 | 可讀性 | LLM、reflection tokens 沒有連結 | self-rag.md | 輕微 | v2-②b-1 | 待修 |
+| V2-17 | 可讀性 | EM、F1、BLEU、ROUGE、Hit Rate、MRR、NDCG 沒有連結 | rag-evaluation.md | 輕微 | v2-②b-1 | 待修 |
+
+> 這 17 條都是輕微問題，依 workflow v2 不阻擋 ②b。之後依 AGENTS.md §9.3 的 Wiki 維護流程整批處理。製作這份簡報時，不使用 V2-05、V2-09 的數字；V2-01、V2-13 涉及的數字，只引用帶有限定條件的句子。
