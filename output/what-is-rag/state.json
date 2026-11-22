@@ -3,7 +3,7 @@
   "slug": "what-is-rag",
   "workflow": "v2",
   "node": "5",
-  "status": "waiting",
+  "status": "running",
   "rejections": {
     "0": 0,
     "2": 1,
@@ -16,5 +16,5 @@
   "stop_reason": "",
   "note": "workflow v2 的第一次執行；v1 紀錄封存在 v1/",
   "created": "2026-11-22 15:39:07",
-  "updated": "2026-11-22 16:03:41"
+  "updated": "2026-11-22 16:33:45"
 }
