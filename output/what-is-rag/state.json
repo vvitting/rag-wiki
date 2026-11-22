@@ -2,7 +2,7 @@
   "topic": "RAG 是什麼？",
   "slug": "what-is-rag",
   "workflow": "v2",
-  "node": "7",
+  "node": "8",
   "status": "running",
   "rejections": {
     "0": 0,

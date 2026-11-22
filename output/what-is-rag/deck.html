@@ -49,10 +49,10 @@ body.show-notes #notes-panel { display: block; }
   </header>
   <div class="content">
     
-    <ul class="points"><li><strong>LLM</strong> 有三個主要問題：會講錯、知識過時、無法追溯出處</li><li><strong>Hallucination</strong>：講出聽起來很像真的、但其實是錯的內容</li><li>例子：問 BART 中耳是什麼，它說中耳介於中耳和鼻子之間</li><li>遇到需要最新資訊、或超出訓練資料的問題，特別容易出錯</li></ul>
+    <ul class="points"><li><strong>LLM</strong> 有三個主要問題：會講錯、知識過時、無法追溯出處</li><li><strong>Hallucination</strong>：講出聽起來很像真的、但其實是錯的內容</li><li>例子：只靠記憶、不查資料的模型 BART，說中耳「介於中耳和鼻子之間」</li><li>遇到需要最新資訊、或超出訓練資料的問題，特別容易出錯</li></ul>
   </div>
   <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/overview.md</li><li>wiki/concepts/hallucination.md</li></ul><span class="pageno">1 / 13</span></footer>
-  <aside class="notes">今天的大型語言模型，也就是 LLM，很會寫也很會聊，但它有三個主要問題：會講錯、知識會過時，而且說不出答案是從哪裡來的。其中最麻煩的是 hallucination，就是模型講出聽起來很像真的、其實是錯的內容。例如問 BART 中耳是什麼，它竟然回答中耳是介於中耳和鼻子之間的部分。</aside>
+  <aside class="notes">今天的大型語言模型，也就是 LLM，很會寫也很會聊，但它有三個主要問題：會講錯、知識會過時，而且說不出答案是從哪裡來的。其中最麻煩的是 hallucination，就是模型講出聽起來很像真的、其實是錯的內容。例如 BART 是一個只靠參數記憶、不查資料的模型，問它中耳是什麼，它竟然回答中耳是介於中耳和鼻子之間的部分。</aside>
 </section>
 <section class="slide" data-slide="2">
   <header>
@@ -87,8 +87,8 @@ body.show-notes #notes-panel { display: block; }
     
     <ul class="points"><li><strong>閉書考</strong>：只能靠腦袋裡背的東西作答</li><li><strong>開書考</strong>：先翻課本找到相關段落，再用自己的話寫答案</li><li>RAG 就是讓模型參加開書考</li><li>在 open-domain QA 上，參數少很多的開書考模型，能勝過參數多很多的閉書考模型</li><li>比喻的極限：模型可能翻到不相關的頁面</li></ul>
   </div>
-  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/analogies.md</li><li>wiki/comparisons/closed-book-vs-open-book.md</li></ul><span class="pageno">4 / 13</span></footer>
-  <aside class="notes">原始 RAG 論文自己就把只靠參數的方法叫 closed-book，把會去檢索資料的方法叫 open-book。在 open-domain QA 的 NQ 資料集上，RAG-Sequence 只有 626M 個可訓練參數，拿到 44.5 分。參數多很多的 T5-11B 有 11B 個參數，卻只有 34.5 分。不過要注意，開書考的學生通常知道該翻哪一章，RAG 卻可能翻到不相關的頁面。</aside>
+  <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/analogies.md</li><li>wiki/comparisons/closed-book-vs-open-book.md</li><li>wiki/concepts/rag-evaluation.md</li></ul><span class="pageno">4 / 13</span></footer>
+  <aside class="notes">原始 RAG 論文自己就把只靠參數的方法叫 closed-book，把會去檢索資料的方法叫 open-book。在 open-domain QA 的 NQ 資料集上，成績是用 Exact Match 計算，也就是看答案和標準答案吻合的程度。RAG-Sequence 只有 626M 個可訓練參數，Exact Match 是 44.5；參數多很多的 T5-11B 有 11B 個參數，卻只有 34.5。不過要注意，開書考的學生通常知道該翻哪一章，RAG 卻可能翻到不相關的頁面。</aside>
 </section>
 <section class="slide" data-slide="5">
   <header>
@@ -193,7 +193,7 @@ body.show-notes #notes-panel { display: block; }
   </header>
   <div class="content">
     
-    <ul class="points"><li>RAG = 先查再寫；換掉 index 就能更新知識，不用重新訓練</li><li>位置有影響：放在中間的資訊最容易被忽略（<strong>Lost in the Middle</strong>）</li><li>GPT-3.5-Turbo、20 份文件、答案在中間：53.8%，低於不給文件的 56.1%</li><li>⚠️ 文件放越多越好嗎？各研究看法不一；有實驗發現 50 份比 20 份只多約 1%–1.5%</li><li>檢索不一定有幫助，外部資料本身也可能有錯</li></ul>
+    <ul class="points"><li>RAG = 先查再寫；換掉 index 就能更新知識，不用重新訓練</li><li>位置有影響：放在中間的資訊最容易被忽略（<strong>Lost in the Middle</strong>）</li><li>最糟的情況（GPT-3.5-Turbo、20 份文件、答案在中間）：53.8%，低於不給文件的 56.1%</li><li>⚠️ 文件放越多越好嗎？各研究看法不一；有實驗發現 50 份比 20 份只多約 1%–1.5%</li><li>檢索不一定有幫助，外部資料本身也可能有錯</li></ul>
   </div>
   <footer class="refs"><span class="refs-label">出處</span><ul><li>wiki/overview.md</li><li>wiki/concepts/lost-in-the-middle.md</li><li>wiki/concepts/retriever.md</li><li>wiki/comparisons/closed-book-vs-open-book.md</li><li>wiki/methods/naive-rag.md</li></ul><span class="pageno">13 / 13</span></footer>
   <aside class="notes">最後幫大家整理：RAG 就是先查再寫，只要換掉 index，就能更新 RAG 的知識，不用重新訓練模型。但它不是萬靈丹：在 GPT-3.5-Turbo 的實驗裡，20 份文件中答案放在第 1 份時答對 75.8%，放在中間只有 53.8%，比完全不給文件的 56.1% 還低，這是在 20 和 30 份文件設定的最差位置觀察到的。另一份研究也發現，ChatGPT 加上檢索後，PubHealth 反而從 70.1 降到 54.7。至於要放幾份文件，各研究的看法並不一致，例如有一項實驗發現，取 50 份比 20 份只多進步約 1%–1.5%，而外部資料本身也可能有錯。</aside>
